@@ -1,33 +1,54 @@
 import { useState } from 'react';
-import { Icon } from '../components/Icon.jsx';
-import { DownloadRow } from '../components/PageShared.jsx';
-import { DOWNLOAD_CATEGORIES, DOWNLOADS } from '../data/content.jsx';
+import { DownloadRow } from '../components/DownloadRow.jsx';
+import { Reveal, SectionLabel } from '../components/ui.jsx';
+import { DOWNLOADS, DOWNLOAD_CATEGORIES } from '../content/loader.js';
 
 export function DownloadsPage() {
-  const [filter, setFilter] = useState('all');
-  const files = filter === 'all' ? DOWNLOADS : DOWNLOADS.filter((file) => file.category === filter);
+  const [category, setCategory] = useState('all');
+  const filtered = category === 'all' ? DOWNLOADS : DOWNLOADS.filter((file) => file.category === category);
+  const countOf = (id) => (id === 'all' ? DOWNLOADS.length : DOWNLOADS.filter((f) => f.category === id).length);
 
   return (
     <div className="page-enter">
-      <section className="page-header simple downloads-header">
+      <section className="page-head">
         <div className="wrap">
-          <h1 className="page-title">Downloads</h1>
-          <p className="page-kicker">配布データ・素材</p>
-          <div className="tabs">
-            {DOWNLOAD_CATEGORIES.map(({ id, label }) => <button key={id} className={`tab ${filter === id ? 'active' : ''}`} onClick={() => setFilter(id)}>{label}</button>)}
-          </div>
+          <SectionLabel>Downloads</SectionLabel>
+          <h1 className="h-display">公開データ</h1>
+          <p className="h-body">
+            制作したツールや音源などを自由にダウンロードできます。音源はその場で試聴できます。
+          </p>
         </div>
       </section>
-      <section className="block downloads-block">
-        <div className="wrap download-list">
-          {files.length > 0 ? files.map((file) => <DownloadRow key={file.id} file={file}/>) : (
-            <div className="empty-state">
-              <div className="empty-mark"><Icon.Download/></div>
-              <strong>まだ何もないようです</strong>
-              <span>このカテゴリの公開データは準備中です。近日公開予定です。</span>
+
+      <section className="block block-tight">
+        <div className="wrap">
+          <div className="filter-row" role="tablist" aria-label="カテゴリで絞り込む">
+            {DOWNLOAD_CATEGORIES.map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                role="tab"
+                aria-selected={category === cat.id}
+                className={`filter-pill ${category === cat.id ? 'active' : ''}`}
+                onClick={() => setCategory(cat.id)}
+              >
+                {cat.label}
+                <span className="filter-count">{countOf(cat.id)}</span>
+              </button>
+            ))}
+          </div>
+
+          {filtered.length === 0 ? (
+            <p className="empty-note">このカテゴリの公開データはまだありません。</p>
+          ) : (
+            <div className="dl-list">
+              {filtered.map((file, i) => (
+                <Reveal key={file.id} delay={i * 50}>
+                  <DownloadRow file={file} />
+                </Reveal>
+              ))}
             </div>
           )}
-          <p className="download-note">ダウンロードするデータは個人利用の範囲でご利用ください。商用利用や再配布については、利用条件をご確認ください。</p>
         </div>
       </section>
     </div>

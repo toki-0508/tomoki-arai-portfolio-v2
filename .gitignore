@@ -9,3 +9,8 @@ output/
 .playwright-cli/
 .vercel
 .claude/
+
+# 制作レポート置き場: 原稿・アーカイブはローカルのみ(公開リポジトリに含めない)
+reports/*
+!reports/README.md
+!reports/_TEMPLATE.md

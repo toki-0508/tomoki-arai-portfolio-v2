@@ -15,6 +15,28 @@
     <meta name="google-site-verification" content="cTiFthtcgbvlrSUvuelor5uRwI0tUqBv9Y7svowbEKo" />
     <link rel="canonical" href="https://tomoki-arai.vercel.app/" />
 
+    <!-- テーマ初期化: 描画前に data-theme を決めて FOUC を防ぐ -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var theme = saved === 'dark' || saved === 'light'
+            ? saved
+            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+    />
+
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:site_name" content="新井智己 | Tomoki Arai Portfolio" />

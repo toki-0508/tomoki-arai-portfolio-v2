@@ -1,0 +1,98 @@
+/* ============================================================
+   デザイントークン
+   ライト / ダークの色はすべてここで定義し、他のファイルは
+   var() だけを参照する。
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* 面 */
+  --bg: #f7f8fc;
+  --bg-soft: #eef1f8;
+  --surface: #ffffff;
+  --surface-2: #f3f5fa;
+  --nav-bg: rgba(255, 255, 255, 0.78);
+
+  /* 文字 */
+  --ink: #101828;
+  --ink-strong: #0a0f1c;
+  --muted: #5b6577;
+  --faint: #97a0b3;
+
+  /* 線 */
+  --line: #e6e9f1;
+  --line-strong: #d6dbe7;
+
+  /* ブランド */
+  --brand: #2563eb;
+  --brand-strong: #1d4fd7;
+  --brand-soft: #e9efff;
+  --brand-ink: #1e40af;
+  --ring: rgba(37, 99, 235, 0.4);
+
+  /* カテゴリ */
+  --cat-web-bg: #e9efff;
+  --cat-web-fg: #1d4fd7;
+  --cat-app-bg: #fdf0e0;
+  --cat-app-fg: #b45309;
+  --cat-3d-bg: #e2f6ee;
+  --cat-3d-fg: #047857;
+  --cat-sounds-bg: #fce8f1;
+  --cat-sounds-fg: #be185d;
+  --cat-other-bg: #f0eafd;
+  --cat-other-fg: #6d28d9;
+
+  /* 影 */
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 6px 20px -6px rgba(16, 24, 40, 0.12);
+  --shadow-lg: 0 18px 46px -14px rgba(16, 24, 40, 0.2);
+
+  /* 形 */
+  --radius-s: 10px;
+  --radius-m: 16px;
+  --radius-l: 24px;
+  --wrap: 1120px;
+
+  /* 書体 */
+  --font-body: 'Inter', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, system-ui, sans-serif;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0b1020;
+  --bg-soft: #0e1428;
+  --surface: #121a33;
+  --surface-2: #182140;
+  --nav-bg: rgba(11, 16, 32, 0.72);
+
+  --ink: #e7ecf8;
+  --ink-strong: #ffffff;
+  --muted: #9aa6c2;
+  --faint: #6a7694;
+
+  --line: #222c4e;
+  --line-strong: #2e3a63;
+
+  --brand: #5c8bff;
+  --brand-strong: #7da3ff;
+  --brand-soft: #1b2a55;
+  --brand-ink: #aac3ff;
+  --ring: rgba(122, 158, 255, 0.5);
+
+  --cat-web-bg: #1b2a55;
+  --cat-web-fg: #a9c2ff;
+  --cat-app-bg: #3a2a12;
+  --cat-app-fg: #f4bd76;
+  --cat-3d-bg: #0f3327;
+  --cat-3d-fg: #6ee7b7;
+  --cat-sounds-bg: #3d1830;
+  --cat-sounds-fg: #f9a8d4;
+  --cat-other-bg: #291c4d;
+  --cat-other-fg: #c4b5fd;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px -6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 18px 46px -14px rgba(0, 0, 0, 0.6);
+}

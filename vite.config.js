@@ -9,6 +9,10 @@ const base = process.env.GITHUB_PAGES === 'true' ? '/tomoki-arai-portfolio/' : '
 export default defineConfig({
   base,
   plugins: [react()],
+  // プレビュー環境が PORT を指定してくることがあるため、あれば従う
+  server: {
+    port: Number(process.env.PORT) || 5174,
+  },
   build: {
     chunkSizeWarningLimit: 700,
     rollupOptions: {
