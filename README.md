@@ -5,9 +5,12 @@
 - 公開先(このリポジトリ): https://toki-0508.github.io/tomoki-arai-portfolio-v2/
 - 既存ポートフォリオ(v1・稼働中): https://tomoki-arai.vercel.app/
 
-> **検索エンジンについて**: v1 と検索結果で競合しないよう、v2 は当面 `noindex` で公開しています
-> (`.github/workflows/deploy.yml` の `NOINDEX` 参照)。v2 を正式な公開先に切り替えるときは
-> `NOINDEX: 'false'` にして、canonical / OG の URL を v2 のものへ更新してください。
+> **検索エンジンについて**: v2 は検索対象(index)として公開しています。canonical / OG /
+> 構造化データ / sitemap の URL は、ビルド時に `SITE_URL` から自動生成されるため、
+> 公開先を移してもズレません(`.github/workflows/deploy.yml` 参照)。
+>
+> v1 も同じ内容で公開され続けているため、**どちらを「正」とするか**は決めておく必要があります。
+> v2 を正としたい場合は、v1 側の `index.html` の canonical を v2 の URL に向けてください。
 
 ---
 
@@ -106,8 +109,12 @@ GITHUB_PAGES=true VITE_CONTACT_API_BASE=https://tomoki-arai.vercel.app npm run b
 
 | 環境変数 | 用途 | 未設定時 |
 |----------|------|----------|
-| `GITHUB_PAGES` | `true` で `base` をサブパスへ切替 | `/`(Vercel 用) |
+| `GITHUB_PAGES_BASE` | 配信ベースパス(`/<リポジトリ名>/`) | `/`(ルート配信) |
+| `SITE_URL` | canonical / OG / 構造化データ / sitemap の公開URL | `https://tomoki-arai.vercel.app` |
+| `NOINDEX` | `true` で `noindex, nofollow` にする(プレビュー用) | `false`(検索対象) |
 | `VITE_CONTACT_API_BASE` | 問い合わせ API の向き先 | 空文字(同一オリジン) |
+
+`sitemap.xml` と `robots.txt` は `SITE_URL` からビルド時に生成されます(`public/` には置きません)。
 
 ---
 

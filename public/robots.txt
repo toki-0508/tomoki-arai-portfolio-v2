@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://tomoki-arai.vercel.app/sitemap.xml
