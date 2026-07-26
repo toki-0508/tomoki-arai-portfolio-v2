@@ -1,7 +1,13 @@
 name: Deploy to GitHub Pages
 
-# 本番は Vercel。GitHub Pages はサブ公開として同じ内容を配信する。
-# Pages 向けビルドだけ base をサブパスへ切り替え、Contact は Vercel の API を叩く。
+# GitHub Pages へのデプロイ(このリポジトリの公開先)。
+# ベースパスはリポジトリ名から自動で決まるので、リポジトリを
+# リネーム・フォークしてもこのファイルはそのまま使える。
+#
+# NOINDEX: 'true' の間は検索エンジンに載せない(既存の本番
+# ポートフォリオ https://tomoki-arai.vercel.app/ と検索結果で
+# 競合させないため)。このサイトを正式な公開先に切り替えるときは
+# NOINDEX を 'false' にすること。
 
 on:
   push:
@@ -37,10 +43,13 @@ jobs:
 
       - name: Build for GitHub Pages
         env:
-          # base を '/tomoki-arai-portfolio/' に切り替える
+          # base を '/<リポジトリ名>/' に切り替える
           GITHUB_PAGES: 'true'
-          # Pages は静的配信のため、問い合わせは Vercel 上の API へ転送する
+          GITHUB_PAGES_BASE: /${{ github.event.repository.name }}/
+          # Pages は静的配信のため、問い合わせは既存 Vercel の API へ転送する
           VITE_CONTACT_API_BASE: https://tomoki-arai.vercel.app
+          # 既存ポートフォリオと検索結果で競合しないよう、当面 noindex にする
+          NOINDEX: 'true'
         run: npm run build
 
       - name: Setup Pages

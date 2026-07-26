@@ -1,9 +1,13 @@
-# tomoki-arai-portfolio
+# tomoki-arai-portfolio-v2
 
-新井智己のポートフォリオサイト。React + Vite で構築し、**本番を Vercel**、**サブ公開を GitHub Pages**(GitHub Actions で自動デプロイ)の二系統で配信しています。
+新井智己のポートフォリオサイト(v2・全面リビルド版)。React + Vite で構築し、GitHub Pages で公開しています。
 
-- 本番(メイン): https://tomoki-arai.vercel.app/
-- サブ公開(GitHub Pages): https://toki-0508.github.io/tomoki-arai-portfolio/
+- 公開先(このリポジトリ): https://toki-0508.github.io/tomoki-arai-portfolio-v2/
+- 既存ポートフォリオ(v1・稼働中): https://tomoki-arai.vercel.app/
+
+> **検索エンジンについて**: v1 と検索結果で競合しないよう、v2 は当面 `noindex` で公開しています
+> (`.github/workflows/deploy.yml` の `NOINDEX` 参照)。v2 を正式な公開先に切り替えるときは
+> `NOINDEX: 'false'` にして、canonical / OG の URL を v2 のものへ更新してください。
 
 ---
 
@@ -110,15 +114,14 @@ GITHUB_PAGES=true VITE_CONTACT_API_BASE=https://tomoki-arai.vercel.app npm run b
 ## デプロイ構成
 
 ```
-push to main
-   ├─ Vercel        → https://tomoki-arai.vercel.app/         (本番・メイン)
-   └─ GitHub Actions → https://toki-0508.github.io/...        (サブ公開)
-         .github/workflows/deploy.yml
+push to main (このリポジトリ)
+   └─ GitHub Actions → https://toki-0508.github.io/tomoki-arai-portfolio-v2/
+         .github/workflows/deploy.yml(base はリポジトリ名から自動決定)
 ```
 
-Pages 版の問い合わせは Vercel の `/api/contact` へ転送されます(`api/contact.js` の
-`ALLOWED_ORIGINS` で許可)。SEO 上の重複を避けるため、`index.html` の canonical は
-本番である Vercel を指しています。
+問い合わせフォームは、既存ポートフォリオ(v1)の Vercel 上にある `/api/contact` へ
+クロスオリジンで転送します。`toki-0508.github.io` は v1 側 API の `ALLOWED_ORIGINS` で
+許可済みのため、そのまま動作します。
 
 ---
 
