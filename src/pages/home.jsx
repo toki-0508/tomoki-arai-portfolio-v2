@@ -22,8 +22,10 @@ export function HomePage() {
         <div className="wrap hero-grid">
           <div className="hero-copy">
             <SectionLabel>Hello! I'm {PROFILE.nameEn}</SectionLabel>
+            {/* フレーズ単位の span で「活用し」などの語中改行を防ぐ */}
             <h1 className="h-display">
-              <span className="line">Web、アプリ、3Dを活用し</span>
+              <span className="phrase">Web、アプリ、</span>
+              <span className="phrase">3Dを活用し</span>
               <span className="line"><em>面白い</em>を形にする</span>
             </h1>
             <p className="h-body">

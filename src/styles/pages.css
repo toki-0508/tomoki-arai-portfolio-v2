@@ -4,7 +4,7 @@
 
 /* ---------- ホーム: ヒーロー ---------- */
 .hero {
-  padding-block: 72px 88px;
+  padding-block: clamp(44px, 4.5vw + 8px, 72px) clamp(56px, 5vw + 16px, 88px);
   background:
     radial-gradient(700px 420px at 85% 0%, var(--brand-soft), transparent 70%),
     radial-gradient(520px 380px at 0% 100%, var(--bg-soft), transparent 70%);
@@ -12,9 +12,13 @@
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
   align-items: center;
-  gap: 48px;
+  gap: clamp(28px, 4vw, 52px);
+}
+
+.hero-copy {
+  min-width: 0;
 }
 
 .hero-ctas {
@@ -96,7 +100,7 @@
 
 /* ---------- ページ共通ヘッダ ---------- */
 .page-head {
-  padding-block: 64px 8px;
+  padding-block: clamp(40px, 4vw + 12px, 64px) 8px;
   background: radial-gradient(640px 320px at 90% 0%, var(--brand-soft), transparent 70%);
 }
 
@@ -759,10 +763,6 @@
    ============================================================ */
 
 @media (max-width: 960px) {
-  .block {
-    padding-block: 64px;
-  }
-
   .nav-links {
     display: none;
   }
@@ -774,10 +774,6 @@
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 20px;
-  }
-
-  .hero {
-    padding-block: 48px 64px;
   }
 
   .hero-3d {
@@ -817,10 +813,6 @@
 @media (max-width: 640px) {
   .wrap {
     width: min(var(--wrap), 100% - 36px);
-  }
-
-  .block {
-    padding-block: 52px;
   }
 
   .h-body {
