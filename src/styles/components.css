@@ -288,9 +288,17 @@
 }
 
 .footer-tagline {
-  margin: 16px 0 18px;
+  margin: 16px 0 6px;
   font-size: 14px;
   color: var(--muted);
+}
+
+.footer-desc {
+  max-width: 420px;
+  margin: 0 0 18px;
+  font-size: 12.5px;
+  line-height: 1.9;
+  color: var(--faint);
 }
 
 .footer-socials {

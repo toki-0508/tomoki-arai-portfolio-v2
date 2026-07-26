@@ -6,6 +6,9 @@
 export const PROFILE = {
   nameJa: '新井智己',
   nameEn: 'Tomoki Arai',
+  reading: 'あらいともき',
+  nickname: 'あらとも',
+  romaji: 'Tomoki Arai / Arai Tomoki',
   role: 'Web / App / 3D Creator',
   tagline: '身の回りを、ちょっと好きになる。',
   email: 'toki.zeno.0508@gmail.com',

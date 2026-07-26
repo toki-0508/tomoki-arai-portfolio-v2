@@ -18,18 +18,21 @@ function getRoute() {
   return '/';
 }
 
+// どのページでも「新井智己 / Tomoki Arai」が title に入るようにする(検索対策)
+const SITE_TITLE = `${PROFILE.nameJa}(${PROFILE.reading} / ${PROFILE.nickname})| ${PROFILE.nameEn} Portfolio`;
+
 const TITLES = {
-  '/': `${PROFILE.nameJa} | ${PROFILE.nameEn} Portfolio`,
-  '/about': `About | ${PROFILE.nameEn} Portfolio`,
-  '/works': `Works | ${PROFILE.nameEn} Portfolio`,
-  '/downloads': `Downloads | ${PROFILE.nameEn} Portfolio`,
-  '/contact': `Contact | ${PROFILE.nameEn} Portfolio`,
+  '/': SITE_TITLE,
+  '/about': `About | ${PROFILE.nameJa} - ${PROFILE.nameEn} Portfolio`,
+  '/works': `Works 作品一覧 | ${PROFILE.nameJa} - ${PROFILE.nameEn} Portfolio`,
+  '/downloads': `Downloads 公開データ | ${PROFILE.nameJa} - ${PROFILE.nameEn} Portfolio`,
+  '/contact': `Contact お問い合わせ | ${PROFILE.nameJa} - ${PROFILE.nameEn} Portfolio`,
 };
 
 function titleFor(route) {
   if (route.startsWith('/works/')) {
     const work = workById(route.split('/').pop());
-    if (work) return `${work.name} | ${PROFILE.nameEn} Portfolio`;
+    if (work) return `${work.name} | ${PROFILE.nameJa}の作品 - ${PROFILE.nameEn} Portfolio`;
   }
   return TITLES[route] ?? TITLES['/'];
 }

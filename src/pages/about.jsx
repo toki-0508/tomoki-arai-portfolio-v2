@@ -1,8 +1,17 @@
 import { Icon } from '../components/Icon.jsx';
 import { Reveal, SectionLabel } from '../components/ui.jsx';
-import { HISTORY, INTERESTS, MVV, NOW, SKILL_GROUPS } from '../content/site.js';
+import { HISTORY, INTERESTS, MVV, NOW, PROFILE, SKILL_GROUPS } from '../content/site.js';
 
 const INTEREST_ICONS = { pen: Icon.Pen, play: Icon.Play, box: Icon.Box, chart: Icon.Chart };
+
+// 名前の表記ゆれ(よみ・通称・ローマ字)を明示するプロフィール。
+// 検索からたどり着いた人が本人確認しやすくする目的も兼ねる。
+const PROFILE_ROWS = [
+  ['名前', `${PROFILE.nameJa}(${PROFILE.reading})`],
+  ['通称', `${PROFILE.nickname}`],
+  ['英語表記', PROFILE.romaji],
+  ['領域', 'Web制作 / アプリ開発 / 3D制作'],
+];
 
 export function AboutPage() {
   return (
@@ -34,6 +43,28 @@ export function AboutPage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="block block-tight">
+        <div className="wrap">
+          <Reveal className="profile-panel">
+            <SectionLabel>Profile</SectionLabel>
+            <div className="profile-grid">
+              <dl className="profile-list">
+                {PROFILE_ROWS.map(([term, desc]) => (
+                  <div key={term}>
+                    <dt>{term}</dt>
+                    <dd>{desc}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="profile-note">
+                「{PROFILE.nickname}」と呼ばれることが多いです。{PROFILE.nameJa}({PROFILE.reading})名義で、
+                使って便利で楽しいと感じられるWeb・アプリ・3D作品を制作・公開しています。
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 

@@ -199,6 +199,10 @@ export function Footer() {
         <div className="footer-brand">
           <Logo />
           <p className="footer-tagline">{PROFILE.tagline}</p>
+          <p className="footer-desc">
+            {PROFILE.nameJa}({PROFILE.reading} / {PROFILE.nickname} / {PROFILE.romaji})のポートフォリオサイト。
+            Web制作・アプリ開発・3D制作の作品と公開データを紹介しています。
+          </p>
           <div className="footer-socials">
             {PROFILE.socials.map((social) => (
               <a key={social.id} href={social.url} target="_blank" rel="noreferrer" aria-label={social.label}>
