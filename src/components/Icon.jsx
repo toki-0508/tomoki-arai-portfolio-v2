@@ -63,4 +63,10 @@ export const Icon = {
   Spark: (p) => (
     <svg {...base} {...p}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" /></svg>
   ),
+  Zoom: (p) => (
+    <svg {...base} {...p}><circle cx="11" cy="11" r="7" /><path d="m20.5 20.5-4.6-4.6M11 8v6M8 11h6" /></svg>
+  ),
+  Up: (p) => (
+    <svg {...base} {...p}><path d="M12 19V5M6 11l6-6 6 6" /></svg>
+  ),
 };

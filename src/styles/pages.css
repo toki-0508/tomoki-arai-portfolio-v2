@@ -158,6 +158,10 @@
 }
 
 .detail-visual {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius-l);
   overflow: hidden;
@@ -165,6 +169,13 @@
     radial-gradient(480px 280px at 20% 0%, var(--brand-soft), transparent 70%),
     var(--surface-2);
   box-shadow: var(--shadow-md);
+  cursor: zoom-in;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.detail-visual:hover {
+  border-color: var(--brand);
+  box-shadow: var(--shadow-lg);
 }
 
 .detail-visual .thumb {
@@ -172,9 +183,86 @@
   background: transparent;
 }
 
-.detail-visual .thumb img {
+.detail-visual .thumb-main {
   object-fit: contain;
   padding: clamp(12px, 3vw, 32px);
+}
+
+.zoom-hint {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.detail-visual:hover .zoom-hint,
+.detail-visual:focus-visible .zoom-hint {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- ライトボックス ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: grid;
+  place-items: center;
+  padding: 4vmin;
+  background: rgba(6, 9, 20, 0.86);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  cursor: zoom-out;
+  animation: lightbox-in 0.25s ease both;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 14px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+  cursor: default;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+@keyframes lightbox-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .detail-body {

@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { Icon } from '../components/Icon.jsx';
-import { CategoryChip, Link, Reveal, Thumb } from '../components/ui.jsx';
+import { WorkCard } from '../components/WorkCard.jsx';
+import { CategoryChip, Lightbox, Link, Reveal, SectionLabel, Thumb } from '../components/ui.jsx';
 import { BlockList } from '../lib/markdown.jsx';
 import { WORKS, workById } from '../content/loader.js';
 
 export function WorkDetailPage({ id }) {
   const work = workById(id);
+  const [zoomed, setZoomed] = useState(false);
 
   if (!work) {
     return (
@@ -23,6 +26,7 @@ export function WorkDetailPage({ id }) {
   const index = WORKS.indexOf(work);
   const prev = WORKS[index + 1] ?? null; // 日付降順なので次=古い方
   const next = WORKS[index - 1] ?? null;
+  const related = WORKS.filter((w) => w.category === work.category && w.id !== work.id).slice(0, 3);
 
   return (
     <div className="page-enter">
@@ -59,11 +63,22 @@ export function WorkDetailPage({ id }) {
         {work.image && (
           <section className="block block-tight">
             <div className="wrap">
-              <Reveal className="detail-visual">
-                <Thumb src={work.image} alt={`${work.name} のスクリーンショット`} />
+              <Reveal>
+                <button
+                  type="button"
+                  className="detail-visual"
+                  onClick={() => setZoomed(true)}
+                  aria-label={`${work.name} のスクリーンショットを拡大表示`}
+                >
+                  <Thumb src={work.image} alt={`${work.name} のスクリーンショット`} />
+                  <span className="zoom-hint"><Icon.Zoom width={14} height={14} /> クリックで拡大</span>
+                </button>
               </Reveal>
             </div>
           </section>
+        )}
+        {zoomed && work.image && (
+          <Lightbox src={work.image} alt={`${work.name} のスクリーンショット`} onClose={() => setZoomed(false)} />
         )}
 
         <section className="block block-tight">
@@ -98,6 +113,29 @@ export function WorkDetailPage({ id }) {
             ) : <span />}
           </div>
         </section>
+
+        {related.length > 0 && (
+          <section className="block block-tight">
+            <div className="wrap">
+              <Reveal className="section-head">
+                <div>
+                  <SectionLabel>Related</SectionLabel>
+                  <h2 className="h-section">同じカテゴリの作品</h2>
+                </div>
+                <Link to={`/works?cat=${work.category}`} className="section-link">
+                  {work.categoryLabel} の作品一覧 <Icon.Arrow />
+                </Link>
+              </Reveal>
+              <div className="grid-3">
+                {related.map((w, i) => (
+                  <Reveal key={w.id} delay={i * 60}>
+                    <WorkCard work={w} />
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </article>
     </div>
   );

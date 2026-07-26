@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Footer, Nav } from './components/Layout.jsx';
+import { BackToTop, Footer, Nav, ScrollProgress } from './components/Layout.jsx';
 import { HomePage } from './pages/home.jsx';
 import { AboutPage } from './pages/about.jsx';
 import { WorksPage } from './pages/works.jsx';
@@ -58,9 +58,11 @@ export function App() {
 
   return (
     <div className="app">
+      <ScrollProgress />
       <Nav route={route} />
       <main id="main" key={route}><Page /></main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }
