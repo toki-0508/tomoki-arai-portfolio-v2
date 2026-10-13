@@ -1,6 +1,13 @@
 // ============================================================
 // サイト全体で使うプロフィール・固定コンテンツ
 // 作品・ダウンロードは works/ downloads/ の md で管理する。
+//
+// 表記ルール(全ページ共通。reports/README.md にも同じものを載せている)
+//   - 文体は「です・ます」。見出しのみ体言止め
+//   - 約物は全角(、。！？「」（）)、英数字は半角。和欧間にスペースは入れない
+//   - 技術名は公式表記(JavaScript / Three.js / Firebase / GarageBand など)
+//   - 「作る」は漢字、「もの」はひらがな
+//   - キャッチコピーは PROFILE.tagline の1つだけ。ほかの言い回しを増やさない
 // ============================================================
 
 export const PROFILE = {
@@ -8,8 +15,8 @@ export const PROFILE = {
   nameEn: 'Tomoki Arai',
   reading: 'あらいともき',
   nickname: 'あらとも',
-  romaji: 'Tomoki Arai / Arai Tomoki',
-  role: 'Web / App / 3D Creator',
+  affiliation: '高専生',
+  fields: 'Web・アプリ・3D',
   tagline: '身の回りを、ちょっと好きになる。',
   email: 'toki.zeno.0508@gmail.com',
   socials: [
@@ -18,56 +25,67 @@ export const PROFILE = {
   ],
 };
 
+// ナビは英語、ページ内の見出しは日本語、という役割分担で統一する。
+// title はページの h1 とブラウザタブのタイトルに使う。
 export const NAV_LINKS = [
-  { id: '/', label: 'Home' },
-  { id: '/about', label: 'About' },
-  { id: '/works', label: 'Works' },
-  { id: '/downloads', label: 'Downloads' },
-  { id: '/contact', label: 'Contact' },
+  { id: '/works', label: 'Works', title: '作品' },
+  { id: '/about', label: 'About', title: 'プロフィール' },
+  { id: '/downloads', label: 'Downloads', title: 'ダウンロード' },
+  { id: '/contact', label: 'Contact', title: 'お問い合わせ' },
 ];
 
 export const MVV = [
   {
     label: 'Mission',
-    title: '身近な不便を、触って楽しいモノに変える',
-    text: '日常の中にある小さな困りごとや退屈を、Web・アプリ・3Dの力で使いやすく、少しでもワクワクするような形にしていきます。',
+    title: '身近な不便を、触って楽しいものに変える',
+    text: '日常の小さな困りごとや退屈を、Web・アプリ・3Dの力で、使いやすく少しワクワクする形に変えていきます。',
   },
   {
     label: 'Vision',
-    title: '全てのものに愛着が持てる社会を作る',
-    text: '身の回りにあるものにはこだわって欲しいし、それを好きになれることはとても幸せで、QOLが高くてより幸せな世界だと思います。',
+    title: 'すべてのものに、愛着を持てる社会を作る',
+    text: '身の回りのものにこだわり、それを好きになれることは、暮らしをより幸せにしてくれると考えています。',
   },
   {
     label: 'Values',
     title: 'わかりやすく、気持ちよく、続けて磨く',
-    text: '見た目の良さだけでなく、使う人が迷わないこと、触って心地よいこと、作った後も使い続けられることを大切にします。',
+    text: '見た目の良さだけでなく、使う人が迷わないこと、触って心地よいこと、作ったあとも使い続けられることを大切にしています。',
   },
 ];
 
-export const INTERESTS = [
-  { icon: 'pen', title: 'つくること', text: 'アイデアを形にするのが好きです。' },
-  { icon: 'play', title: 'あそぶこと', text: '作ったものを自分で触って試すのが好きです。' },
-  { icon: 'box', title: '3Dと空間表現', text: '思ったものを簡単に形にできるのが好きです。' },
-  { icon: 'chart', title: 'データ・仕組み', text: 'AIと一緒に最適解を導き出すのが楽しいです。' },
+// Values を3つの行動に分けたもの。トップページで「どう考えて作るか」を短く伝える。
+export const PRINCIPLES = [
+  { title: 'わかりやすく', text: '使う人が迷わないこと。' },
+  { title: '気持ちよく', text: '触っていて心地よいこと。' },
+  { title: '続けて磨く', text: '作ったあとも使い続けられること。' },
 ];
 
+export const INTERESTS = [
+  { icon: 'pen', title: '作ること', text: 'アイデアを形にするのが好きです。' },
+  { icon: 'play', title: '遊ぶこと', text: '作ったものを、自分で触って試すのが好きです。' },
+  { icon: 'box', title: '3Dと空間表現', text: '思い描いたものを、そのまま形にできるのが好きです。' },
+  { icon: 'chart', title: 'データと仕組み', text: 'AIと一緒に、最適な方法を考えるのが好きです。' },
+];
+
+// 作品・ダウンロードの tags に含まれる技術は、プロフィールで「作品で使用」と表示される。
+// (判定は loader.js の techUsage。名前は tags と同じ表記で書くこと)
 export const SKILL_GROUPS = [
-  { title: 'Frontend', skills: ['React', 'TypeScript', 'JavaScript', 'Next.js', 'Three.js', 'Tailwind CSS'] },
-  { title: 'Backend / Tools', skills: ['Node.js', 'Firebase', 'Supabase', 'GitHub'] },
-  { title: '3D / Design', skills: ['Blender', 'Three.js', 'Figma', 'Adobe Illustrator', 'Adobe Photoshop'] },
-  { title: 'AIs', skills: ['ChatGPT', 'Codex', 'Claude', 'qwen'] },
-  { title: 'Other', skills: ['Git', 'VS Code', 'Vite', 'Notion'] },
+  { title: '開発', skills: ['React', 'JavaScript', 'TypeScript', 'Next.js', 'Flutter', 'Dart', 'Python', 'Three.js', 'Vite', 'Tailwind CSS'] },
+  { title: 'バックエンド・公開', skills: ['Firebase', 'Supabase', 'Node.js', 'Vercel', 'GitHub Actions'] },
+  { title: '3D・デザイン・サウンド', skills: ['Blender', 'Figma', 'Adobe Illustrator', 'Adobe Photoshop', 'GarageBand'] },
+  { title: 'ツール・AI', skills: ['Git', 'VS Code', 'Notion', 'ChatGPT', 'Claude', 'Codex', 'Qwen'] },
 ];
 
 export const HISTORY = [
-  { time: '小学生の頃〜', text: 'ものづくり(工作)に興味を持つ' },
-  { time: '中学時代', text: 'ゲームに触れプログラミングに興味を持つ' },
-  { time: '高専時代〜現在', text: 'バイブコーディングでWeb・アプリ制作を学ぶ、3Dは独学' },
-  { time: 'これから', text: '身近な人が今よりちょっと幸せになれるようなものを作っていきたい' },
+  { time: '小学生のころ', text: '工作をきっかけに、ものづくりに興味を持ちました。' },
+  { time: '中学生のころ', text: 'ゲームをきっかけに、プログラミングに興味を持ちました。' },
+  { time: '高専〜現在', text: '生成AIを活用しながらWeb・アプリ開発を学んでいます。3Dは独学です。' },
+  { time: 'これから', text: '身近な人が、今よりちょっと幸せになれるものを作っていきたいです。' },
 ];
 
+// 「いま」の内容は古くなりやすいので、いつ時点の情報かを必ず表示する。
+export const NOW_UPDATED = '2026-07';
 export const NOW = [
-  { title: '制作中のこと', text: '3Dインタラクション作品' },
-  { title: '学んでいること', text: 'WebGL / Shader / UIアニメーション' },
-  { title: '興味があること', text: 'AI / XR / データビジュアライズ' },
+  { title: 'いま作っているもの', text: '3Dを使ったインタラクティブな作品' },
+  { title: '学んでいること', text: 'WebGL・シェーダー・UIアニメーション' },
+  { title: '興味があること', text: 'AI・XR・データビジュアライゼーション' },
 ];

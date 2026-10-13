@@ -2,12 +2,9 @@ const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || 'toki.zeno.0508@gmail.c
 const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'Portfolio Contact <onboarding@resend.dev>';
 const RESEND_API_URL = 'https://api.resend.com/emails';
 
-// この API を呼び出してよいオリジン。GitHub Pages(サブ公開)と Vercel(本番)。
-const ALLOWED_ORIGINS = new Set([
-  'https://toki-0508.github.io',
-  'https://tomoki-arai.vercel.app',
-  'https://tomoki-arai-portfolio.vercel.app',
-]);
+// この API を呼び出してよいオリジン。サイトと同じオリジン(本番の Vercel)だけを許可する。
+// (旧ドメインや GitHub Pages は本番 URL への転送のみで、フォームは置いていない)
+const ALLOWED_ORIGINS = new Set(['https://tomoki-arai.vercel.app']);
 
 const MAX_FIELD_LENGTHS = {
   name: 80,

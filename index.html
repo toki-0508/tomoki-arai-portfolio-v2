@@ -3,69 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>新井智己（あらいともき / あらとも）| Tomoki Arai Portfolio</title>
+    <title>新井智己（あらいともき・あらとも）| Tomoki Arai Portfolio</title>
     <meta
       name="description"
-      content="新井智己（あらいともき / あらとも / アライトモキ / Tomoki Arai / Arai Tomoki）の公式ポートフォリオサイト。Web制作、アプリ開発、3D制作の作品、MVV、公開データを紹介しています。"
+      content="新井智己（あらいともき・あらとも、Tomoki Arai）のポートフォリオです。「身の回りを、ちょっと好きになる。」をテーマに、Web・アプリ・3Dの作品と公開データを紹介しています。"
     />
     <meta name="robots" content="index, follow" />
-    <meta name="author" content="新井智己 / Tomoki Arai" />
+    <meta name="author" content="新井智己（Tomoki Arai）" />
     <meta name="keywords" content="新井智己, あらいともき, あらとも, アライトモキ, Tomoki Arai, Arai Tomoki, ポートフォリオ, Web制作, アプリ開発, 3D制作" />
-    <meta name="theme-color" content="#2563eb" />
-    <!-- Search Console 所有権の確認。複数プロパティ分を並べてよい。
-         1つ目: v1(Vercel) / 2つ目: v2(GitHub Pages)。確認後も消さないこと。 -->
+    <meta name="theme-color" content="#f4f5f9" />
+    <!-- Search Console(tomoki-arai.vercel.app のプロパティ)の所有権確認。消さないこと -->
     <meta name="google-site-verification" content="cTiFthtcgbvlrSUvuelor5uRwI0tUqBv9Y7svowbEKo" />
-    <meta name="google-site-verification" content="TSiAGsAyJ-PfvUdq4HzKuwhwj45JxCECe0PpHWV4xY8" />
     <link rel="canonical" href="https://tomoki-arai.vercel.app/" />
 
-    <!-- テーマ初期化: 描画前に data-theme を決めて FOUC を防ぐ -->
+    <!-- テーマ初期化: 描画前に data-theme を決めてちらつきを防ぐ -->
     <script>
       (function () {
+        var theme = 'light';
         try {
           var saved = localStorage.getItem('theme');
-          var theme = saved === 'dark' || saved === 'light'
+          theme = saved === 'dark' || saved === 'light'
             ? saved
             : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-          document.documentElement.dataset.theme = theme;
-        } catch (e) {
-          document.documentElement.dataset.theme = 'light';
-        }
+        } catch (e) {}
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#0e1222' : '#f4f5f9';
       })();
     </script>
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
     />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:site_name" content="新井智己 | Tomoki Arai Portfolio" />
-    <meta property="og:title" content="新井智己 / あらいともき / あらとも | Tomoki Arai Portfolio" />
+    <meta property="og:title" content="新井智己（あらいともき・あらとも）| Tomoki Arai Portfolio" />
     <meta
       property="og:description"
-      content="新井智己（あらいともき / あらとも / アライトモキ / Tomoki Arai）の公式ポートフォリオサイト。Web、アプリ、3D制作、制作実績、MVV、公開データを紹介しています。"
+      content="「身の回りを、ちょっと好きになる。」をテーマに、Web・アプリ・3Dの作品を作っています。新井智己（Tomoki Arai）のポートフォリオです。"
     />
     <meta property="og:url" content="https://tomoki-arai.vercel.app/" />
     <meta property="og:image" content="https://tomoki-arai.vercel.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:alt" content="新井智己（あらいともき / あらとも / Tomoki Arai）のポートフォリオ" />
+    <meta property="og:image:alt" content="新井智己のポートフォリオ「身の回りを、ちょっと好きになる。」" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="新井智己 / あらいともき / あらとも | Tomoki Arai Portfolio" />
+    <meta name="twitter:title" content="新井智己（あらいともき・あらとも）| Tomoki Arai Portfolio" />
     <meta
       name="twitter:description"
-      content="新井智己（あらいともき / あらとも / アライトモキ / Tomoki Arai）の公式ポートフォリオサイト。Web、アプリ、3D制作、制作実績、MVV、公開データを紹介しています。"
+      content="「身の回りを、ちょっと好きになる。」をテーマに、Web・アプリ・3Dの作品を作っています。新井智己（Tomoki Arai）のポートフォリオです。"
     />
     <meta name="twitter:image" content="https://tomoki-arai.vercel.app/og-image.png" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23eff6ff'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial,sans-serif' font-size='24' font-weight='700' fill='%232563eb'%3ETA%3C/text%3E%3C/svg%3E"
-    />
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -82,11 +80,8 @@
               "あらとも",
               "アライトモキ",
               "アラトモ",
-              "新井 ともき",
-              "新井智己 あらとも",
               "Tomoki Arai",
-              "Arai Tomoki",
-              "arai tomoki"
+              "Arai Tomoki"
             ],
             "url": "https://tomoki-arai.vercel.app/",
             "image": "https://tomoki-arai.vercel.app/og-image.png",
@@ -95,54 +90,29 @@
               "https://x.com/zeno_arai"
             ],
             "jobTitle": "Web / App / 3D Creator",
-            "knowsAbout": [
-              "Web制作",
-              "アプリ開発",
-              "3D制作",
-              "UIデザイン",
-              "React",
-              "Three.js"
-            ],
-            "description": "新井智己（あらいともき / あらとも / アライトモキ / Tomoki Arai）は、Web、アプリ、3Dを活用して使いやすく楽しいデジタル体験を制作しています。"
+            "knowsAbout": ["Web制作", "アプリ開発", "3D制作", "React", "Three.js", "Flutter", "Firebase", "Blender"],
+            "description": "新井智己（あらいともき・あらとも）は、「身の回りを、ちょっと好きになる。」をテーマに、Web・アプリ・3Dの作品を作っている高専生です。"
           },
           {
             "@type": "WebSite",
             "@id": "https://tomoki-arai.vercel.app/#website",
             "name": "新井智己 | Tomoki Arai Portfolio",
-            "alternateName": [
-              "新井智己 ポートフォリオ",
-              "あらいともき ポートフォリオ",
-              "あらとも ポートフォリオ",
-              "アライトモキ ポートフォリオ",
-              "Tomoki Arai Portfolio"
-            ],
+            "alternateName": ["新井智己 ポートフォリオ", "あらいともき ポートフォリオ", "あらとも ポートフォリオ", "Tomoki Arai Portfolio"],
             "url": "https://tomoki-arai.vercel.app/",
             "inLanguage": "ja",
-            "author": {
-              "@id": "https://tomoki-arai.vercel.app/#person"
-            }
+            "author": { "@id": "https://tomoki-arai.vercel.app/#person" }
           },
           {
             "@type": "ProfilePage",
             "@id": "https://tomoki-arai.vercel.app/#profile",
             "url": "https://tomoki-arai.vercel.app/",
-            "name": "新井智己（あらいともき / あらとも）のポートフォリオ",
-            "headline": "新井智己 / あらいともき / あらとも / アライトモキ",
-            "description": "新井智己の制作実績、スキル、MVV、公開データをまとめた本人公式ポートフォリオです。",
+            "name": "新井智己（あらいともき・あらとも）のポートフォリオ",
+            "description": "新井智己の作品、スキル、考え方、公開データをまとめたポートフォリオです。",
             "inLanguage": "ja",
-            "isPartOf": {
-              "@id": "https://tomoki-arai.vercel.app/#website"
-            },
-            "mainEntity": {
-              "@id": "https://tomoki-arai.vercel.app/#person"
-            },
-            "about": {
-              "@id": "https://tomoki-arai.vercel.app/#person"
-            },
-            "primaryImageOfPage": {
-              "@type": "ImageObject",
-              "url": "https://tomoki-arai.vercel.app/og-image.png"
-            }
+            "isPartOf": { "@id": "https://tomoki-arai.vercel.app/#website" },
+            "mainEntity": { "@id": "https://tomoki-arai.vercel.app/#person" },
+            "about": { "@id": "https://tomoki-arai.vercel.app/#person" },
+            "primaryImageOfPage": { "@type": "ImageObject", "url": "https://tomoki-arai.vercel.app/og-image.png" }
           }
         ]
       }
@@ -150,19 +120,20 @@
   </head>
   <body>
     <noscript>
-      <main>
-        <h1>新井智己（あらいともき / あらとも）のポートフォリオ</h1>
+      <main style="max-width: 40em; margin: 0 auto; padding: 48px 20px; font-family: sans-serif; line-height: 1.9">
+        <h1>新井智己（あらいともき・あらとも）のポートフォリオ</h1>
+        <p>身の回りを、ちょっと好きになる。</p>
         <p>
-          新井智己（読み: あらいともき、通称: あらとも、英語表記: Tomoki Arai / Arai Tomoki）の公式ポートフォリオサイトです。
-          Web制作、アプリ開発、3D制作を中心に、制作実績、MVV、公開データを紹介しています。
+          新井智己（読み：あらいともき、通称：あらとも、英語表記：Tomoki Arai）のポートフォリオです。Web・アプリ・3Dの作品と公開データを紹介しています。
         </p>
         <p>
-          主な作品: ポートフォリオサイト(React / Three.js)、便利な家計簿!(Flutter / Firebase)、じぎょメモ(Flutter)、今日の名言.web(JavaScript / API)、3Dデスク周りモデル(Blender)
+          主な作品：ポートフォリオサイト（React・Three.js）、便利な家計簿！（Flutter・Firebase）、じぎょメモ（Flutter・Firebase）、今日の名言.web（JavaScript）、3Dデスク周りモデル（Blender）
         </p>
         <p>
           <a href="https://github.com/toki-0508">GitHub</a> /
-          <a href="https://x.com/zeno_arai">X (Twitter)</a>
+          <a href="https://x.com/zeno_arai">X</a>
         </p>
+        <p>このサイトの表示には JavaScript が必要です。</p>
       </main>
     </noscript>
     <div id="root"></div>

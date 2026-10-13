@@ -2,9 +2,10 @@
 name: NightBell
 category: sounds
 date: 2025-09
-size: 908.08 KB
+size: 908 KB
+length: 0:58
+tags: [GarageBand]
 file: /downloads/NightBell.mp3
-image: /images/projects/chilltime.png
 ---
 
-GarageBandを使って初めて作ったジングル?BGM?みたいなものです。
+GarageBandで初めて作った、ジングル風の短い曲です。

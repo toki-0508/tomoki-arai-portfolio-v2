@@ -1,116 +1,109 @@
+import { Fragment } from 'react';
 import { Icon } from '../components/Icon.jsx';
 import { Hero3D } from '../components/Hero3D.jsx';
 import { WorkCard } from '../components/WorkCard.jsx';
 import { DownloadRow } from '../components/DownloadRow.jsx';
-import { Link, Reveal, SectionLabel } from '../components/ui.jsx';
-import { DOWNLOADS, WORKS, featuredWorks } from '../content/loader.js';
-import { PROFILE } from '../content/site.js';
+import { Link, SectionHead } from '../components/ui.jsx';
+import { DOWNLOADS, featuredWorks } from '../content/loader.js';
+import { PRINCIPLES, PROFILE } from '../content/site.js';
 
-const CATEGORY_LINKS = [
-  { title: 'Web', desc: 'Web制作を見る', icon: Icon.Monitor, to: '/works?cat=web' },
-  { title: 'App', desc: 'アプリ開発を見る', icon: Icon.Smartphone, to: '/works?cat=app' },
-  { title: '3D', desc: '3D制作を見る', icon: Icon.Box, to: '/works?cat=3d' },
-];
+// キャッチコピーは PROFILE.tagline から組み立てる(フッターや OG 画像と必ず一致させるため)。
+// 「、」の後ろで改行し、「好き」に手書きの下線を引く。
+function Tagline({ text }) {
+  // 正規表現の後読みは古い Safari で構文エラーになるため使わない
+  const parts = text.split('、');
+  const phrases = parts.map((part, i) => (i < parts.length - 1 ? `${part}、` : part)).filter(Boolean);
+  return phrases.map((phrase, i) => {
+    const at = phrase.indexOf('好き');
+    if (at < 0) return <span key={i} className="phrase">{phrase}</span>;
+    return (
+      <span key={i} className="phrase">
+        {phrase.slice(0, at)}
+        <span className="ink-mark">
+          好き
+          <svg viewBox="0 0 120 16" aria-hidden="true" focusable="false">
+            <path pathLength="1" d="M3 10.5C26 6 52 12.5 78 8.5S108 6 117 7" />
+          </svg>
+        </span>
+        {phrase.slice(at + 2)}
+      </span>
+    );
+  });
+}
 
 export function HomePage() {
   const featured = featuredWorks(3);
-  const latestUpdate = WORKS[0]?.dateLabel ?? '-';
 
   return (
-    <div className="page-enter">
-      <section className="hero">
+    <Fragment>
+      <section className="hero" aria-labelledby="hero-title">
         <div className="wrap hero-grid">
           <div className="hero-copy">
-            <SectionLabel>Hello! I'm {PROFILE.nameEn}</SectionLabel>
-            {/* フレーズ単位の span で「活用し」などの語中改行を防ぐ */}
-            <h1 className="h-display">
-              <span className="phrase">Web、アプリ、</span>
-              <span className="phrase">3Dを活用し</span>
-              <span className="line"><em>面白い</em>を形にする</span>
+            <p className="eyebrow">{PROFILE.nameEn} · Web / App / 3D</p>
+            <h1 className="hero-title" id="hero-title">
+              <Tagline text={PROFILE.tagline} />
             </h1>
-            <p className="h-body">
-              使って便利で楽しいと感じられるようなサービスやコンテンツを作ることを掲げ、学習しながら制作活動を行っています。
-              このポートフォリオでは、制作物や公開データを通じて、私の考え方とスキルを紹介します。
+            <p className="hero-lead">
+              日常の小さな不便や退屈を、Web・アプリ・3Dで「使って便利、触って楽しい」ものに変えています。高専で学びながら、制作を続けています。
             </p>
-            <div className="hero-ctas">
-              <Link to="/works" className="btn btn-primary">作品を見る <Icon.Arrow className="arrow" /></Link>
-              <Link to="/downloads" className="btn btn-ghost">ダウンロード <Icon.Arrow /></Link>
-            </div>
-            <dl className="hero-stats" aria-label="サイトの概況">
-              <div><dt>Works</dt><dd>{WORKS.length}</dd></div>
-              <div><dt>Downloads</dt><dd>{DOWNLOADS.length}</dd></div>
-              <div><dt>Last update</dt><dd>{latestUpdate}</dd></div>
-            </dl>
-          </div>
-          <div className="hero-visual">
-            <Hero3D />
-          </div>
-        </div>
-      </section>
-
-      <section className="block">
-        <div className="wrap">
-          <Reveal className="section-head">
-            <div>
-              <SectionLabel>Featured Works</SectionLabel>
-              <h2 className="h-section">注目の作品</h2>
-            </div>
-            <Link to="/works" className="section-link">すべての作品を見る <Icon.Arrow /></Link>
-          </Reveal>
-          <div className="grid-3">
-            {featured.map((work, i) => (
-              <Reveal key={work.id} delay={i * 80}>
-                <WorkCard work={work} index={i + 1} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="block category-band">
-        <div className="wrap category-grid">
-          {CATEGORY_LINKS.map(({ title, desc, icon: Ico, to }, i) => (
-            <Reveal key={title} delay={i * 60}>
-              <Link to={to} className="category-link">
-                <span className="category-icon"><Ico /></span>
-                <span className="category-text"><strong>{title}</strong><small>{desc}</small></span>
-                <Icon.Arrow />
+            <div className="hero-actions">
+              <Link to="/works" className="btn btn-primary">
+                作品を見る
+                <Icon.Arrow width={16} height={16} />
               </Link>
-            </Reveal>
-          ))}
+              <Link to="/about" className="btn btn-secondary">プロフィール</Link>
+            </div>
+          </div>
+          <Hero3D />
         </div>
       </section>
 
-      <section className="block">
+      <section className="section">
         <div className="wrap">
-          <Reveal className="section-head">
-            <div>
-              <SectionLabel>Downloads</SectionLabel>
-              <h2 className="h-section">公開データ</h2>
-            </div>
-            <Link to="/downloads" className="section-link">公開データを見る <Icon.Arrow /></Link>
-          </Reveal>
-          <div className="dl-list">
-            {DOWNLOADS.slice(0, 3).map((file, i) => (
-              <Reveal key={file.id} delay={i * 60}>
-                <DownloadRow file={file} />
-              </Reveal>
-            ))}
+          <SectionHead title="注目の作品" link={{ to: '/works', label: 'すべての作品を見る' }} />
+          <div className="card-grid">
+            {featured.map((work) => <WorkCard key={work.id} work={work} />)}
           </div>
         </div>
       </section>
 
-      <section className="block">
+      <section className="section section-band">
         <div className="wrap">
-          <Reveal className="cta-panel">
-            <div>
-              <h2 className="h-section">一緒に何か作りませんか?</h2>
-              <p>制作のご相談・ご依頼など、お気軽にご連絡ください。</p>
-            </div>
-            <Link to="/contact" className="btn btn-primary">お問い合わせ <Icon.Arrow className="arrow" /></Link>
-          </Reveal>
+          <SectionHead title="大切にしていること" link={{ to: '/about', label: 'プロフィールを見る' }} />
+          <ul className="principles">
+            {PRINCIPLES.map((item) => (
+              <li key={item.title}>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
-    </div>
+
+      <section className="section">
+        <div className="wrap">
+          <SectionHead title="ダウンロード" link={{ to: '/downloads', label: 'すべて見る' }} />
+          <div className="dl-list">
+            {DOWNLOADS.slice(0, 3).map((file) => <DownloadRow key={file.id} file={file} />)}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap">
+          <div className="cta">
+            <div>
+              <h2 className="section-title">一緒に何か作りませんか？</h2>
+              <p>インターンや制作のご相談など、お気軽にご連絡ください。</p>
+            </div>
+            <Link to="/contact" className="btn btn-primary">
+              お問い合わせ
+              <Icon.Arrow width={16} height={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+    </Fragment>
   );
 }

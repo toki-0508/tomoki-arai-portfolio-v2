@@ -1,9 +1,17 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Icon } from '../components/Icon.jsx';
 import { WorkCard } from '../components/WorkCard.jsx';
-import { CategoryChip, Lightbox, Link, Reveal, SectionLabel, Thumb } from '../components/ui.jsx';
+import { CategoryLabel, Lightbox, Link, PageHead, SectionHead, TechList, Thumb } from '../components/ui.jsx';
 import { BlockList } from '../lib/markdown.jsx';
 import { WORKS, workById } from '../content/loader.js';
+
+const hostOf = (url) => {
+  try {
+    return new URL(url).host;
+  } catch {
+    return url;
+  }
+};
 
 export function WorkDetailPage({ id }) {
   const work = workById(id);
@@ -11,132 +19,136 @@ export function WorkDetailPage({ id }) {
 
   if (!work) {
     return (
-      <div className="page-enter">
-        <section className="page-head">
-          <div className="wrap">
-            <h1 className="h-display">作品が見つかりません</h1>
-            <p className="h-body">URLが変更されたか、削除された可能性があります。</p>
-            <Link to="/works" className="btn btn-primary">作品一覧へ戻る</Link>
-          </div>
-        </section>
-      </div>
+      <PageHead eyebrow="Works" title="作品が見つかりません" lead="URLが変わったか、作品が削除された可能性があります。">
+        <Link to="/works" className="btn btn-primary page-head-action">作品一覧を見る</Link>
+      </PageHead>
     );
   }
 
+  // 一覧は新しい順。「前の作品」は時系列で1つ前(=古い方)
   const index = WORKS.indexOf(work);
-  const prev = WORKS[index + 1] ?? null; // 日付降順なので次=古い方
-  const next = WORKS[index - 1] ?? null;
+  const older = WORKS[index + 1] ?? null;
+  const newer = WORKS[index - 1] ?? null;
   const related = WORKS.filter((w) => w.category === work.category && w.id !== work.id).slice(0, 3);
 
   return (
-    <div className="page-enter">
-      <article>
-        <section className="page-head detail-head">
-          <div className="wrap">
-            <Link to="/works" className="back-link"><Icon.Back width={16} height={16} /> 作品一覧へ戻る</Link>
-            <div className="detail-meta">
-              <CategoryChip category={work.category} label={work.categoryLabel} />
-              <span className="detail-date">{work.dateLabel}</span>
-            </div>
-            <h1 className="h-display">{work.name}</h1>
-            {work.summary && <p className="h-body detail-summary">{work.summary}</p>}
-            <div className="detail-toolbar">
-              <div className="tags">
-                {work.tags.map((tag) => <span key={tag} className="tag">{tag}</span>)}
-              </div>
-              <div className="detail-links">
-                {work.url && (
-                  <a href={work.url} target="_blank" rel="noreferrer" className="btn btn-primary">
-                    サイトを見る <Icon.External width={15} height={15} />
-                  </a>
-                )}
-                {work.github && (
-                  <a href={work.github} target="_blank" rel="noreferrer" className="btn btn-ghost">
-                    <Icon.GitHub width={15} height={15} /> GitHub
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
+    <Fragment>
+      <header className="page-head detail-head">
+        <div className="wrap">
+          <Link to="/works" className="back-link">
+            <Icon.Back width={16} height={16} />
+            作品一覧へ
+          </Link>
+          <p className="meta">
+            <CategoryLabel category={work.category} label={work.categoryLabel} />
+            <time dateTime={work.date}>{work.dateLabel}</time>
+          </p>
+          <h1 className="page-title">{work.name}</h1>
+          {work.summary && <p className="lead">{work.summary}</p>}
+          {work.url && (
+            <a href={work.url} target="_blank" rel="noreferrer" className="btn btn-primary page-head-action">
+              サイトを開く
+              <Icon.External width={15} height={15} />
+            </a>
+          )}
+        </div>
+      </header>
 
-        {work.image && (
-          <section className="block block-tight">
-            <div className="wrap">
-              <Reveal>
-                <button
-                  type="button"
-                  className="detail-visual"
-                  onClick={() => setZoomed(true)}
-                  aria-label={`${work.name} のスクリーンショットを拡大表示`}
-                >
-                  <Thumb src={work.image} alt={`${work.name} のスクリーンショット`} />
-                  <span className="zoom-hint"><Icon.Zoom width={14} height={14} /> クリックで拡大</span>
-                </button>
-              </Reveal>
-            </div>
-          </section>
-        )}
-        {zoomed && work.image && (
-          <Lightbox src={work.image} alt={`${work.name} のスクリーンショット`} onClose={() => setZoomed(false)} />
-        )}
+      {work.image && (
+        <div className="wrap detail-visual-wrap">
+          <button type="button" className="detail-visual" onClick={() => setZoomed(true)} aria-label={`${work.name}の画像を拡大する`}>
+            <Thumb src={work.image} alt={`${work.name}の画面`} />
+            <span className="zoom-hint" aria-hidden="true">
+              <Icon.Zoom width={14} height={14} />
+              クリックで拡大
+            </span>
+          </button>
+        </div>
+      )}
+      {zoomed && <Lightbox src={work.image} alt={`${work.name}の画面`} onClose={() => setZoomed(false)} />}
 
-        <section className="block block-tight">
-          <div className="wrap detail-body">
-            {work.lead.length > 0 && (
-              <Reveal className="detail-section">
-                <BlockList blocks={work.lead} />
-              </Reveal>
-            )}
-            {work.sections.map((section, i) => (
-              <Reveal key={section.title + i} className="detail-section">
-                <h2><span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>{section.title}</h2>
+      <section className="section section-tight">
+        <div className="wrap detail-layout">
+          <article className="prose">
+            {work.lead.length > 0 && <BlockList blocks={work.lead} />}
+            {work.sections.map((section) => (
+              <section key={section.title} className="prose-section">
+                <h2>{section.title}</h2>
                 <BlockList blocks={section.blocks} />
-              </Reveal>
+              </section>
             ))}
-          </div>
-        </section>
+          </article>
 
-        <section className="block block-tight">
-          <div className="wrap detail-nav">
-            {prev ? (
-              <Link to={`/works/${prev.id}`} className="detail-nav-link prev">
-                <small><Icon.Back width={14} height={14} /> 前の作品</small>
-                <span>{prev.name}</span>
-              </Link>
-            ) : <span />}
-            {next ? (
-              <Link to={`/works/${next.id}`} className="detail-nav-link next">
-                <small>次の作品 <Icon.Arrow width={14} height={14} /></small>
-                <span>{next.name}</span>
-              </Link>
-            ) : <span />}
-          </div>
-        </section>
-
-        {related.length > 0 && (
-          <section className="block block-tight">
-            <div className="wrap">
-              <Reveal className="section-head">
-                <div>
-                  <SectionLabel>Related</SectionLabel>
-                  <h2 className="h-section">同じカテゴリの作品</h2>
-                </div>
-                <Link to={`/works?cat=${work.category}`} className="section-link">
-                  {work.categoryLabel} の作品一覧 <Icon.Arrow />
-                </Link>
-              </Reveal>
-              <div className="grid-3">
-                {related.map((w, i) => (
-                  <Reveal key={w.id} delay={i * 60}>
-                    <WorkCard work={w} />
-                  </Reveal>
-                ))}
+          <aside className="spec" aria-label="作品の情報">
+            <dl>
+              <div>
+                <dt>カテゴリ</dt>
+                <dd><CategoryLabel category={work.category} label={work.categoryLabel} /></dd>
               </div>
+              <div>
+                <dt>制作時期</dt>
+                <dd><time dateTime={work.date}>{work.dateLabel}</time></dd>
+              </div>
+              {work.tags.length > 0 && (
+                <div>
+                  <dt>使用技術</dt>
+                  <dd><TechList items={work.tags} className="spec-tech" /></dd>
+                </div>
+              )}
+              {work.url && (
+                <div>
+                  <dt>公開先</dt>
+                  <dd>
+                    <a href={work.url} target="_blank" rel="noreferrer">
+                      {hostOf(work.url)}
+                      <Icon.External width={13} height={13} />
+                    </a>
+                  </dd>
+                </div>
+              )}
+              {work.github && (
+                <div>
+                  <dt>ソースコード</dt>
+                  <dd>
+                    <a href={work.github} target="_blank" rel="noreferrer">
+                      GitHub
+                      <Icon.External width={13} height={13} />
+                    </a>
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      {(older || newer) && (
+        <nav className="wrap pager" aria-label="ほかの作品">
+          {older ? (
+            <Link to={`/works/${older.id}`} className="pager-link">
+              <small><Icon.Back width={14} height={14} />前の作品</small>
+              <span>{older.name}</span>
+            </Link>
+          ) : <span />}
+          {newer ? (
+            <Link to={`/works/${newer.id}`} className="pager-link is-next">
+              <small>次の作品<Icon.Arrow width={14} height={14} /></small>
+              <span>{newer.name}</span>
+            </Link>
+          ) : <span />}
+        </nav>
+      )}
+
+      {related.length > 0 && (
+        <section className="section">
+          <div className="wrap">
+            <SectionHead title="同じカテゴリの作品" link={{ to: `/works?cat=${work.category}`, label: `${work.categoryLabel}の作品をすべて見る` }} />
+            <div className="card-grid">
+              {related.map((w) => <WorkCard key={w.id} work={w} />)}
             </div>
-          </section>
-        )}
-      </article>
-    </div>
+          </div>
+        </section>
+      )}
+    </Fragment>
   );
 }

@@ -35,6 +35,29 @@ const WORK_CATEGORIES = ['web', 'app', '3d', 'other'];
 const DOWNLOAD_CATEGORIES = ['app', '3d', 'sounds', 'other'];
 const IMAGE_EXTS = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg'];
 
+// 作品詳細の見出しは全作品で「概要 / 特徴 / 対象 / 作った理由 / 成果と学び」にそろえる。
+// 古いテンプレートや言い回しの違う見出しで書かれたレポートも、ここで統一後の名前に置き換える。
+const HEADING_ALIASES = {
+  主な機能: '特徴',
+  機能: '特徴',
+  ポイント: '特徴',
+  対象ユーザー: '対象',
+  想定ユーザー: '対象',
+  目的: '作った理由',
+  制作の目的: '作った理由',
+  作ったきっかけ: '作った理由',
+  成果: '成果と学び',
+  学んだこと: '成果と学び',
+  学び: '成果と学び',
+};
+
+function normalizeHeadings(body) {
+  return body.replace(/^##\s+(.+?)\s*$/gm, (line, title) => {
+    const unified = HEADING_ALIASES[title];
+    return unified ? `## ${unified}` : line;
+  });
+}
+
 // ---------- 小さな frontmatter パーサ(src/lib/markdown.jsx と同じ文法) ----------
 function parseScalar(value) {
   let v = String(value).trim();
@@ -218,12 +241,16 @@ function ingest(report, manifest) {
 
   // ---- 出力 md を組み立てる ----
   const fm = [`name: ${data.name}`, `category: ${category}`, `date: ${date}`];
+  const tags = Array.isArray(data.tags) ? data.tags : data.tags ? [data.tags] : [];
   if (isDownload) {
     if (size) fm.push(`size: ${size}`);
+    if (data.length) fm.push(`length: ${data.length}`);
+    if (data.platform) fm.push(`platform: ${data.platform}`);
+    if (tags.length) fm.push(`tags: [${tags.join(', ')}]`);
     if (fileField) fm.push(`file: ${fileField}`);
     if (image) fm.push(`image: ${image}`);
+    if (data.note) fm.push(`note: ${data.note}`);
   } else {
-    const tags = Array.isArray(data.tags) ? data.tags : data.tags ? [data.tags] : [];
     if (tags.length) fm.push(`tags: [${tags.join(', ')}]`);
     if (image) fm.push(`image: ${image}`);
     if (data.url) fm.push(`url: ${data.url}`);
@@ -232,7 +259,7 @@ function ingest(report, manifest) {
     if (data.summary) fm.push(`summary: ${data.summary}`);
   }
 
-  let outBody = body.trim();
+  let outBody = normalizeHeadings(body.trim());
   if (!isDownload && !outBody) {
     outBody = `## 概要\n\n${data.summary || data.name}`;
   }

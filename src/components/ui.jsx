@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Icon } from './Icon.jsx';
 
 // ---------- ルーティング ----------
 export function navigate(path) {
@@ -6,9 +7,10 @@ export function navigate(path) {
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
-// サイト内リンク。href は '/works' のようなルートパスで渡す。
+// サイト内リンク。to は '/works' のようなルートパスで渡す。
 export function Link({ to, className, children, onNavigate, ...rest }) {
   const handleClick = (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return; // 新しいタブで開く操作は邪魔しない
     e.preventDefault();
     navigate(to);
     onNavigate?.();
@@ -20,86 +22,90 @@ export function Link({ to, className, children, onNavigate, ...rest }) {
   );
 }
 
-// ---------- セクションラベル ----------
-export function SectionLabel({ children }) {
+// ---------- 見出し ----------
+// ページ見出し: 英語の小見出し(=ナビの表記)+ 日本語の h1 + リード文。全ページこの形にそろえる。
+export function PageHead({ eyebrow, title, lead, children }) {
   return (
-    <div className="section-label">
-      <span className="section-label-dot" aria-hidden="true" />
-      {children}
+    <header className="page-head">
+      <div className="wrap">
+        {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+        <h1 className="page-title">{title}</h1>
+        {lead && <p className="lead">{lead}</p>}
+        {children}
+      </div>
+    </header>
+  );
+}
+
+// セクション見出し: h2 + 任意の補足 + 任意の「すべて見る」リンク。
+export function SectionHead({ title, note, link }) {
+  return (
+    <div className="section-head">
+      <div>
+        <h2 className="section-title">{title}</h2>
+        {note && <p className="section-note">{note}</p>}
+      </div>
+      {link && (
+        <Link to={link.to} className="text-link">
+          {link.label}
+          <Icon.Arrow width={16} height={16} />
+        </Link>
+      )}
     </div>
   );
 }
 
-// ---------- スクロール連動の出現アニメーション ----------
-// 子要素はそのまま描画し、見えたら .in を付ける。
-// prefers-reduced-motion 時は CSS 側でアニメーションを無効化する。
-export function Reveal({ as: Tag = 'div', className = '', delay = 0, children, ...rest }) {
-  const ref = useRef(null);
-  const [seen, setSeen] = useState(false);
+// ---------- カテゴリ ----------
+const CATEGORY_ICONS = {
+  web: Icon.Monitor,
+  app: Icon.Smartphone,
+  '3d': Icon.Box,
+  sounds: Icon.Note,
+  other: Icon.Spark,
+};
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (!('IntersectionObserver' in window)) {
-      setSeen(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setSeen(true);
-            io.disconnect();
-          }
-        }
-      },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
+export function CategoryLabel({ category, label }) {
+  const Ico = CATEGORY_ICONS[category] ?? Icon.Spark;
   return (
-    <Tag
-      ref={ref}
-      className={`reveal ${seen ? 'in' : ''} ${className}`}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
-      {...rest}
-    >
-      {children}
-    </Tag>
+    <span className="cat-label">
+      <Ico width={14} height={14} />
+      {label}
+    </span>
+  );
+}
+
+// 使用技術を「React · Three.js · Vite」の形で並べる
+export function TechList({ items, className = '' }) {
+  if (!items?.length) return null;
+  return (
+    <ul className={`tech-list ${className}`} aria-label="使用技術">
+      {items.map((item) => <li key={item}>{item}</li>)}
+    </ul>
   );
 }
 
 // ---------- サムネイル ----------
-// 読み込み完了までは薄いプレースホルダー、完了後にふわっと表示する。
-// スクリーンショットの縦横比はバラバラなので、フレームは常に同じ比率のまま
-// 横長 → cover / 縦長・正方形に近い → contain + ぼかし背景 で見え方を揃える。
+// スクリーンショットの縦横比はばらばらなので、枠は常に同じ比率に固定し、
+// 横長は cover、縦長や正方形に近いものは contain にして、下地の上に影付きで置く。
 export function Thumb({ src, alt = '' }) {
   const [loaded, setLoaded] = useState(false);
   const [portrait, setPortrait] = useState(false);
   if (!src) return <div className="thumb thumb-empty" aria-hidden="true" />;
 
   const onLoad = (e) => {
-    const { naturalWidth, naturalHeight } = e.target;
+    const { naturalWidth, naturalHeight } = e.currentTarget;
     setPortrait(naturalHeight > 0 && naturalWidth / naturalHeight < 1.2);
     setLoaded(true);
   };
 
   return (
-    <div className={`thumb ${loaded ? 'loaded' : ''} ${portrait ? 'portrait' : ''}`}>
-      {portrait && <img className="thumb-backdrop" src={src} alt="" aria-hidden="true" />}
-      <img className="thumb-main" src={src} alt={alt} loading="lazy" onLoad={onLoad} />
+    <div className={`thumb ${loaded ? 'is-loaded' : ''} ${portrait ? 'is-portrait' : ''}`}>
+      <img className="thumb-main" src={src} alt={alt} loading="lazy" decoding="async" onLoad={onLoad} />
     </div>
   );
 }
 
-// ---------- カテゴリチップ ----------
-export function CategoryChip({ category, label }) {
-  return <span className={`cat-chip cat-${category}`}>{label}</span>;
-}
-
-// ---------- ライトボックス(画像の拡大表示) ----------
+// ---------- ライトボックス ----------
 // 背景クリック・Esc・閉じるボタンで閉じる。表示中は背面のスクロールを止める。
 export function Lightbox({ src, alt = '', onClose }) {
   useEffect(() => {
@@ -118,10 +124,8 @@ export function Lightbox({ src, alt = '', onClose }) {
   return (
     <div className="lightbox" role="dialog" aria-modal="true" aria-label={alt || '画像の拡大表示'} onClick={onClose}>
       <img src={src} alt={alt} onClick={(e) => e.stopPropagation()} />
-      <button type="button" className="lightbox-close" aria-label="閉じる" onClick={onClose}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-          <path d="M6 6l12 12M18 6L6 18" />
-        </svg>
+      <button type="button" className="lightbox-close" aria-label="閉じる" onClick={onClose} autoFocus>
+        <Icon.Close width={20} height={20} />
       </button>
     </div>
   );

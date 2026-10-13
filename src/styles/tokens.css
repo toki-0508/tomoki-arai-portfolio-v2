@@ -1,98 +1,82 @@
 /* ============================================================
    デザイントークン
-   ライト / ダークの色はすべてここで定義し、他のファイルは
-   var() だけを参照する。
+   色はすべてここで定義し、他のファイルは var() だけを参照する。
+
+   コンセプト: 紙とインク
+   - 背景はわずかに青みのある紙の白、文字は墨に近い紺
+   - アクセントはボールペンのインクの青。ボタンやリンクに加えて、
+     手書きの注釈(見出しの下線・3Dモデルのメモ)も同じインクで描く
    ============================================================ */
 
 :root {
   color-scheme: light;
 
-  /* 面 */
-  --bg: #f7f8fc;
-  --bg-soft: #eef1f8;
-  --surface: #ffffff;
-  --surface-2: #f3f5fa;
-  --nav-bg: rgba(255, 255, 255, 0.78);
+  /* 紙と面 */
+  --paper: #f4f5f9;
+  --card: #ffffff;
+  --well: #eaecf3;
 
   /* 文字 */
-  --ink: #101828;
-  --ink-strong: #0a0f1c;
-  --muted: #5b6577;
-  --faint: #97a0b3;
+  --ink: #161b2e;
+  --pencil: #565e73;
+  --faint: #8a92a7;
 
   /* 線 */
-  --line: #e6e9f1;
-  --line-strong: #d6dbe7;
+  --rule: #e1e4ed;
+  --rule-strong: #c8cddb;
 
-  /* ブランド */
-  --brand: #2563eb;
-  --brand-strong: #1d4fd7;
-  --brand-soft: #e9efff;
-  --brand-ink: #1e40af;
-  --ring: rgba(37, 99, 235, 0.4);
+  /* インク(アクセント) */
+  --accent: #3046d1;
+  --accent-strong: #2234ae;
+  --accent-tint: #e8ebfb;
+  --on-accent: #ffffff;
 
-  /* カテゴリ */
-  --cat-web-bg: #e9efff;
-  --cat-web-fg: #1d4fd7;
-  --cat-app-bg: #fdf0e0;
-  --cat-app-fg: #b45309;
-  --cat-3d-bg: #e2f6ee;
-  --cat-3d-fg: #047857;
-  --cat-sounds-bg: #fce8f1;
-  --cat-sounds-fg: #be185d;
-  --cat-other-bg: #f0eafd;
-  --cat-other-fg: #6d28d9;
+  /* 状態 */
+  --success: #15803d;
+  --danger: #c2410c;
 
   /* 影 */
-  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
-  --shadow-md: 0 6px 20px -6px rgba(16, 24, 40, 0.12);
-  --shadow-lg: 0 18px 46px -14px rgba(16, 24, 40, 0.2);
+  --shadow-1: 0 1px 2px rgb(22 27 46 / 0.05);
+  --shadow-2: 0 18px 40px -22px rgb(22 27 46 / 0.35), 0 2px 6px -2px rgb(22 27 46 / 0.06);
 
   /* 形 */
-  --radius-s: 10px;
-  --radius-m: 16px;
-  --radius-l: 24px;
+  --r-s: 8px;
+  --r-m: 14px;
+  --r-l: 22px;
   --wrap: 1120px;
+  --header-h: 64px;
 
-  /* 書体 */
-  --font-body: 'Inter', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, system-ui, sans-serif;
+  /* 書体
+     sans: 見出しと本文 / mono: 日付・技術名・ラベルなどのデータ / hand: 手書きの注釈のみ */
+  --font-sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', Meiryo, system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-hand: 'Klee One', 'Klee', 'YuKyokasho', serif;
+
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --bg: #0b1020;
-  --bg-soft: #0e1428;
-  --surface: #121a33;
-  --surface-2: #182140;
-  --nav-bg: rgba(11, 16, 32, 0.72);
+  --paper: #0e1222;
+  --card: #151b30;
+  --well: #1a2138;
 
-  --ink: #e7ecf8;
-  --ink-strong: #ffffff;
-  --muted: #9aa6c2;
-  --faint: #6a7694;
+  --ink: #e7eaf4;
+  --pencil: #a1a9c0;
+  --faint: #6b7490;
 
-  --line: #222c4e;
-  --line-strong: #2e3a63;
+  --rule: #252d49;
+  --rule-strong: #364066;
 
-  --brand: #5c8bff;
-  --brand-strong: #7da3ff;
-  --brand-soft: #1b2a55;
-  --brand-ink: #aac3ff;
-  --ring: rgba(122, 158, 255, 0.5);
+  --accent: #8a9dff;
+  --accent-strong: #aab8ff;
+  --accent-tint: #1e2752;
+  --on-accent: #0e1222;
 
-  --cat-web-bg: #1b2a55;
-  --cat-web-fg: #a9c2ff;
-  --cat-app-bg: #3a2a12;
-  --cat-app-fg: #f4bd76;
-  --cat-3d-bg: #0f3327;
-  --cat-3d-fg: #6ee7b7;
-  --cat-sounds-bg: #3d1830;
-  --cat-sounds-fg: #f9a8d4;
-  --cat-other-bg: #291c4d;
-  --cat-other-fg: #c4b5fd;
+  --success: #4ade80;
+  --danger: #fb923c;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 6px 20px -6px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 18px 46px -14px rgba(0, 0, 0, 0.6);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-2: 0 18px 40px -22px rgb(0 0 0 / 0.8), 0 2px 6px -2px rgb(0 0 0 / 0.4);
 }

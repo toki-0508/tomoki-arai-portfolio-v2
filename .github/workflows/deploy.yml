@@ -1,72 +1,46 @@
-name: Deploy to GitHub Pages
+name: Deploy redirect to GitHub Pages
 
-# GitHub Pages へのデプロイ(このリポジトリの公開先)。
-# ベースパスも公開URLもリポジトリ名から自動で決まるので、
-# リポジトリをリネーム・フォークしてもこのファイルはそのまま使える。
+# 本番は Vercel(https://tomoki-arai.vercel.app/)。main への push で Vercel が自動デプロイする。
 #
-# このサイトは検索エンジンに登録する正式な公開先。
-# canonical / OG / sitemap は SITE_URL から生成される。
+# このワークフローは、以前このリポジトリの GitHub Pages で公開していた URL
+# (https://toki-0508.github.io/tomoki-arai-portfolio-v2/)を本番 URL へ転送するページだけを配信する。
+# 古いリンクや検索結果から来た人を本番へ案内するためのもので、サイト本体はここでは公開しない。
 
 on:
   push:
     branches: [main]
+    paths:
+      - 'pages-redirect/**'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
-# Pages へのデプロイに必要な権限
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# 同時実行を1本に制限(進行中のデプロイはキャンセルしない)
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build for GitHub Pages
-        env:
-          # base を '/<リポジトリ名>/' に切り替える
-          GITHUB_PAGES: 'true'
-          GITHUB_PAGES_BASE: /${{ github.event.repository.name }}/
-          # canonical / OG / sitemap をこの公開先のURLに揃える
-          SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
-          # Pages は静的配信のため、問い合わせは既存 Vercel の API へ転送する
-          VITE_CONTACT_API_BASE: https://tomoki-arai.vercel.app
-          # 検索エンジンに登録する(プレビュー用途で外したいときだけ 'true')
-          NOINDEX: 'false'
-        run: npm run build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload redirect pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: pages-redirect
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

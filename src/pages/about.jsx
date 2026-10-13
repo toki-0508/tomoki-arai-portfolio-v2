@@ -1,133 +1,152 @@
+import { Fragment } from 'react';
 import { Icon } from '../components/Icon.jsx';
-import { Reveal, SectionLabel } from '../components/ui.jsx';
-import { HISTORY, INTERESTS, MVV, NOW, PROFILE, SKILL_GROUPS } from '../content/site.js';
+import { Link, PageHead, SectionHead } from '../components/ui.jsx';
+import { usageOf } from '../content/loader.js';
+import { HISTORY, INTERESTS, MVV, NOW, NOW_UPDATED, PROFILE, SKILL_GROUPS } from '../content/site.js';
 
 const INTEREST_ICONS = { pen: Icon.Pen, play: Icon.Play, box: Icon.Box, chart: Icon.Chart };
-
-// 名前の表記ゆれ(よみ・通称・ローマ字)を明示するプロフィール。
-// 検索からたどり着いた人が本人確認しやすくする目的も兼ねる。
-const PROFILE_ROWS = [
-  ['名前', `${PROFILE.nameJa}(${PROFILE.reading})`],
-  ['通称', `${PROFILE.nickname}`],
-  ['英語表記', PROFILE.romaji],
-  ['領域', 'Web制作 / アプリ開発 / 3D制作'],
-];
+const monthLabel = (ym) => ym.replace('-', '.');
 
 export function AboutPage() {
   return (
-    <div className="page-enter">
-      <section className="page-head">
+    <Fragment>
+      <PageHead
+        eyebrow="About"
+        title="プロフィール"
+        lead="ただ動くものを作るだけでなく、使った人が「使ってよかった」と感じられる体験を目指しています。いまは実装力を高めるために、作りたい・面白そうと思ったWeb・アプリ・3Dの制作に取り組んでいます。"
+      />
+
+      <section className="section section-tight">
         <div className="wrap">
-          <SectionLabel>About</SectionLabel>
-          <h1 className="h-display">つくる理由を、いつも近くに置く。</h1>
-          <p className="h-body">
-            ただ動くものを作るだけではなく、誰かが「使ってよかった」と感じられる体験に近づけたい。
-            そのために、Mission / Vision / Values を判断軸として持ちながら、今は将来に向け実装力を高めるために、作りたい・面白そうと思ったWeb・アプリ・3Dを制作しています。
-          </p>
-          <div className="mvv-points" aria-label="制作で大切にしている軸">
-            <span>Touch</span>
-            <span>Useful</span>
-            <span>Playful</span>
+          <div className="profile">
+            <div className="profile-name">
+              <p className="profile-ja">{PROFILE.nameJa}</p>
+              <p className="profile-reading">{PROFILE.reading}</p>
+              <p className="profile-nick">
+                「<span className="hand">{PROFILE.nickname}</span>」と呼ばれることが多いです。
+              </p>
+            </div>
+            <dl className="profile-list">
+              <div>
+                <dt>英語表記</dt>
+                <dd>{PROFILE.nameEn}</dd>
+              </div>
+              <div>
+                <dt>所属</dt>
+                <dd>{PROFILE.affiliation}</dd>
+              </div>
+              <div>
+                <dt>制作領域</dt>
+                <dd>{PROFILE.fields}</dd>
+              </div>
+              <div>
+                <dt>連絡先</dt>
+                <dd className="profile-links">
+                  <Link to="/contact">お問い合わせ</Link>
+                  {PROFILE.socials.map((s) => (
+                    <a key={s.id} href={s.url} target="_blank" rel="noreferrer">{s.label}</a>
+                  ))}
+                </dd>
+              </div>
+            </dl>
           </div>
         </div>
       </section>
 
-      <section className="block block-tight">
+      <section className="section">
         <div className="wrap">
-          <div className="mvv-grid">
-            {MVV.map((item, i) => (
-              <Reveal key={item.label} delay={i * 80} className="mvv-card">
-                <span className="mvv-label">{item.label}</span>
-                <h2>{item.title}</h2>
+          <SectionHead title="大切にしていること" />
+          <div className="mvv">
+            {MVV.map((item) => (
+              <article key={item.label} className="mvv-card">
+                <p className="eyebrow">{item.label}</p>
+                <h3>{item.title}</h3>
                 <p>{item.text}</p>
-              </Reveal>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="block block-tight">
+      <section className="section section-band">
         <div className="wrap">
-          <Reveal className="profile-panel">
-            <SectionLabel>Profile</SectionLabel>
-            <div className="profile-grid">
-              <dl className="profile-list">
-                {PROFILE_ROWS.map(([term, desc]) => (
-                  <div key={term}>
-                    <dt>{term}</dt>
-                    <dd>{desc}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="profile-note">
-                「{PROFILE.nickname}」と呼ばれることが多いです。{PROFILE.nameJa}({PROFILE.reading})名義で、
-                使って便利で楽しいと感じられるWeb・アプリ・3D作品を制作・公開しています。
-              </p>
-            </div>
-          </Reveal>
+          <SectionHead
+            title="スキル"
+            note="点の付いた技術は、このサイトに載せている作品やダウンロードで実際に使っているものです。数字はその件数です。"
+          />
+          <div className="skill-groups">
+            {SKILL_GROUPS.map((group) => (
+              <div key={group.title} className="skill-group">
+                <h3>{group.title}</h3>
+                <ul className="chips">
+                  {group.skills.map((skill) => {
+                    const used = usageOf(skill);
+                    return (
+                      <li key={skill} className={`chip ${used ? 'is-used' : ''}`}>
+                        {skill}
+                        {used > 0 && (
+                          <span className="chip-count">
+                            <span className="visually-hidden">（使用実績</span>
+                            {used}
+                            <span className="visually-hidden">件）</span>
+                          </span>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="block">
-        <div className="wrap about-grid">
-          <Reveal className="about-panel">
-            <SectionLabel>好きなこと</SectionLabel>
-            <div className="interest-grid">
+      <section className="section">
+        <div className="wrap about-columns">
+          <div>
+            <SectionHead title="好きなこと" />
+            <ul className="interests">
               {INTERESTS.map(({ icon, title, text }) => {
                 const Ico = INTEREST_ICONS[icon] ?? Icon.Spark;
                 return (
-                  <div key={title} className="interest-item">
-                    <div className="interest-icon"><Ico /></div>
-                    <h3>{title}</h3>
-                    <p>{text}</p>
-                  </div>
+                  <li key={title}>
+                    <span className="interest-icon"><Ico /></span>
+                    <div>
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                  </li>
                 );
               })}
-            </div>
-          </Reveal>
-          <Reveal className="about-panel" delay={80}>
-            <SectionLabel>Skills</SectionLabel>
-            <div className="skill-groups">
-              {SKILL_GROUPS.map(({ title, skills }) => (
-                <div key={title} className="skill-group">
-                  <h3>{title}</h3>
-                  <div className="tags">
-                    {skills.map((skill) => <span key={skill} className="tag">{skill}</span>)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-          <Reveal className="about-panel history-panel" delay={140}>
-            <SectionLabel>これまでのこと</SectionLabel>
-            <div className="timeline">
+            </ul>
+          </div>
+          <div>
+            <SectionHead title="これまで" />
+            <ol className="timeline">
               {HISTORY.map(({ time, text }) => (
-                <div key={time} className="timeline-item">
-                  <strong>{time}</strong>
+                <li key={time}>
+                  <h3>{time}</h3>
                   <p>{text}</p>
-                </div>
+                </li>
               ))}
-            </div>
-          </Reveal>
+            </ol>
+          </div>
         </div>
       </section>
 
-      <section className="block block-tight">
+      <section className="section section-tight">
         <div className="wrap">
-          <Reveal className="now-panel">
-            <SectionLabel>Now</SectionLabel>
-            <p className="now-lead">日々、新しい技術や表現を学びながら、ワクワクするアイデアを形にしています。</p>
-            <div className="now-chips">
-              {NOW.map(({ title, text }) => (
-                <div key={title} className="now-chip">
-                  <strong>{title}</strong>
-                  <span>{text}</span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
+          <SectionHead title="いま取り組んでいること" note={`${monthLabel(NOW_UPDATED)} 時点の内容です。`} />
+          <dl className="now">
+            {NOW.map(({ title, text }) => (
+              <div key={title}>
+                <dt>{title}</dt>
+                <dd>{text}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
-    </div>
+    </Fragment>
   );
 }
