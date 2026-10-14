@@ -4,23 +4,53 @@
   "outputDirectory": "dist",
   "redirects": [
     {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "tomoki-arai-portfolio.vercel.app" }],
-      "destination": "https://tomoki-arai.vercel.app/:path*",
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "tomoki-arai-portfolio.vercel.app"
+        }
+      ],
+      "destination": "https://tomoki-arai.vercel.app/",
+      "permanent": true
+    },
+    {
+      "source": "/:path+",
+      "has": [
+        {
+          "type": "host",
+          "value": "tomoki-arai-portfolio.vercel.app"
+        }
+      ],
+      "destination": "https://tomoki-arai.vercel.app/:path+",
       "permanent": true
     }
   ],
   "headers": [
     {
       "source": "/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
       ]
     }
   ]
