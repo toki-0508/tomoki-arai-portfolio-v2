@@ -55,6 +55,19 @@ reports/
 4. 処理済みのレポートは `reports/archive/` へ移動（git 管理外）
 5. 表記をそろえ、ビルドを確認して、コミット → push → Vercel が自動で公開
 
+## 配布ファイルの安全チェック
+
+配布ファイルと画像は誰でもダウンロードできるため、`npm run build` の前に自動で中身を検査します（`npm run check:files` で単体実行も可）。zip・jar・apk は展開して1ファイルずつ調べます。次のものが見つかるとビルドが止まり、公開されません。
+
+- `.env`、秘密鍵（`.pem` `.key` `.p12`、SSH の鍵）、署名用キーストア（`.jks` `.keystore`、`key.properties`）
+- クラウドの認証情報（`google-services.json`、`GoogleService-Info.plist`、サービスアカウントの JSON など）
+- API キー・トークン（AWS、Google / Firebase、GitHub、Stripe、Resend、Slack、AI サービスなど）
+- このPCのフォルダのパス（`/Users/ユーザー名/...`）、`.git` フォルダ、データベース（`.db` `.sqlite`）
+- `.DS_Store`、`__MACOSX`（macOS の「圧縮」で入るもの）、写真の位置情報（GPS）
+- 中身を確認できない形式（`.dmg` `.7z` `.rar` など）とパスワード付きの zip
+
+止まったときは、該当ファイルを取り除いてから zip を作り直してください。アプリは実行に必要なもの（`.app` や `.jar` 本体と説明書き）だけを入れ、ソースコードやビルド用のフォルダは入れないのが基本です。macOS では Finder の「圧縮」ではなく、ターミナルで `zip -qryX <名前>.zip <フォルダ> -x '*.DS_Store'` を使うと、`.DS_Store` と `__MACOSX` が入りません（`-y` で `.app` の中のリンクもそのまま保てます）。
+
 ## 注意
 
 - このフォルダの中身（README と _TEMPLATE 以外）は **git にコミットされません**

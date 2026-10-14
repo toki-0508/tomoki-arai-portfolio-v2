@@ -52,6 +52,10 @@ src/content/
 - 変換スクリプト: [scripts/ingest-reports.mjs](scripts/ingest-reports.mjs)（`npm run ingest`、`--dry-run` 対応）
 - `reports/` の原稿は git 管理外で、公開リポジトリには含まれません
 
+### 配布ファイルの安全チェック
+
+`npm run build` の前に [scripts/check-public-files.mjs](scripts/check-public-files.mjs) が `public/downloads/` と `public/images/` を検査します。鍵・トークン・`.env`・キーストア・このPCのパス・写真の位置情報などが見つかるとビルドが止まり、公開されません（zip / jar / apk は展開して検査）。詳しくは [reports/README.md](reports/README.md#配布ファイルの安全チェック)。
+
 ---
 
 ## 公開構成
@@ -86,6 +90,7 @@ npm run dev      # 開発サーバー
 npm run build    # 本番ビルド
 npm run preview  # ビルド結果の確認
 npm run ingest   # reports/ のレポートを取り込む（--dry-run 可）
+npm run check:files  # 配布ファイルと画像の安全チェック（build 前にも自動実行）
 ```
 
 ---

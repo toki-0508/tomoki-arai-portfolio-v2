@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/check-public-files.mjs",
     "build": "vite build",
     "preview": "vite preview",
-    "ingest": "node scripts/ingest-reports.mjs"
+    "ingest": "node scripts/ingest-reports.mjs",
+    "check:files": "node scripts/check-public-files.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
