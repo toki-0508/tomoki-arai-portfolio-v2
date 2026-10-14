@@ -120,6 +120,10 @@ main {
   padding-block: clamp(28px, 3vw + 8px, 48px);
 }
 
+.section-flush {
+  padding-top: 0;
+}
+
 .section-band {
   background: var(--card);
   border-block: 1px solid var(--rule);
@@ -134,7 +138,8 @@ h3,
 .hero-lead,
 .section-note,
 .work-card-summary,
-.principles p,
+.feature-lead-summary,
+.feature-points li,
 .dl-desc,
 .dl-note,
 .mvv-card p,
@@ -194,6 +199,10 @@ h3 {
   justify-content: space-between;
   gap: 12px 24px;
   margin-bottom: clamp(24px, 2vw + 12px, 36px);
+}
+
+.section-eyebrow {
+  margin-bottom: 12px;
 }
 
 .section-title {

@@ -146,29 +146,8 @@
   }
 }
 
-/* ---------- トップ: 大切にしていること ---------- */
-.principles {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(20px, 3vw, 48px);
-}
-
-.principles li {
-  padding-top: 20px;
-  border-top: 2px solid var(--ink);
-}
-
-.principles h3 {
-  font-size: clamp(20px, 0.8vw + 16px, 24px);
-}
-
-.principles p {
-  margin-top: 8px;
-  font-size: 15px;
-  color: var(--pencil);
-}
-
 /* ---------- トップ: お問い合わせへの導線 ---------- */
+/* ライト・ダークのどちらでも同じ見え方になるよう、インクの淡い色を敷く */
 .cta {
   display: flex;
   flex-wrap: wrap;
@@ -176,23 +155,14 @@
   justify-content: space-between;
   gap: 24px 40px;
   padding: clamp(28px, 4vw, 48px);
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
   border-radius: var(--r-l);
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--accent-tint);
 }
 
 .cta p {
   margin-top: 8px;
-  color: color-mix(in srgb, var(--paper) 72%, transparent);
-}
-
-.cta .btn-primary {
-  background: var(--paper);
-  color: var(--ink);
-}
-
-.cta .btn-primary:hover {
-  background: var(--accent-tint);
+  color: var(--pencil);
 }
 
 /* ---------- 作品詳細 ---------- */
@@ -217,7 +187,59 @@
 }
 
 .detail-head .page-title {
-  margin-top: 12px;
+  margin-top: 0;
+}
+
+/* 作品の基本情報(種類・時期・技術・リンク)を1行にまとめる */
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px clamp(28px, 4vw, 56px);
+  margin-top: clamp(24px, 3vw, 32px);
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+
+.facts > div {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.facts dt {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--pencil);
+}
+
+.facts dd {
+  font-size: 14px;
+}
+
+.facts .cat-label,
+.facts-tech {
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.facts-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.facts-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--accent);
+}
+
+.facts-links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .detail-visual {
@@ -232,16 +254,19 @@
   cursor: zoom-in;
 }
 
+/* 掲載画像の多くは 16:10。枠も同じ比率にして、画像のまわりに余計な枠が二重に出ないようにする */
 .detail-visual .thumb {
   height: auto;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 10;
   background: transparent;
 }
 
-.detail-visual .thumb-main,
-.detail-visual .thumb.is-portrait .thumb-main {
+.detail-visual .thumb-main {
   object-fit: contain;
-  padding: clamp(12px, 3vw, 36px);
+}
+
+.detail-visual .thumb.is-portrait .thumb-main {
+  padding: clamp(16px, 3vw, 40px);
 }
 
 .zoom-hint {
@@ -268,35 +293,40 @@
   opacity: 1;
 }
 
-.detail-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
-  align-items: start;
-  gap: clamp(32px, 5vw, 72px);
-}
-
+/* 本文: 見出しを左、文章を右に置く。文章の列は 1行40字前後に収める */
 .prose {
-  max-width: 680px;
+  --prose-label: 12rem;
+  --prose-gap: clamp(24px, 5vw, 72px);
 }
 
 .prose p {
   line-height: 2;
 }
 
-.prose p + p,
-.prose > p + .prose-section {
+.prose p + p {
   margin-top: 1em;
 }
 
-.prose-section + .prose-section {
-  margin-top: 40px;
+.prose-lead {
+  max-width: 42rem;
+  margin: 0 0 clamp(24px, 3vw, 36px) calc(var(--prose-label) + var(--prose-gap));
+}
+
+.prose-section {
+  display: grid;
+  grid-template-columns: var(--prose-label) minmax(0, 42rem);
+  gap: 10px var(--prose-gap);
+  padding-block: clamp(24px, 3vw, 36px);
+  border-top: 1px solid var(--rule);
+}
+
+.prose-section:last-child {
+  border-bottom: 1px solid var(--rule);
 }
 
 .prose-section h2 {
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--rule);
-  font-size: 20px;
+  font-size: 18px;
+  line-height: 1.8;
 }
 
 .prose a {
@@ -334,54 +364,6 @@
   height: 2px;
   border-radius: 2px;
   background: var(--accent);
-}
-
-.spec {
-  position: sticky;
-  top: calc(var(--header-h) + 24px);
-  padding: 20px 22px;
-  border: 1px solid var(--rule);
-  border-radius: var(--r-m);
-  background: var(--card);
-}
-
-.spec dl {
-  display: grid;
-  gap: 14px;
-}
-
-.spec dl > div {
-  display: grid;
-  gap: 2px;
-}
-
-.spec dt {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--pencil);
-}
-
-.spec dd {
-  font-size: 14px;
-  overflow-wrap: anywhere;
-}
-
-.spec dd a {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--accent);
-}
-
-.spec dd a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.spec .cat-label {
-  font-size: 13px;
-  color: var(--ink);
 }
 
 .pager {
@@ -861,17 +843,22 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .detail-layout,
+  .feature-lead {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-lead-visual {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
+
   .profile,
   .about-columns,
   .contact-grid,
   .footer-grid {
     grid-template-columns: 1fr;
-  }
-
-  .spec {
-    position: static;
-    order: -1;
   }
 
   .mvv,
@@ -884,23 +871,43 @@
   }
 }
 
+@media (max-width: 760px) {
+  .prose-section {
+    grid-template-columns: 1fr;
+  }
+
+  .prose-lead {
+    margin-left: 0;
+  }
+
+  .index-row {
+    grid-template-columns: 3.25rem minmax(0, 1fr) 16px;
+    gap: 12px;
+  }
+
+  .index-cat,
+  .index-tech {
+    display: none;
+  }
+}
+
 @media (max-width: 640px) {
   .card-grid,
-  .principles,
+  .featured-pair,
   .skill-groups,
   .form-row,
   .pager {
     grid-template-columns: 1fr;
   }
 
-  .principles {
-    gap: 28px;
-  }
-
   .dl-row {
     grid-template-columns: 76px minmax(0, 1fr);
     align-items: start;
     gap: 14px 16px;
+  }
+
+  .dl-row.is-compact {
+    grid-template-columns: 56px minmax(0, 1fr);
   }
 
   .dl-actions {
@@ -915,9 +922,4 @@
   .hero-note {
     width: min(60%, 240px);
   }
-}
-
-.spec .spec-tech {
-  font-size: 13px;
-  color: var(--ink);
 }

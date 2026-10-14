@@ -55,7 +55,7 @@ export function AboutPage() {
 
       <section className="section">
         <div className="wrap">
-          <SectionHead title="大切にしていること" />
+          <SectionHead eyebrow="Principles" title="大切にしていること" />
           <div className="mvv">
             {MVV.map((item) => (
               <article key={item.label} className="mvv-card">
@@ -71,6 +71,7 @@ export function AboutPage() {
       <section className="section section-band">
         <div className="wrap">
           <SectionHead
+            eyebrow="Skills"
             title="スキル"
             note="点の付いた技術は、このサイトに載せている作品やダウンロードで実際に使っているものです。数字はその件数です。"
           />
@@ -104,7 +105,7 @@ export function AboutPage() {
       <section className="section">
         <div className="wrap about-columns">
           <div>
-            <SectionHead title="好きなこと" />
+            <SectionHead eyebrow="Interests" title="好きなこと" />
             <ul className="interests">
               {INTERESTS.map(({ icon, title, text }) => {
                 const Ico = INTEREST_ICONS[icon] ?? Icon.Spark;
@@ -121,7 +122,7 @@ export function AboutPage() {
             </ul>
           </div>
           <div>
-            <SectionHead title="これまで" />
+            <SectionHead eyebrow="History" title="これまで" />
             <ol className="timeline">
               {HISTORY.map(({ time, text }) => (
                 <li key={time}>
@@ -136,7 +137,7 @@ export function AboutPage() {
 
       <section className="section section-tight">
         <div className="wrap">
-          <SectionHead title="いま取り組んでいること" note={`${monthLabel(NOW_UPDATED)} 時点の内容です。`} />
+          <SectionHead eyebrow="Now" title="いま取り組んでいること" note={`${monthLabel(NOW_UPDATED)} 時点の内容です。`} />
           <dl className="now">
             {NOW.map(({ title, text }) => (
               <div key={title}>

@@ -38,12 +38,20 @@ function entries(globbed) {
   });
 }
 
+// トップの注目作品に添える要点。「特徴」の箇条書きの先頭から取る(本文と同じ事実だけを使う)
+const highlightsOf = (sections, count = 3) =>
+  sections
+    .find((section) => section.title === '特徴')
+    ?.blocks.find((block) => block.type === 'list')
+    ?.items.slice(0, count) ?? [];
+
 // ---------- 作品 ----------
 const workFiles = import.meta.glob('./works/*.md', { query: '?raw', import: 'default', eager: true });
 
 export const WORKS = entries(workFiles)
   .map(({ id, data, body }) => {
     const category = pickCategory(data.category, WORK_CATEGORIES);
+    const sections = parseSections(body);
     return {
       id,
       name: data.name || id,
@@ -57,8 +65,9 @@ export const WORKS = entries(workFiles)
       github: data.github || null,
       summary: data.summary || '',
       featured: data.featured === true,
-      sections: parseSections(body),
+      sections,
       lead: parseLead(body),
+      highlights: highlightsOf(sections),
     };
   })
   .sort(byDateDesc);

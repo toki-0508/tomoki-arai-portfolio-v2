@@ -61,11 +61,12 @@ function AudioPreview({ src, name }) {
   );
 }
 
-export function DownloadRow({ file }) {
+// compact: トップページ用。使うときの注意は省き、説明は1行に収める(注意はダウンロードページで読める)
+export function DownloadRow({ file, compact = false }) {
   const spec = [file.platform && `${file.platform}用`, file.length, file.size].filter(Boolean);
 
   return (
-    <article className="dl-row">
+    <article className={`dl-row ${compact ? 'is-compact' : ''}`}>
       <div className="dl-cover">
         {file.category === 'sounds' ? (
           <GeneratedCover name={file.name} label={file.length ? `SOUND · ${file.length}` : 'SOUND'} />
@@ -82,7 +83,7 @@ export function DownloadRow({ file }) {
         </p>
         <h3 className="dl-title">{file.name}</h3>
         {file.lead.map((block, i) => (block.type === 'p' ? <p key={i} className="dl-desc">{block.text}</p> : null))}
-        {file.note && <p className="dl-note">{file.note}</p>}
+        {file.note && !compact && <p className="dl-note">{file.note}</p>}
         {spec.length > 0 && <p className="dl-spec">{spec.join(' · ')}</p>}
       </div>
       <div className="dl-actions">

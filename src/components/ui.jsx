@@ -37,11 +37,13 @@ export function PageHead({ eyebrow, title, lead, children }) {
   );
 }
 
-// セクション見出し: h2 + 任意の補足 + 任意の「すべて見る」リンク。
-export function SectionHead({ title, note, link }) {
+// セクション見出し: 英語の小見出し + h2 + 任意の補足 + 任意の「すべて見る」リンク。
+// 小見出しはページ見出し(PageHead)と同じ「英語 → 日本語」の組み立てにそろえる。
+export function SectionHead({ eyebrow, title, note, link }) {
   return (
     <div className="section-head">
       <div>
+        {eyebrow && <p className="eyebrow section-eyebrow">{eyebrow}</p>}
         <h2 className="section-title">{title}</h2>
         {note && <p className="section-note">{note}</p>}
       </div>

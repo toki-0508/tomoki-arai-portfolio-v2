@@ -384,6 +384,212 @@
   padding-top: 6px;
 }
 
+/* ---------- 注目作品(トップ) ---------- */
+/* 1件目は画像と要点を横並びで大きく、残りは2列のカード */
+.featured {
+  display: grid;
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.feature-lead {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-l);
+  background: var(--card);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.feature-lead:hover {
+  border-color: var(--rule-strong);
+  box-shadow: var(--shadow-2);
+}
+
+/* 横並びのときは本文の高さに合わせて画像を伸ばす(縦積みのときは pages.css で 16:10 に戻す) */
+.feature-lead-visual {
+  position: relative;
+  min-height: 320px;
+  border-right: 1px solid var(--rule);
+}
+
+.feature-lead-visual .thumb {
+  position: absolute;
+  inset: 0;
+}
+
+.feature-lead:hover .thumb.is-loaded .thumb-main {
+  transform: scale(1.02);
+}
+
+.feature-lead-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(24px, 3vw, 40px);
+}
+
+.feature-lead-title {
+  font-size: clamp(24px, 1.2vw + 18px, 32px);
+  line-height: 1.35;
+  transition: color 0.2s;
+}
+
+.feature-lead:hover .feature-lead-title {
+  color: var(--accent);
+}
+
+.feature-lead-summary {
+  color: var(--pencil);
+  text-wrap: pretty;
+}
+
+.feature-points {
+  display: grid;
+  gap: 6px;
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+}
+
+.feature-points li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* 箇条書きの記号は本文と同じインクの短い線 */
+.feature-points li::before {
+  content: '';
+  position: absolute;
+  top: 0.85em;
+  left: 1px;
+  width: 9px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.feature-lead-tech {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.feature-lead-more {
+  align-self: flex-start;
+}
+
+.feature-lead:hover .feature-lead-more svg {
+  transform: translateX(3px);
+}
+
+.featured-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+
+/* ---------- 作品の目次(トップ) ---------- */
+.work-index {
+  border-top: 1px solid var(--rule-strong);
+}
+
+.work-index li {
+  border-bottom: 1px solid var(--rule);
+}
+
+.index-row {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) 6rem minmax(0, 15rem) 16px;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 4px;
+  transition: opacity 0.2s;
+}
+
+.index-year {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--pencil);
+}
+
+.index-title {
+  font-size: clamp(17px, 0.4vw + 15px, 20px);
+  font-weight: 700;
+  line-height: 1.45;
+  font-feature-settings: 'palt' 1;
+  transition: color 0.2s;
+}
+
+.index-tech {
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--pencil);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.index-arrow {
+  color: var(--faint);
+  transition: transform 0.2s var(--ease-out), color 0.2s;
+}
+
+.index-row:hover .index-title,
+.index-row:focus-visible .index-title {
+  color: var(--accent);
+}
+
+.index-row:hover .index-arrow,
+.index-row:focus-visible .index-arrow {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+/* 1行を指しているあいだは、ほかの行を少し下げて目線を集める */
+@media (hover: hover) and (pointer: fine) {
+  .work-index:hover .index-row:not(:hover) {
+    opacity: 0.45;
+  }
+}
+
+/* カーソルの横に出す作品画像。少し遅れてついてくる */
+.index-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  width: 280px;
+  height: 175px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-m);
+  background: var(--well);
+  box-shadow: var(--shadow-2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.12s linear;
+}
+
+.index-preview.is-shown {
+  opacity: 1;
+}
+
+.index-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index-preview {
+    transition: opacity 0.2s ease;
+  }
+}
+
 /* ---------- 絞り込み ---------- */
 .filters {
   display: flex;
@@ -498,6 +704,19 @@
   font-size: 12px;
   letter-spacing: 0.04em;
   color: var(--pencil);
+}
+
+/* トップの簡潔な表示: 説明は1行に収める */
+.dl-row.is-compact {
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  padding: 12px 16px 12px 12px;
+}
+
+.dl-row.is-compact .dl-desc {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .dl-actions {

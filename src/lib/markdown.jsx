@@ -131,6 +131,13 @@ export function parseLead(body) {
   return parseBlocks(lines);
 }
 
+// インライン装飾を外した文字列(リンクの中に置くなど、装飾を使えない場所向け)
+export const plainText = (text) =>
+  String(text)
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/`([^`]+)`/g, '$1');
+
 // ---------- インライン装飾 → React ----------
 const INLINE_PATTERN = /(\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g;
 

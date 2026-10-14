@@ -39,12 +39,46 @@ export function WorkDetailPage({ id }) {
             <Icon.Back width={16} height={16} />
             作品一覧へ
           </Link>
-          <p className="meta">
-            <CategoryLabel category={work.category} label={work.categoryLabel} />
-            <time dateTime={work.date}>{work.dateLabel}</time>
-          </p>
           <h1 className="page-title">{work.name}</h1>
           {work.summary && <p className="lead">{work.summary}</p>}
+
+          {/* 作品の基本情報は1行にまとめ、本文の前に一目で分かるようにする */}
+          <dl className="facts" aria-label="作品の情報">
+            <div>
+              <dt>種類</dt>
+              <dd><CategoryLabel category={work.category} label={work.categoryLabel} /></dd>
+            </div>
+            <div>
+              <dt>制作時期</dt>
+              <dd><time dateTime={work.date}>{work.dateLabel}</time></dd>
+            </div>
+            {work.tags.length > 0 && (
+              <div className="facts-wide">
+                <dt>使用技術</dt>
+                <dd><TechList items={work.tags} className="facts-tech" /></dd>
+              </div>
+            )}
+            {(work.url || work.github) && (
+              <div>
+                <dt>リンク</dt>
+                <dd className="facts-links">
+                  {work.url && (
+                    <a href={work.url} target="_blank" rel="noreferrer">
+                      {hostOf(work.url)}
+                      <Icon.External width={13} height={13} />
+                    </a>
+                  )}
+                  {work.github && (
+                    <a href={work.github} target="_blank" rel="noreferrer">
+                      GitHub
+                      <Icon.External width={13} height={13} />
+                    </a>
+                  )}
+                </dd>
+              </div>
+            )}
+          </dl>
+
           {work.url && (
             <a href={work.url} target="_blank" rel="noreferrer" className="btn btn-primary page-head-action">
               サイトを開く
@@ -67,59 +101,23 @@ export function WorkDetailPage({ id }) {
       )}
       {zoomed && <Lightbox src={work.image} alt={`${work.name}の画面`} onClose={() => setZoomed(false)} />}
 
+      {/* 本文は「見出しを左・文章を右」の2段組み。見出しだけを拾い読みしても流れが分かる */}
       <section className="section section-tight">
-        <div className="wrap detail-layout">
-          <article className="prose">
-            {work.lead.length > 0 && <BlockList blocks={work.lead} />}
-            {work.sections.map((section) => (
-              <section key={section.title} className="prose-section">
-                <h2>{section.title}</h2>
+        <article className="wrap prose">
+          {work.lead.length > 0 && (
+            <div className="prose-lead">
+              <BlockList blocks={work.lead} />
+            </div>
+          )}
+          {work.sections.map((section) => (
+            <section key={section.title} className="prose-section">
+              <h2>{section.title}</h2>
+              <div className="prose-body">
                 <BlockList blocks={section.blocks} />
-              </section>
-            ))}
-          </article>
-
-          <aside className="spec" aria-label="作品の情報">
-            <dl>
-              <div>
-                <dt>カテゴリ</dt>
-                <dd><CategoryLabel category={work.category} label={work.categoryLabel} /></dd>
               </div>
-              <div>
-                <dt>制作時期</dt>
-                <dd><time dateTime={work.date}>{work.dateLabel}</time></dd>
-              </div>
-              {work.tags.length > 0 && (
-                <div>
-                  <dt>使用技術</dt>
-                  <dd><TechList items={work.tags} className="spec-tech" /></dd>
-                </div>
-              )}
-              {work.url && (
-                <div>
-                  <dt>公開先</dt>
-                  <dd>
-                    <a href={work.url} target="_blank" rel="noreferrer">
-                      {hostOf(work.url)}
-                      <Icon.External width={13} height={13} />
-                    </a>
-                  </dd>
-                </div>
-              )}
-              {work.github && (
-                <div>
-                  <dt>ソースコード</dt>
-                  <dd>
-                    <a href={work.github} target="_blank" rel="noreferrer">
-                      GitHub
-                      <Icon.External width={13} height={13} />
-                    </a>
-                  </dd>
-                </div>
-              )}
-            </dl>
-          </aside>
-        </div>
+            </section>
+          ))}
+        </article>
       </section>
 
       {(older || newer) && (
@@ -142,7 +140,7 @@ export function WorkDetailPage({ id }) {
       {related.length > 0 && (
         <section className="section">
           <div className="wrap">
-            <SectionHead title="同じカテゴリの作品" link={{ to: `/works?cat=${work.category}`, label: `${work.categoryLabel}の作品をすべて見る` }} />
+            <SectionHead eyebrow="Related" title="同じカテゴリの作品" link={{ to: `/works?cat=${work.category}`, label: `${work.categoryLabel}の作品をすべて見る` }} />
             <div className="card-grid">
               {related.map((w) => <WorkCard key={w.id} work={w} />)}
             </div>

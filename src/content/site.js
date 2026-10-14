@@ -53,12 +53,6 @@ export const MVV = [
 ];
 
 // Values を3つの行動に分けたもの。トップページで「どう考えて作るか」を短く伝える。
-export const PRINCIPLES = [
-  { title: 'わかりやすく', text: '使う人が迷わないこと。' },
-  { title: '気持ちよく', text: '触っていて心地よいこと。' },
-  { title: '続けて磨く', text: '作ったあとも使い続けられること。' },
-];
-
 export const INTERESTS = [
   { icon: 'pen', title: '作ること', text: 'アイデアを形にするのが好きです。' },
   { icon: 'play', title: '遊ぶこと', text: '作ったものを、自分で触って試すのが好きです。' },

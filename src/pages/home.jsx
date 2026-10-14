@@ -1,11 +1,12 @@
 import { Fragment } from 'react';
 import { Icon } from '../components/Icon.jsx';
 import { Hero3D } from '../components/Hero3D.jsx';
-import { WorkCard } from '../components/WorkCard.jsx';
+import { FeaturedWorks } from '../components/FeaturedWorks.jsx';
+import { WorkIndex } from '../components/WorkIndex.jsx';
 import { DownloadRow } from '../components/DownloadRow.jsx';
 import { Link, SectionHead } from '../components/ui.jsx';
-import { DOWNLOADS, featuredWorks } from '../content/loader.js';
-import { PRINCIPLES, PROFILE } from '../content/site.js';
+import { DOWNLOADS, WORKS, featuredWorks } from '../content/loader.js';
+import { PROFILE } from '../content/site.js';
 
 // キャッチコピーは PROFILE.tagline から組み立てる(フッターや OG 画像と必ず一致させるため)。
 // 「、」の後ろで改行し、「好き」に手書きの下線を引く。
@@ -33,6 +34,7 @@ function Tagline({ text }) {
 
 export function HomePage() {
   const featured = featuredWorks(3);
+  const others = WORKS.filter((work) => !featured.includes(work));
 
   return (
     <Fragment>
@@ -60,37 +62,30 @@ export function HomePage() {
 
       <section className="section">
         <div className="wrap">
-          <SectionHead title="注目の作品" link={{ to: '/works', label: 'すべての作品を見る' }} />
-          <div className="card-grid">
-            {featured.map((work) => <WorkCard key={work.id} work={work} />)}
-          </div>
+          <SectionHead eyebrow="Selected Works" title="注目の作品" link={{ to: '/works', label: 'すべての作品を見る' }} />
+          <FeaturedWorks works={featured} />
         </div>
       </section>
 
-      <section className="section section-band">
-        <div className="wrap">
-          <SectionHead title="大切にしていること" link={{ to: '/about', label: 'プロフィールを見る' }} />
-          <ul className="principles">
-            {PRINCIPLES.map((item) => (
-              <li key={item.title}>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {others.length > 0 && (
+        <section className="section section-flush">
+          <div className="wrap">
+            <SectionHead eyebrow="More Works" title="そのほかの作品" link={{ to: '/works', label: '作品一覧へ' }} />
+            <WorkIndex works={others} />
+          </div>
+        </section>
+      )}
 
       <section className="section">
         <div className="wrap">
-          <SectionHead title="ダウンロード" link={{ to: '/downloads', label: 'すべて見る' }} />
+          <SectionHead eyebrow="Downloads" title="ダウンロード" link={{ to: '/downloads', label: 'すべて見る' }} />
           <div className="dl-list">
-            {DOWNLOADS.slice(0, 3).map((file) => <DownloadRow key={file.id} file={file} />)}
+            {DOWNLOADS.slice(0, 3).map((file) => <DownloadRow key={file.id} file={file} compact />)}
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-flush">
         <div className="wrap">
           <div className="cta">
             <div>
