@@ -48,6 +48,8 @@ src/content/
 
 `reports/` に制作レポートを置くと、毎日の定期実行が検出し、変換 → ビルド確認 → コミット → push まで行います。push すると Vercel が自動でデプロイします。
 
+レポートが無くても、定期実行は手元の開発フォルダと GitHub を見回り、載せる価値がある新しい作品を見つけたら、事実だけでレポートを書いて同じ流れで公開します。受託・事業・課題・非公開のものなど、迷うものは公開せずに確認を求めます。
+
 - 書き方と表記ルール: [reports/README.md](reports/README.md)、[reports/_TEMPLATE.md](reports/_TEMPLATE.md)
 - 変換スクリプト: [scripts/ingest-reports.mjs](scripts/ingest-reports.mjs)（`npm run ingest`、`--dry-run` 対応）
 - `reports/` の原稿は git 管理外で、公開リポジトリには含まれません
