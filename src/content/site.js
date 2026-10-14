@@ -28,8 +28,8 @@ export const PROFILE = {
 // ナビは英語、ページ内の見出しは日本語、という役割分担で統一する。
 // title はページの h1 とブラウザタブのタイトルに使う。
 export const NAV_LINKS = [
-  { id: '/works', label: 'Works', title: '作品' },
   { id: '/about', label: 'About', title: 'プロフィール' },
+  { id: '/works', label: 'Works', title: '作品' },
   { id: '/downloads', label: 'Downloads', title: 'ダウンロード' },
   { id: '/contact', label: 'Contact', title: 'お問い合わせ' },
 ];
