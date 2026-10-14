@@ -61,9 +61,10 @@ main に push
   └─ Vercel → https://tomoki-arai.vercel.app/   （本番。問い合わせ API も同じオリジン）
 
 転送のみ
-  ├─ tomoki-arai-portfolio.vercel.app → 本番へ 301（vercel.json）
-  └─ toki-0508.github.io/tomoki-arai-portfolio-v2/ → 本番へ転送（pages-redirect/ を GitHub Pages で配信）
+  └─ tomoki-arai-portfolio.vercel.app → 本番へ 308（vercel.json）
 ```
+
+以前使っていた GitHub Pages（toki-0508.github.io/tomoki-arai-portfolio-v2/）は 2026年10月に停止しました。
 
 - 問い合わせフォームは [api/contact.js](api/contact.js)（Vercel Functions + Resend）。Vercel の環境変数 `RESEND_API_KEY` が必要です
 - canonical / OG / 構造化データ / sitemap.xml / robots.txt は、ビルド時に `SITE_URL` から生成されます（[vite.config.js](vite.config.js)）

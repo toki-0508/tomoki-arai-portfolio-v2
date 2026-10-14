@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from './Icon.jsx';
-import { SoundCover } from './SoundCover.jsx';
+import { GeneratedCover } from './GeneratedCover.jsx';
 import { CategoryLabel, Thumb } from './ui.jsx';
 import { isAudio } from '../content/loader.js';
 
@@ -68,9 +68,11 @@ export function DownloadRow({ file }) {
     <article className="dl-row">
       <div className="dl-cover">
         {file.category === 'sounds' ? (
-          <SoundCover name={file.name} length={file.length} />
-        ) : (
+          <GeneratedCover name={file.name} label={file.length ? `SOUND · ${file.length}` : 'SOUND'} />
+        ) : file.image ? (
           <Thumb src={file.image} alt="" />
+        ) : (
+          <GeneratedCover name={file.name} label={(file.tags[1] ?? file.categoryLabel).toUpperCase()} pattern="blocks" />
         )}
       </div>
       <div className="dl-body">

@@ -6,7 +6,6 @@ tags: [React, Three.js, Vite, Vercel]
 image: /images/projects/portfolio-site.png
 url: https://tomoki-arai.vercel.app/
 github: https://github.com/toki-0508/tomoki-arai-portfolio-v2
-featured: true
 summary: Web・アプリ・3Dの作品をまとめた、このポートフォリオサイトです。
 ---
 

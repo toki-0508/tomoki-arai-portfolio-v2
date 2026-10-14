@@ -5,7 +5,6 @@ date: 2026-06
 tags: [Flutter, Dart, Firebase]
 image: /images/projects/kakeibo-app.png
 url: https://bennrina-kakeibo.web.app/#/
-featured: true
 summary: 毎日の収入・支出から毎月のサブスクまで、1か所で手軽に管理できる家計簿アプリです。
 ---
 

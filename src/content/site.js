@@ -69,8 +69,8 @@ export const INTERESTS = [
 // 作品・ダウンロードの tags に含まれる技術は、プロフィールで「作品で使用」と表示される。
 // (判定は loader.js の techUsage。名前は tags と同じ表記で書くこと)
 export const SKILL_GROUPS = [
-  { title: '開発', skills: ['React', 'JavaScript', 'TypeScript', 'Next.js', 'Flutter', 'Dart', 'Python', 'Three.js', 'Vite', 'Tailwind CSS'] },
-  { title: 'バックエンド・公開', skills: ['Firebase', 'Supabase', 'Node.js', 'Vercel', 'GitHub Actions'] },
+  { title: '開発', skills: ['React', 'JavaScript', 'TypeScript', 'Next.js', 'Flutter', 'Dart', 'Python', 'Java', 'Three.js', 'Vite', 'Tailwind CSS', 'Chrome Extensions', 'Minecraft Forge'] },
+  { title: 'バックエンド・公開', skills: ['Firebase', 'Google Apps Script', 'SQLite', 'Supabase', 'Node.js', 'Vercel', 'GitHub Actions'] },
   { title: '3D・デザイン・サウンド', skills: ['Blender', 'Figma', 'Adobe Illustrator', 'Adobe Photoshop', 'GarageBand'] },
   { title: 'ツール・AI', skills: ['Git', 'VS Code', 'Notion', 'ChatGPT', 'Claude', 'Codex', 'Qwen'] },
 ];

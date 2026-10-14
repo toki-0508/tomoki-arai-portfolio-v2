@@ -460,7 +460,7 @@
   inset: 0;
 }
 
-.dl-cover .sound-cover {
+.dl-cover .gen-cover {
   width: 100%;
   height: 100%;
 }
@@ -540,38 +540,38 @@
   color: var(--accent);
 }
 
-/* ---------- 音源カバー ---------- */
-.sound-cover {
+/* ---------- 生成カバー(画像のない配布物) ---------- */
+.gen-cover {
   display: block;
 }
 
-.sc-label {
+.gc-label {
   font-family: var(--font-mono);
   font-size: 7.5px;
   letter-spacing: 1.2px;
 }
 
-.sc-title {
+.gc-title {
   font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.3px;
 }
 
-.sound-cover-accent .sc-bg { fill: var(--accent); }
-.sound-cover-accent .sc-label,
-.sound-cover-accent .sc-title { fill: var(--on-accent); }
-.sound-cover-accent .sc-bars { fill: var(--on-accent); opacity: 0.55; }
+.gen-cover-accent .gc-bg { fill: var(--accent); }
+.gen-cover-accent .gc-label,
+.gen-cover-accent .gc-title { fill: var(--on-accent); }
+.gen-cover-accent .gc-shapes { fill: var(--on-accent); opacity: 0.55; }
 
-.sound-cover-ink .sc-bg { fill: var(--ink); }
-.sound-cover-ink .sc-label,
-.sound-cover-ink .sc-title { fill: var(--paper); }
-.sound-cover-ink .sc-bars { fill: var(--paper); opacity: 0.45; }
+.gen-cover-ink .gc-bg { fill: var(--ink); }
+.gen-cover-ink .gc-label,
+.gen-cover-ink .gc-title { fill: var(--paper); }
+.gen-cover-ink .gc-shapes { fill: var(--paper); opacity: 0.45; }
 
-.sound-cover-tint .sc-bg { fill: var(--accent-tint); }
-.sound-cover-tint .sc-label,
-.sound-cover-tint .sc-title { fill: var(--ink); }
-.sound-cover-tint .sc-bars { fill: var(--accent); }
+.gen-cover-tint .gc-bg { fill: var(--accent-tint); }
+.gen-cover-tint .gc-label,
+.gen-cover-tint .gc-title { fill: var(--ink); }
+.gen-cover-tint .gc-shapes { fill: var(--accent); }
 
 /* ---------- ライトボックス ---------- */
 .lightbox {
