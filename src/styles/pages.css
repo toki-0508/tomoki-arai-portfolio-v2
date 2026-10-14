@@ -14,9 +14,10 @@
   gap: clamp(16px, 3vw, 48px);
 }
 
-/* 読み込み時の演出はここだけ: 文字が順に現れ、下線→矢印→メモの順にインクで書かれる */
+/* 読み込み時の演出はここだけ: 文字が少し持ち上がり、下線→矢印→メモの順にインクで書かれる。
+   見出しは最初から見えている状態にする(透明から出すと、端末が重いとき文字が見えない時間が伸びる) */
 .hero-copy > * {
-  animation: rise 0.7s var(--ease-out) both;
+  animation: lift 0.7s var(--ease-out) both;
 }
 
 .hero-copy > :nth-child(2) { animation-delay: 0.06s; }

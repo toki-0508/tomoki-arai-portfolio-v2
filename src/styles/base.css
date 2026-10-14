@@ -94,12 +94,16 @@ main:focus {
 
 main {
   flex: 1;
-  animation: page-in 0.35s var(--ease-out) both;
+}
+
+/* ページを移動したときだけ軽くフェードする。初回表示では本文を隠さない(表示速度の指標 LCP を遅らせないため) */
+.page-transition {
+  animation: page-in 0.3s var(--ease-out) both;
 }
 
 @keyframes page-in {
   from {
-    opacity: 0;
+    opacity: 0.35;
   }
 }
 
@@ -406,5 +410,11 @@ h3 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@keyframes lift {
+  from {
+    transform: translateY(10px);
   }
 }

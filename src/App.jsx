@@ -41,9 +41,14 @@ const PAGES = {
 
 export function App() {
   const [route, setRoute] = useState(getRoute());
+  // 初回表示ではフェードさせず、ページを移動したときだけフェードする
+  const [hasNavigated, setHasNavigated] = useState(false);
 
   useEffect(() => {
-    const onHash = () => setRoute(getRoute());
+    const onHash = () => {
+      setHasNavigated(true);
+      setRoute(getRoute());
+    };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
@@ -62,7 +67,9 @@ export function App() {
   return (
     <div className="app">
       <Nav route={route} />
-      <main id="main" key={route} tabIndex={-1}>{page}</main>
+      <main id="main" key={route} tabIndex={-1} className={hasNavigated ? 'page-transition' : undefined}>
+        {page}
+      </main>
       <Footer />
       <BackToTop />
     </div>

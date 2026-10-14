@@ -1,7 +1,22 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 
-// Three.js 本体はここで初めて読み込む(初期バンドルを軽く保つ)
+// Three.js 本体(約590KB)はここで初めて読み込む。
+// さらに、ページの初回表示が終わってブラウザが空いてから読み込みを始める
+// (見出しなどの表示を Three.js の解析で遅らせないため)。
 const LazyCanvas = lazy(() => import('./Hero3DCanvas.jsx'));
+
+function useWhenIdle(timeout = 1200) {
+  const [idle, setIdle] = useState(false);
+  useEffect(() => {
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(() => setIdle(true), { timeout });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(() => setIdle(true), 200);
+    return () => window.clearTimeout(id);
+  }, [timeout]);
+  return idle;
+}
 
 // 手書きの注釈。見出しの下線と同じインクで、3Dモデルが何なのかを説明する。
 // 線を引く演出は CSS 側(.hero-note)。モーションを減らす設定では最初から完成形で出る。
@@ -22,11 +37,11 @@ function HeroNote() {
 }
 
 export function Hero3D() {
+  const ready = useWhenIdle();
+  const placeholder = <div className="hero-canvas" aria-hidden="true" />;
   return (
     <div className="hero-visual">
-      <Suspense fallback={<div className="hero-canvas" aria-hidden="true" />}>
-        <LazyCanvas />
-      </Suspense>
+      {ready ? <Suspense fallback={placeholder}><LazyCanvas /></Suspense> : placeholder}
       <HeroNote />
     </div>
   );
