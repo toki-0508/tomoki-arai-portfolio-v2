@@ -2,7 +2,7 @@
 # ▼ 必須
 name: 作品名
 
-# ▼ 分類（web / app / 3d / other。ダウンロードなら sounds も可）
+# ▼ 分類（web / app / 3d / electronics / other。electronics は電子工作。ダウンロードなら sounds も可）
 category: web
 
 # ▼ 完成した年月（省略すると今月になる）

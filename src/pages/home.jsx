@@ -41,12 +41,12 @@ export function HomePage() {
       <section className="hero" aria-labelledby="hero-title">
         <div className="wrap hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">{PROFILE.nameEn} · Web / App / 3D</p>
+            <p className="eyebrow">{PROFILE.nameEn} · {PROFILE.fieldsEn}</p>
             <h1 className="hero-title" id="hero-title">
               <Tagline text={PROFILE.tagline} />
             </h1>
             <p className="hero-lead">
-              日常の小さな不便や退屈を、Web・アプリ・3Dで「使って便利、触って楽しい」ものに変えています。高専で学びながら、制作を続けています。
+              日常の小さな不便や退屈を、{PROFILE.fields}で「使って便利、触って楽しい」ものに変えています。高専で学びながら、制作を続けています。
             </p>
             <div className="hero-actions">
               <Link to="/works" className="btn btn-primary">

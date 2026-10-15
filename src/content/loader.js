@@ -13,11 +13,11 @@ import { asset } from '../asset.js';
 // ============================================================
 
 // カテゴリ表記は作品とダウンロードで共通にする
-const LABELS = { all: 'All', web: 'Web', app: 'App', '3d': '3D', sounds: 'Sounds', other: 'Other' };
+const LABELS = { all: 'All', web: 'Web', app: 'App', '3d': '3D', electronics: 'Electronics', sounds: 'Sounds', other: 'Other' };
 const categories = (ids) => ids.map((id) => ({ id, label: LABELS[id] }));
 
-export const WORK_CATEGORIES = categories(['all', 'web', 'app', '3d', 'other']);
-export const DOWNLOAD_CATEGORIES = categories(['all', 'app', '3d', 'sounds', 'other']);
+export const WORK_CATEGORIES = categories(['all', 'web', 'app', '3d', 'electronics', 'other']);
+export const DOWNLOAD_CATEGORIES = categories(['all', 'app', '3d', 'electronics', 'sounds', 'other']);
 
 const pickCategory = (value, list) => (list.some((c) => c.id === value && c.id !== 'all') ? value : 'other');
 

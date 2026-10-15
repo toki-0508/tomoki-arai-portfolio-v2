@@ -31,8 +31,18 @@ const FILES_DIR = path.join(ROOT, 'public', 'downloads');
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
-const WORK_CATEGORIES = ['web', 'app', '3d', 'other'];
-const DOWNLOAD_CATEGORIES = ['app', '3d', 'sounds', 'other'];
+const WORK_CATEGORIES = ['web', 'app', '3d', 'electronics', 'other'];
+const DOWNLOAD_CATEGORIES = ['app', '3d', 'electronics', 'sounds', 'other'];
+// レポートに日本語や別名で書かれた分類を、サイトの分類名にそろえる
+const CATEGORY_ALIASES = {
+  ウェブ: 'web',
+  アプリ: 'app',
+  電子工作: 'electronics',
+  ハードウェア: 'electronics',
+  hardware: 'electronics',
+  音源: 'sounds',
+  サウンド: 'sounds',
+};
 const IMAGE_EXTS = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg'];
 
 // 作品詳細の見出しは全作品で「概要 / 特徴 / 対象 / 作った理由 / 成果と学び」にそろえる。
@@ -191,10 +201,11 @@ function ingest(report, manifest) {
     throw new Error(`name がありません(${path.relative(ROOT, report.mdPath)})。_TEMPLATE.md を参照してください`);
   }
 
-  const isDownload = data.kind === 'download' || Boolean(data.file) || data.category === 'sounds';
+  const rawCategory = CATEGORY_ALIASES[data.category] ?? String(data.category ?? '').toLowerCase();
+  const isDownload = data.kind === 'download' || Boolean(data.file) || rawCategory === 'sounds';
   const kind = isDownload ? 'download' : 'work';
   const categories = isDownload ? DOWNLOAD_CATEGORIES : WORK_CATEGORIES;
-  const category = categories.includes(data.category) ? data.category : 'other';
+  const category = categories.includes(rawCategory) ? rawCategory : 'other';
   const date = /^\d{4}-\d{1,2}/.test(String(data.date)) ? String(data.date).slice(0, 7) : todayMonth();
 
   const targetDir = isDownload ? DOWNLOADS_DIR : WORKS_DIR;

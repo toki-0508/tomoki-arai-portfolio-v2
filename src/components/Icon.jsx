@@ -17,6 +17,7 @@ const filled = { ...base, fill: 'currentColor', stroke: 'none' };
 export const Icon = {
   Arrow: (p) => <svg {...base} {...p}><path d="M5 12h14M13 6l6 6-6 6" /></svg>,
   Back: (p) => <svg {...base} {...p}><path d="M19 12H5M11 18l-6-6 6-6" /></svg>,
+  Chip: (p) => <svg {...base} {...p}><rect x="7" y="7" width="10" height="10" rx="1.5" /><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4" /></svg>,
   Up: (p) => <svg {...base} {...p}><path d="M12 19V5M6 11l6-6 6 6" /></svg>,
   External: (p) => <svg {...base} {...p}><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5" /></svg>,
   Download: (p) => <svg {...base} {...p}><path d="M12 4v11M6.5 10.5 12 16l5.5-5.5M4 20h16" /></svg>,

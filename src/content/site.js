@@ -15,8 +15,10 @@ export const PROFILE = {
   nameEn: 'Tomoki Arai',
   reading: 'あらいともき',
   nickname: 'あらとも',
-  affiliation: '高専生',
-  fields: 'Web・アプリ・3D',
+  affiliation: '神山まるごと高専2期生',
+  fields: 'アプリ・3D・電子工作',
+  // トップの小見出しなど英語で並べる場所用(fields と同じ順番にする)
+  fieldsEn: 'App / 3D / Electronics',
   tagline: '身の回りを、ちょっと好きになる。',
   email: 'toki.zeno.0508@gmail.com',
   socials: [
@@ -38,7 +40,7 @@ export const MVV = [
   {
     label: 'Mission',
     title: '身近な不便を、触って楽しいものに変える',
-    text: '日常の小さな困りごとや退屈を、Web・アプリ・3Dの力で、使いやすく少しワクワクする形に変えていきます。',
+    text: '日常の小さな困りごとや退屈を、アプリ・3D・電子工作の力で、使いやすく少しワクワクする形に変えていきます。',
   },
   {
     label: 'Vision',
@@ -66,20 +68,21 @@ export const SKILL_GROUPS = [
   { title: '開発', skills: ['React', 'JavaScript', 'TypeScript', 'Next.js', 'Flutter', 'Dart', 'Python', 'Java', 'Three.js', 'Vite', 'Tailwind CSS', 'Chrome Extensions', 'Minecraft Forge'] },
   { title: 'バックエンド・公開', skills: ['Firebase', 'Google Apps Script', 'SQLite', 'Supabase', 'Node.js', 'Vercel', 'GitHub Actions'] },
   { title: '3D・デザイン・サウンド', skills: ['Blender', 'Figma', 'Adobe Illustrator', 'Adobe Photoshop', 'GarageBand'] },
+  { title: '電子工作', skills: ['Arduino', 'KiCad'] },
   { title: 'ツール・AI', skills: ['Git', 'VS Code', 'Notion', 'ChatGPT', 'Claude', 'Codex', 'Qwen'] },
 ];
 
 export const HISTORY = [
   { time: '小学生のころ', text: '工作をきっかけに、ものづくりに興味を持ちました。' },
   { time: '中学生のころ', text: 'ゲームをきっかけに、プログラミングに興味を持ちました。' },
-  { time: '高専〜現在', text: '生成AIを活用しながらWeb・アプリ開発を学んでいます。3Dは独学です。' },
+  { time: '高専〜現在', text: '生成AIを活用しながらアプリ開発を学んでいます。3Dは独学で、最近は電子工作にも力を入れています。' },
   { time: 'これから', text: '身近な人が、今よりちょっと幸せになれるものを作っていきたいです。' },
 ];
 
 // 「いま」の内容は古くなりやすいので、いつ時点の情報かを必ず表示する。
-export const NOW_UPDATED = '2026-07';
+export const NOW_UPDATED = '2026-10';
 export const NOW = [
-  { title: 'いま作っているもの', text: '3Dを使ったインタラクティブな作品' },
-  { title: '学んでいること', text: 'WebGL・シェーダー・UIアニメーション' },
+  { title: 'いま作っているもの', text: '電子工作で作るオリジナルのガジェット' },
+  { title: '学んでいること', text: '回路・基板設計（KiCad）とマイコンのプログラミング' },
   { title: '興味があること', text: 'AI・XR・データビジュアライゼーション' },
 ];

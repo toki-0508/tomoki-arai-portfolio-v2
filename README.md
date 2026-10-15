@@ -11,7 +11,7 @@
 
 ## コンセプト
 
-日常の小さな不便や退屈を、Web・アプリ・3Dで「使って便利、触って楽しい」ものに変える。その姿勢を、説明ではなくサイトを触る体験として伝えることを目指しています。
+日常の小さな不便や退屈を、アプリ・3D・電子工作で「使って便利、触って楽しい」ものに変える。その姿勢を、説明ではなくサイトを触る体験として伝えることを目指しています。
 
 想定している読み手は、制作を任せるかどうかを判断する方（採用担当者・クライアント）です。「何を作れる人か」「どう考えて作る人か」を短時間でつかめることを優先しています。
 
@@ -26,6 +26,14 @@
 | 手書きの注釈（トップとプロフィールのみ） | Klee One |
 
 色はすべて [src/styles/tokens.css](src/styles/tokens.css) の CSS 変数で管理しています（ライト / ダーク）。
+
+### OG 画像の作り直し
+
+SNS で共有したときに出る画像（`public/og-image.png`）は [scripts/og/og.html](scripts/og/og.html) から作っています。文言を変えたら、次のコマンドで書き出し直してください。
+
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --virtual-time-budget=5000 --window-size=1200,630 --screenshot="$PWD/public/og-image.png" "file://$PWD/scripts/og/og.html"
+```
 
 ---
 

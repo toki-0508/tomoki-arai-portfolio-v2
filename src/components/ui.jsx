@@ -62,6 +62,7 @@ const CATEGORY_ICONS = {
   web: Icon.Monitor,
   app: Icon.Smartphone,
   '3d': Icon.Box,
+  electronics: Icon.Chip,
   sounds: Icon.Note,
   other: Icon.Spark,
 };
