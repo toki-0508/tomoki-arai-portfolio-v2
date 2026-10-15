@@ -4,7 +4,6 @@ category: web
 date: 2026-09
 tags: [JavaScript, Google Apps Script, PWA]
 image: /images/projects/marugoto-inventory.png
-url: https://toki-0508.github.io/marugoto-inventory/
 github: https://github.com/toki-0508/marugoto-inventory
 summary: イベントで使う物品の在庫と貸し出しを、申請から返却まで管理できるWebアプリです。
 ---
