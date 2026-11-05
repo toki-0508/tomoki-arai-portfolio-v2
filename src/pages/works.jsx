@@ -48,7 +48,7 @@ export function WorksPage() {
       <PageHead
         eyebrow="Works"
         title="作品"
-        lead="これまでに作ったアプリ・Webサイト・3Dモデルなどです。各作品のページで、作った理由や学んだことを紹介しています。"
+        lead="アプリ、電子工作、3D、ゲームや高専祭の企画まで。各作品のページで、作った理由や学んだことを紹介しています。"
       />
       <section className="section section-tight">
         <div className="wrap">

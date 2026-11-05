@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
+import { asset } from '../asset.js';
 
 // Three.js 本体(約590KB)はここで初めて読み込む。
 // さらに、ページの初回表示が終わってブラウザが空いてから読み込みを始める
@@ -20,7 +21,7 @@ function useWhenIdle(timeout = 1200) {
 
 // 手書きの注釈。見出しの下線と同じインクで、3Dモデルが何なのかを説明する。
 // 線を引く演出は CSS 側(.hero-note)。モーションを減らす設定では最初から完成形で出る。
-function HeroNote() {
+function HeroNote({ interactive }) {
   return (
     <div className="hero-note">
       <svg className="hero-note-arrow" viewBox="0 0 120 80" aria-hidden="true" focusable="false">
@@ -28,21 +29,25 @@ function HeroNote() {
         <path pathLength="1" d="M95.8 18.7 108 14l-2 12.9" />
       </svg>
       <p className="hero-note-text">
-        Blenderで作ったマウスです。
-        <br />
-        ドラッグで回せます。
+        Blenderで制作したデスクマウス
+        {interactive && <><br />ドラッグで回転</>}
       </p>
     </div>
   );
 }
 
 export function Hero3D() {
-  const ready = useWhenIdle();
-  const placeholder = <div className="hero-canvas" aria-hidden="true" />;
+  const loadCanvas = useWhenIdle();
+  const [interactive, setInteractive] = useState(false);
+
   return (
-    <div className="hero-visual">
-      {ready ? <Suspense fallback={placeholder}><LazyCanvas /></Suspense> : placeholder}
-      <HeroNote />
+    <div className={`hero-visual${interactive ? ' is-interactive' : ''}`}>
+      <span className="hero-figure-label" aria-hidden="true">FIG. 01 / BLENDER STUDY</span>
+      {!interactive && (
+        <img className="hero-poster" src={asset('/images/projects/mouse-model.png')} alt="デスクマウスの3Dレンダリング" width="320" height="320" />
+      )}
+      {loadCanvas && <Suspense fallback={null}><LazyCanvas onReady={setInteractive} /></Suspense>}
+      <HeroNote interactive={interactive} />
     </div>
   );
 }

@@ -63,6 +63,8 @@ const CATEGORY_ICONS = {
   app: Icon.Smartphone,
   '3d': Icon.Box,
   electronics: Icon.Chip,
+  game: Icon.Play,
+  event: Icon.Spark,
   sounds: Icon.Note,
   other: Icon.Spark,
 };
@@ -90,7 +92,7 @@ export function TechList({ items, className = '' }) {
 // ---------- サムネイル ----------
 // スクリーンショットの縦横比はばらばらなので、枠は常に同じ比率に固定し、
 // 横長は cover、縦長や正方形に近いものは contain にして、下地の上に影付きで置く。
-export function Thumb({ src, alt = '' }) {
+export function Thumb({ src, alt = '', fit }) {
   const [loaded, setLoaded] = useState(false);
   const [portrait, setPortrait] = useState(false);
   if (!src) return <div className="thumb thumb-empty" aria-hidden="true" />;
@@ -102,7 +104,7 @@ export function Thumb({ src, alt = '' }) {
   };
 
   return (
-    <div className={`thumb ${loaded ? 'is-loaded' : ''} ${portrait ? 'is-portrait' : ''}`}>
+    <div className={`thumb ${loaded ? 'is-loaded' : ''} ${portrait ? 'is-portrait' : ''} ${fit === 'contain' ? 'is-contained' : ''}`}>
       <img className="thumb-main" src={src} alt={alt} loading="lazy" decoding="async" onLoad={onLoad} />
     </div>
   );

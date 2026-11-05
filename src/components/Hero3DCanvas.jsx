@@ -13,8 +13,8 @@ import { asset } from '../asset.js';
 // ============================================================
 
 const INITIAL_AZIMUTH_DEG = -140;
-const CAMERA_DISTANCE = 9.2;
-const CAMERA_HEIGHT = 2.4;
+const CAMERA_DISTANCE = 8.1;
+const CAMERA_HEIGHT = 2.8;
 
 function makeShadowTexture() {
   const size = 128;
@@ -32,7 +32,7 @@ function makeShadowTexture() {
   return texture;
 }
 
-export default function Hero3DCanvas() {
+export default function Hero3DCanvas({ onReady }) {
   const mountRef = useRef(null);
 
   useEffect(() => {
@@ -50,11 +50,15 @@ export default function Hero3DCanvas() {
     const azimuth = (INITIAL_AZIMUTH_DEG * Math.PI) / 180;
     camera.position.set(Math.sin(azimuth) * CAMERA_DISTANCE, CAMERA_HEIGHT, Math.cos(azimuth) * CAMERA_DISTANCE);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    } catch {
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(width, height);
     renderer.domElement.style.cursor = 'grab';
-    renderer.domElement.style.touchAction = 'pan-y';
     renderer.domElement.setAttribute('aria-label', '自作の3Dモデル（マウス）。ドラッグで回転できます');
     renderer.domElement.setAttribute('role', 'img');
     mount.appendChild(renderer.domElement);
@@ -92,16 +96,7 @@ export default function Hero3DCanvas() {
       placeShadow(wrap);
     };
 
-    const fallback = () => {
-      if (disposed) return;
-      const geometry = new THREE.IcosahedronGeometry(1.6, 0);
-      const material = new THREE.MeshStandardMaterial({ color: 0x3046d1, flatShading: true, roughness: 0.4 });
-      const mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
-      placeShadow(mesh);
-      disposables.push(geometry, material);
-    };
-
+    let firstModelFrame = false;
     new GLTFLoader().load(
       asset('/models/hero.glb'),
       (gltf) => {
@@ -110,9 +105,10 @@ export default function Hero3DCanvas() {
           if (o.isMesh && o.material) o.material.side = THREE.DoubleSide;
         });
         fitObject(gltf.scene);
+        firstModelFrame = true;
       },
       undefined,
-      fallback,
+      () => { /* The poster remains visible if the model cannot load. */ },
     );
 
     // 黒い艶のあるマウスなので、輪郭が背景に沈まないよう逆光(リムライト)を足す
@@ -137,6 +133,8 @@ export default function Hero3DCanvas() {
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     const controls = new OrbitControls(camera, renderer.domElement);
+    // OrbitControls sets touch-action: none by default; keep vertical page scrolling available.
+    renderer.domElement.style.touchAction = 'pan-y';
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
     controls.enablePan = false;
@@ -159,6 +157,10 @@ export default function Hero3DCanvas() {
     const tick = () => {
       controls.update();
       renderer.render(scene, camera);
+      if (firstModelFrame) {
+        firstModelFrame = false;
+        onReady(true);
+      }
       raf = requestAnimationFrame(tick);
     };
     const start = () => { if (!raf && visible && !disposed) tick(); };
@@ -201,7 +203,7 @@ export default function Hero3DCanvas() {
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, []);
+  }, [onReady]);
 
   return <div className="hero-canvas" ref={mountRef} />;
 }

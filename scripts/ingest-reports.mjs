@@ -31,7 +31,7 @@ const FILES_DIR = path.join(ROOT, 'public', 'downloads');
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
-const WORK_CATEGORIES = ['web', 'app', '3d', 'electronics', 'other'];
+const WORK_CATEGORIES = ['web', 'app', '3d', 'electronics', 'game', 'event', 'other'];
 const DOWNLOAD_CATEGORIES = ['app', '3d', 'electronics', 'sounds', 'other'];
 // レポートに日本語や別名で書かれた分類を、サイトの分類名にそろえる
 const CATEGORY_ALIASES = {

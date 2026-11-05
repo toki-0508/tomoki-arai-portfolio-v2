@@ -13,10 +13,10 @@ import { asset } from '../asset.js';
 // ============================================================
 
 // カテゴリ表記は作品とダウンロードで共通にする
-const LABELS = { all: 'All', web: 'Web', app: 'App', '3d': '3D', electronics: 'Electronics', sounds: 'Sounds', other: 'Other' };
+const LABELS = { all: 'All', web: 'Web', app: 'App', '3d': '3D', electronics: 'Electronics', game: 'Games', event: 'Events', sounds: 'Sounds', other: 'Other' };
 const categories = (ids) => ids.map((id) => ({ id, label: LABELS[id] }));
 
-export const WORK_CATEGORIES = categories(['all', 'web', 'app', '3d', 'electronics', 'other']);
+export const WORK_CATEGORIES = categories(['all', 'web', 'app', '3d', 'electronics', 'game', 'event', 'other']);
 export const DOWNLOAD_CATEGORIES = categories(['all', 'app', '3d', 'electronics', 'sounds', 'other']);
 
 const pickCategory = (value, list) => (list.some((c) => c.id === value && c.id !== 'all') ? value : 'other');
@@ -38,12 +38,12 @@ function entries(globbed) {
   });
 }
 
-// トップの注目作品に添える要点。「特徴」の箇条書きの先頭から取る(本文と同じ事実だけを使う)
-const highlightsOf = (sections, count = 3) =>
-  sections
-    .find((section) => section.title === '特徴')
-    ?.blocks.find((block) => block.type === 'list')
-    ?.items.slice(0, count) ?? [];
+// 順番の指定がない既存の featured: true は、番号付き作品の後ろに並べる。
+function featuredOrder(value) {
+  const order = Number(value);
+  if (typeof value === 'string' && Number.isInteger(order) && order > 0) return order;
+  return value === true ? Infinity : null;
+}
 
 // ---------- 作品 ----------
 const workFiles = import.meta.glob('./works/*.md', { query: '?raw', import: 'default', eager: true });
@@ -51,7 +51,6 @@ const workFiles = import.meta.glob('./works/*.md', { query: '?raw', import: 'def
 export const WORKS = entries(workFiles)
   .map(({ id, data, body }) => {
     const category = pickCategory(data.category, WORK_CATEGORIES);
-    const sections = parseSections(body);
     return {
       id,
       name: data.name || id,
@@ -61,13 +60,20 @@ export const WORKS = entries(workFiles)
       dateLabel: dateLabel(data.date),
       tags: toList(data.tags),
       image: data.image ? asset(data.image) : null,
+      imageFit: data.imageFit === 'contain' ? 'contain' : undefined,
+      imageAlt: data.imageAlt || '',
+      imageCaption: data.imageCaption || '',
       url: data.url || null,
       github: data.github || null,
       summary: data.summary || '',
-      featured: data.featured === true,
-      sections,
+      featuredOrder: featuredOrder(data.featured),
+      role: data.role || '',
+      status: data.status || '',
+      outcome: data.outcome || '',
+      steps: toList(data.steps),
+      relatedIds: toList(data.related),
+      sections: parseSections(body),
       lead: parseLead(body),
-      highlights: highlightsOf(sections),
     };
   })
   .sort(byDateDesc);
@@ -76,7 +82,8 @@ export const workById = (id) => WORKS.find((work) => work.id === id) ?? null;
 
 // featured 指定を優先し、足りない分を新しい順で埋めて count 件返す
 export function featuredWorks(count = 3) {
-  const picked = WORKS.filter((work) => work.featured);
+  const picked = WORKS.filter((work) => work.featuredOrder !== null)
+    .sort((a, b) => a.featuredOrder - b.featuredOrder || byDateDesc(a, b));
   for (const work of WORKS) {
     if (picked.length >= count) break;
     if (!picked.includes(work)) picked.push(work);

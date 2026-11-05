@@ -13,6 +13,26 @@ const hostOf = (url) => {
   }
 };
 
+function CaseFacts({ work }) {
+  const facts = [
+    ['自分の担当', work.role],
+    ['現在地', work.status],
+    ['確認できた成果', work.outcome],
+  ].filter(([, value]) => value);
+
+  if (!facts.length) return null;
+  return (
+    <dl className="case-facts" aria-label="制作の要点">
+      {facts.map(([label, value]) => (
+        <div key={label}>
+          <dt>{label}</dt>
+          <dd>{value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 export function WorkDetailPage({ id }) {
   const work = workById(id);
   const [zoomed, setZoomed] = useState(false);
@@ -29,7 +49,10 @@ export function WorkDetailPage({ id }) {
   const index = WORKS.indexOf(work);
   const older = WORKS[index + 1] ?? null;
   const newer = WORKS[index - 1] ?? null;
-  const related = WORKS.filter((w) => w.category === work.category && w.id !== work.id).slice(0, 3);
+  const linkedWorks = work.relatedIds.map(workById).filter((w) => w && w !== work);
+  const sameCategory = WORKS.filter((w) => w.category === work.category && w !== work);
+  const related = [...new Set([...linkedWorks, ...sameCategory])].slice(0, 3);
+  const imageAlt = work.imageAlt || `${work.name}の画像`;
 
   return (
     <Fragment>
@@ -41,6 +64,7 @@ export function WorkDetailPage({ id }) {
           </Link>
           <h1 className="page-title">{work.name}</h1>
           {work.summary && <p className="lead">{work.summary}</p>}
+          <CaseFacts work={work} />
 
           {/* 作品の基本情報は1行にまとめ、本文の前に一目で分かるようにする */}
           <dl className="facts" aria-label="作品の情報">
@@ -89,17 +113,27 @@ export function WorkDetailPage({ id }) {
       </header>
 
       {work.image && (
-        <div className="wrap detail-visual-wrap">
+        <figure className="wrap detail-visual-wrap">
           <button type="button" className="detail-visual" onClick={() => setZoomed(true)} aria-label={`${work.name}の画像を拡大する`}>
-            <Thumb src={work.image} alt={`${work.name}の画面`} />
+            <Thumb src={work.image} alt={imageAlt} />
             <span className="zoom-hint" aria-hidden="true">
               <Icon.Zoom width={14} height={14} />
               クリックで拡大
             </span>
           </button>
-        </div>
+          {work.imageCaption && <figcaption className="detail-caption">{work.imageCaption}</figcaption>}
+        </figure>
       )}
-      {zoomed && <Lightbox src={work.image} alt={`${work.name}の画面`} onClose={() => setZoomed(false)} />}
+      {zoomed && <Lightbox src={work.image} alt={imageAlt} onClose={() => setZoomed(false)} />}
+
+      {work.steps.length > 0 && (
+        <section className="wrap detail-walkthrough" aria-labelledby="walkthrough-title">
+          <h2 id="walkthrough-title">操作の流れ</h2>
+          <ol>
+            {work.steps.map((step) => <li key={step}>{step}</li>)}
+          </ol>
+        </section>
+      )}
 
       {/* 本文は「見出しを左・文章を右」の2段組み。見出しだけを拾い読みしても流れが分かる */}
       <section className="section section-tight">
@@ -140,7 +174,13 @@ export function WorkDetailPage({ id }) {
       {related.length > 0 && (
         <section className="section">
           <div className="wrap">
-            <SectionHead eyebrow="Related" title="同じカテゴリの作品" link={{ to: `/works?cat=${work.category}`, label: `${work.categoryLabel}の作品をすべて見る` }} />
+            <SectionHead
+              eyebrow="Related"
+              title={linkedWorks.length ? '関連する作品' : '同じカテゴリの作品'}
+              link={linkedWorks.length
+                ? { to: '/works', label: 'すべての作品を見る' }
+                : { to: `/works?cat=${work.category}`, label: `${work.categoryLabel}の作品をすべて見る` }}
+            />
             <div className="card-grid">
               {related.map((w) => <WorkCard key={w.id} work={w} />)}
             </div>
