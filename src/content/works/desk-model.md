@@ -4,7 +4,6 @@ category: 3d
 date: 2024-09
 tags: [Blender]
 image: /images/projects/desk-model.png
-featured: true
 summary: Blenderで制作した、L字のゲーミングデスクとデュアルモニターの3Dモデルです。
 ---
 

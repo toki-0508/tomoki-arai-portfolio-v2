@@ -4,7 +4,17 @@ category: app
 date: 2026-10
 tags: [Flutter, Dart, SQLite]
 image: /images/projects/hi-pdf.png
-featured: true
+imageFit: contain
+imageAlt: 左にHi PDFのプロジェクト一覧、右に写真の追加・並べ替えとPDF作成を行う画面
+imageCaption: 左：iPhoneのプロジェクト一覧。右：Androidの撮影・並べ替え・PDF作成画面。
+featured: 2
+role: アプリの設計・実装、実機検証
+status: iPhoneとAndroidで主要な操作を検証済み。
+outcome: アカウントやサーバーなしで、撮影からPDF保存まで端末内で完結します。
+steps:
+  - プロジェクトを作り、写真を連続で撮影するか端末から追加します。
+  - 写真をドラッグして、PDFのページ順に並べ替えます。
+  - 並べた順でA4のPDFを作り、端末に保存するか共有します。
 summary: 連続で撮った写真を並べ替えて、1つのPDFにまとめられるアプリです。
 ---
 

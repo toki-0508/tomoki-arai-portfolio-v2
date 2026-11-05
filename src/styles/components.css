@@ -305,6 +305,10 @@
   opacity: 1;
 }
 
+.thumb.is-contained .thumb-main {
+  object-fit: contain;
+}
+
 .thumb.is-portrait .thumb-main {
   object-fit: contain;
   padding: 7% 0;
@@ -384,110 +388,35 @@
   padding-top: 6px;
 }
 
-/* ---------- 注目作品(トップ) ---------- */
-/* 1件目は画像と要点を横並びで大きく、残りは2列のカード */
-.featured {
-  display: grid;
-  gap: clamp(16px, 2vw, 28px);
+/* ---------- 代表作(トップ) ---------- */
+.showcase-section {
+  padding-top: clamp(30px, 4vw, 48px);
 }
 
-.feature-lead {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-  overflow: hidden;
-  border: 1px solid var(--rule);
-  border-radius: var(--r-l);
+.showcase-grid .work-card {
+  border-radius: var(--r-s);
+}
+
+.showcase-grid .work-card-visual {
+  aspect-ratio: 2 / 1;
+}
+
+.work-card-number {
+  position: absolute;
+  z-index: 2;
+  inset: 10px auto auto 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
   background: var(--card);
-  transition: border-color 0.25s, box-shadow 0.25s;
+  color: var(--ink);
+  font: 500 12px/1.75 var(--font-mono);
 }
 
-.feature-lead:hover {
-  border-color: var(--rule-strong);
-  box-shadow: var(--shadow-2);
-}
-
-/* 横並びのときは本文の高さに合わせて画像を伸ばす(縦積みのときは pages.css で 16:10 に戻す) */
-.feature-lead-visual {
-  position: relative;
-  min-height: 320px;
-  border-right: 1px solid var(--rule);
-}
-
-.feature-lead-visual .thumb {
-  position: absolute;
-  inset: 0;
-}
-
-.feature-lead:hover .thumb.is-loaded .thumb-main {
-  transform: scale(1.02);
-}
-
-.feature-lead-body {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: clamp(24px, 3vw, 40px);
-}
-
-.feature-lead-title {
-  font-size: clamp(24px, 1.2vw + 18px, 32px);
-  line-height: 1.35;
-  transition: color 0.2s;
-}
-
-.feature-lead:hover .feature-lead-title {
-  color: var(--accent);
-}
-
-.feature-lead-summary {
-  color: var(--pencil);
-  text-wrap: pretty;
-}
-
-.feature-points {
-  display: grid;
-  gap: 6px;
-  margin-top: 4px;
-  padding-top: 14px;
-  border-top: 1px solid var(--rule);
-}
-
-.feature-points li {
-  position: relative;
-  padding-left: 18px;
-  font-size: 14px;
-  line-height: 1.75;
-}
-
-/* 箇条書きの記号は本文と同じインクの短い線 */
-.feature-points li::before {
-  content: '';
-  position: absolute;
-  top: 0.85em;
-  left: 1px;
-  width: 9px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--accent);
-}
-
-.feature-lead-tech {
-  margin-top: auto;
+.work-card-role {
   padding-top: 8px;
-}
-
-.feature-lead-more {
-  align-self: flex-start;
-}
-
-.feature-lead:hover .feature-lead-more svg {
-  transform: translateX(3px);
-}
-
-.featured-pair {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 28px);
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  font-weight: 700;
 }
 
 /* ---------- 作品の目次(トップ) ---------- */
