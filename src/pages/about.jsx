@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { Icon } from '../components/Icon.jsx';
-import { Link, PageHead, SectionHead } from '../components/ui.jsx';
+import { Link, SectionHead } from '../components/ui.jsx';
 import { usageOf, workById } from '../content/loader.js';
 import { HISTORY, INTERESTS, MVV, NOW, NOW_UPDATED, PROFILE, SKILL_GROUPS } from '../content/site.js';
 
@@ -8,53 +8,43 @@ const INTEREST_ICONS = { pen: Icon.Pen, play: Icon.Play, box: Icon.Box, chart: I
 const monthLabel = (ym) => ym.replace('-', '.');
 
 export function AboutPage() {
+  const mouseWork = workById('handheld-mouse');
   return (
     <Fragment>
-      <PageHead
-        eyebrow="About"
-        title="プロフィール"
-        lead="神山まるごと高専2期生の新井智己です。身近な不便からアプリを作ったり、欲しい操作感を求めて基板からガジェットを作ったりしています。"
-      />
-
-      <section className="section section-tight">
-        <div className="wrap">
-          <div className="profile">
-            <div className="profile-name">
-              <p className="profile-ja">{PROFILE.nameJa}</p>
-              <p className="profile-reading">{PROFILE.reading}</p>
-              <p className="profile-nick">
-                「<span className="hand">{PROFILE.nickname}</span>」と呼ばれることが多いです。
-              </p>
-            </div>
+      <header className="intro-band" aria-labelledby="about-title">
+        <div className="wrap about-intro">
+          <div>
+            <p className="eyebrow intro-kicker">About / {PROFILE.nameEn}</p>
+            <h1 className="intro-title" id="about-title">{PROFILE.nameJa}</h1>
+            <p className="about-reading">{PROFILE.reading} / {PROFILE.nickname}</p>
+            <p className="intro-lead">欲しいアプリを自分で作り、欲しい操作感を基板から試す。ソフトウェアと実物の両方を作っています。</p>
             <dl className="profile-list">
-              <div>
-                <dt>英語表記</dt>
-                <dd>{PROFILE.nameEn}</dd>
-              </div>
-              <div>
-                <dt>所属</dt>
-                <dd>{PROFILE.affiliation}</dd>
-              </div>
-              <div>
-                <dt>制作領域</dt>
-                <dd>{PROFILE.fields}</dd>
-              </div>
-              <div>
-                <dt>連絡先</dt>
-                <dd className="profile-links">
-                  <Link to="/contact">お問い合わせ</Link>
-                  {PROFILE.socials.map((s) => (
-                    <a key={s.id} href={s.url} target="_blank" rel="noreferrer">{s.label}</a>
-                  ))}
-                </dd>
-              </div>
+              <div><dt>所属</dt><dd>{PROFILE.affiliation}</dd></div>
+              <div><dt>制作領域</dt><dd>{PROFILE.fields}</dd></div>
             </dl>
+            <div className="profile-links">
+              <Link to="/contact" className="text-link">お問い合わせ<Icon.Arrow width={15} height={15} /></Link>
+              {PROFILE.socials.map((social) => (
+                <a key={social.id} href={social.url} target="_blank" rel="noreferrer" className="text-link">
+                  {social.label}<Icon.External width={13} height={13} />
+                </a>
+              ))}
+            </div>
           </div>
+          {mouseWork?.image && (
+            <figure className="about-figure">
+              <img src={mouseWork.image} alt={mouseWork.imageAlt} width="1600" height="1000" />
+              <figcaption className="intro-caption">
+                <Link to={`/works/${mouseWork.id}`} className="text-link">{mouseWork.name}<Icon.Arrow width={15} height={15} /></Link>
+                <span>基板・ケースの試作</span>
+              </figcaption>
+            </figure>
+          )}
         </div>
-      </section>
+      </header>
 
       <section className="section section-band">
-        <div className="wrap">
+        <div className="wrap career-layout">
           <SectionHead eyebrow="History" title="制作と活動の歩み" />
           <ol className="timeline career-timeline">
             {HISTORY.map(({ time, title, text, work }) => {

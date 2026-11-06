@@ -135,15 +135,14 @@ h1,
 h2,
 h3,
 .lead,
-.hero-lead,
+.intro-lead,
 .section-note,
 .work-card-summary,
 .dl-desc,
 .dl-note,
 .mvv-card p,
 .footer-desc,
-.footer-tagline,
-.hero-note-text {
+.footer-tagline {
   word-break: auto-phrase;
 }
 
@@ -417,11 +416,5 @@ h3 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-}
-
-@keyframes lift {
-  from {
-    transform: translateY(10px);
   }
 }

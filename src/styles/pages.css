@@ -2,19 +2,24 @@
    ページ固有のスタイルとレスポンシブ
    ============================================================ */
 
-/* ---------- トップ: ヒーロー ---------- */
-.hero {
-  position: relative;
-  background: var(--card);
+/* ---------- Home / About: shared introductions ---------- */
+.intro-band {
+  background: var(--intro-surface);
   border-bottom: 1px solid var(--rule);
 }
 
-.hero-grid {
+.hero {
+  position: relative;
+}
+
+.hero-grid,
+.about-intro {
   display: grid;
-  grid-template-columns: minmax(0, 47%) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  min-height: 440px;
-  padding-block: 52px;
+  gap: 48px;
+  min-height: 430px;
+  padding-block: 56px;
 }
 
 .hero-copy {
@@ -23,28 +28,32 @@
   min-width: 0;
 }
 
-/* 読み込み時の演出はここだけ: 文字が少し持ち上がり、下線→矢印→メモの順にインクで書かれる。
-   見出しは最初から見えている状態にする(透明から出すと、端末が重いとき文字が見えない時間が伸びる) */
-.hero-copy > * {
-  animation: lift 0.7s var(--ease-out) both;
+.intro-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--intro-ink);
 }
 
-.hero-copy > :nth-child(2) { animation-delay: 0.06s; }
-.hero-copy > :nth-child(3) { animation-delay: 0.14s; }
-.hero-copy > :nth-child(4) { animation-delay: 0.2s; }
+.intro-kicker::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  flex: none;
+  background: currentColor;
+}
 
-.hero-title {
+.intro-title {
   margin-top: 18px;
   font-size: 52px;
   line-height: 1.32;
   letter-spacing: 0;
 }
 
-.hero-title .phrase {
+.intro-title .phrase {
   display: block;
 }
 
-/* 手書きの下線 */
 .ink-mark {
   position: relative;
   display: inline-block;
@@ -60,23 +69,18 @@
   pointer-events: none;
 }
 
-.ink-mark path,
-.hero-note-arrow path {
+.ink-mark path {
   fill: none;
-  stroke: var(--accent);
+  stroke: var(--intro-ink);
+  stroke-width: 3.2;
   stroke-linecap: round;
-  stroke-linejoin: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: draw 0.65s var(--ease-out) 0.55s forwards;
+  animation: draw 0.65s var(--ease-out) 0.35s forwards;
 }
 
-.ink-mark path {
-  stroke-width: 3.2;
-}
-
-.hero-lead {
-  max-width: 28em;
+.intro-lead {
+  max-width: 29em;
   margin-top: 20px;
   font-size: 16px;
   color: var(--pencil);
@@ -95,19 +99,31 @@
   position: absolute;
   inset: 0 0 0 50%;
   isolation: isolate;
-  background: var(--hero-stage);
-  color: var(--hero-ink);
 }
 
-.hero-figure-label {
+.intro-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding-top: 9px;
+  border-top: 1px solid var(--rule-strong);
+  color: var(--pencil);
+  font-size: 13px;
+}
+
+.intro-caption > :first-child {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.hero-caption {
   position: absolute;
-  z-index: 1;
-  top: 24px;
   right: max(24px, (100vw - var(--wrap)) / 2);
+  bottom: 28px;
+  left: 32px;
   pointer-events: none;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
 }
 
 .hero-poster {
@@ -137,57 +153,6 @@
 .hero-canvas canvas {
   width: 100% !important;
   height: 100% !important;
-}
-
-/* 手書きのメモ(3Dモデルの説明) */
-.hero-note {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  width: min(70%, 246px);
-  pointer-events: none;
-}
-
-.hero-note-arrow {
-  display: block;
-  width: 58%;
-  height: auto;
-  margin-left: 38%;
-  overflow: visible;
-}
-
-.hero-note-arrow path {
-  stroke: currentColor;
-  stroke-width: 2.4;
-  animation-delay: 1.15s;
-}
-
-.hero-note-arrow path + path {
-  animation-duration: 0.25s;
-  animation-delay: 1.75s;
-}
-
-.hero-note-text {
-  margin-top: 2px;
-  font-family: var(--font-hand);
-  font-size: clamp(14px, 0.5vw + 11px, 18px);
-  font-weight: 600;
-  line-height: 1.6;
-  letter-spacing: 0;
-  transform: rotate(-3deg);
-  transform-origin: left top;
-  animation: note-in 0.5s var(--ease-out) 1.55s both;
-}
-
-@keyframes note-in {
-  from {
-    opacity: 0;
-    transform: rotate(-3deg) translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: rotate(-3deg);
-  }
 }
 
 /* ---------- トップ: お問い合わせへの導線 ---------- */
@@ -510,42 +475,35 @@
 }
 
 /* ---------- プロフィール ---------- */
-.profile {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  align-items: center;
-  gap: clamp(24px, 4vw, 56px);
-  padding: clamp(24px, 3vw, 40px);
-  border: 1px solid var(--rule);
-  border-radius: var(--r-l);
-  background: var(--card);
-}
-
-.profile-ja {
-  font-size: clamp(32px, 2vw + 22px, 44px);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0.12em;
-}
-
-.profile-reading {
+.about-reading {
   margin-top: 6px;
+  color: var(--intro-ink);
   font-size: 14px;
-  letter-spacing: 0.2em;
-  color: var(--pencil);
 }
 
-.profile-nick {
-  margin-top: 18px;
-  font-size: 14px;
-  color: var(--pencil);
+.about-figure {
+  min-width: 0;
 }
 
-.hand {
-  font-family: var(--font-hand);
-  font-size: 1.35em;
-  font-weight: 600;
-  color: var(--accent);
+.about-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-s);
+}
+
+.about-figure .intro-caption {
+  margin-top: 14px;
+}
+
+.profile-list {
+  margin-top: 24px;
+}
+
+.career-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  align-items: start;
+  gap: 40px;
 }
 
 .profile-list > div {
@@ -574,6 +532,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px 16px;
+  margin-top: 12px;
 }
 
 .profile-links a {
@@ -930,13 +889,14 @@
     display: inline-grid;
   }
 
-  .hero-grid {
+  .hero-grid,
+  .about-intro {
     grid-template-columns: 1fr;
     min-height: 0;
     padding-block: 36px 32px;
   }
 
-  .hero-title {
+  .intro-title {
     font-size: 44px;
   }
 
@@ -950,10 +910,14 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .profile,
+  .career-layout,
   .contact-grid,
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .career-layout {
+    gap: 0;
   }
 
   .mvv,
@@ -1016,7 +980,7 @@
     font-size: 14px;
   }
 
-  .hero-title {
+  .intro-title {
     font-size: 34px;
   }
 
@@ -1024,24 +988,10 @@
     height: 235px;
   }
 
-  .hero-figure-label {
-    top: 14px;
-    right: 18px;
-  }
-
-  .hero-note {
-    bottom: 10px;
+  .hero-caption {
+    bottom: 12px;
     left: 18px;
-    width: calc(100% - 36px);
-  }
-
-  .hero-note-arrow {
-    display: none;
-  }
-
-  .hero-note-text {
-    animation: none;
-    transform: none;
+    right: 18px;
   }
 
   .detail-walkthrough ol {

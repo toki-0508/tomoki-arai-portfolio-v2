@@ -4,8 +4,7 @@
 
    コンセプト: 紙とインク
    - 背景はわずかに青みのある紙の白、文字は墨に近い紺
-   - アクセントはボールペンのインクの青。ボタンやリンクに加えて、
-     手書きの注釈(見出しの下線・3Dモデルのメモ)も同じインクで描く
+   - 操作には青、HomeとAboutの導入には緑がかった紙とインクを使う
    ============================================================ */
 
 :root {
@@ -15,8 +14,8 @@
   --paper: #f4f5f9;
   --card: #ffffff;
   --well: #eaecf3;
-  --hero-stage: #dce9e7;
-  --hero-ink: #244640;
+  --intro-surface: #f7f9f7;
+  --intro-ink: #315c50;
 
   /* 文字 */
   --ink: #161b2e;
@@ -49,10 +48,9 @@
   --header-h: 64px;
 
   /* 書体
-     sans: 見出しと本文 / mono: 日付・技術名・ラベルなどのデータ / hand: 手書きの注釈のみ */
+     sans: 見出しと本文 / mono: 日付・技術名・ラベルなどのデータ */
   --font-sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', Meiryo, system-ui, sans-serif;
   --font-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-hand: 'Klee One', 'Klee', 'YuKyokasho', serif;
 
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
@@ -63,8 +61,8 @@
   --paper: #0e1222;
   --card: #151b30;
   --well: #1a2138;
-  --hero-stage: #263e3c;
-  --hero-ink: #dce9e7;
+  --intro-surface: #192222;
+  --intro-ink: #a9d3c5;
 
   --ink: #e7eaf4;
   --pencil: #a1a9c0;
