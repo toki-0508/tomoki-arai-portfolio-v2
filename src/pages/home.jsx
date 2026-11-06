@@ -34,27 +34,26 @@ function Tagline({ text }) {
 
 export function HomePage() {
   const featured = featuredWorks(3);
-  const leadWork = featured[0];
   const others = WORKS.filter((work) => !featured.includes(work));
 
   return (
     <Fragment>
-      <section className="hero" aria-labelledby="hero-title">
+      <section className="hero intro-band" aria-labelledby="hero-title">
         <div className="wrap hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">{PROFILE.nameEn} / {PROFILE.fieldsEn}</p>
-            <h1 className="hero-title" id="hero-title">
+            <p className="eyebrow intro-kicker">{PROFILE.nameEn} / Portfolio</p>
+            <h1 className="intro-title" id="hero-title">
               <Tagline text={PROFILE.tagline} />
             </h1>
-            <p className="hero-lead">
-              {PROFILE.affiliation}の{PROFILE.nameJa}です。写真をまとめるアプリから、基板を設計したマウスまで。日常の小さな不便を見つけて、使える形にしています。
+            <p className="intro-lead">
+              {PROFILE.affiliation}の{PROFILE.nameJa}です。アプリや電子工作で、日常の小さな不便を使えるものに変えています。
             </p>
             <div className="hero-actions">
-              <Link to={leadWork ? `/works/${leadWork.id}` : '/works'} className="btn btn-primary">
-                {leadWork ? `${leadWork.name}を見る` : '作品を見る'}
+              <Link to="/works" className="btn btn-primary">
+                作品を見る
                 <Icon.Arrow width={16} height={16} />
               </Link>
-              <Link to="/works" className="text-link">作品一覧</Link>
+              <Link to="/about" className="text-link">プロフィール<Icon.Arrow width={15} height={15} /></Link>
             </div>
           </div>
         </div>
@@ -64,7 +63,7 @@ export function HomePage() {
       {featured.length > 0 && (
         <section className="section showcase-section">
           <div className="wrap">
-            <SectionHead eyebrow="Selected Works" title="代表作" link={{ to: '/works', label: 'すべての作品を見る' }} />
+            <SectionHead eyebrow="Selected Works" title="ピックアップ" link={{ to: '/works', label: 'すべての作品を見る' }} />
             <div className="card-grid showcase-grid">
               {featured.map((work, index) => (
                 <WorkCard key={work.id} work={work} number={String(index + 1).padStart(2, '0')} />
