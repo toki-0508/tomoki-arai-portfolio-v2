@@ -2,7 +2,7 @@
 # ▼ 必須
 name: 作品名
 
-# ▼ 分類（web / app / 3d / electronics / other。作品なら game / event、ダウンロードなら sounds も可）
+# ▼ 作品は app / web / electronics / game / other。配布物は app / 3d / electronics / other（音源は other）
 category: web
 
 # ▼ 完成した年月（省略すると今月になる）
@@ -29,8 +29,10 @@ summary: ひとことで言うとどんな作品かを書きます。
 # length: 1:08           # 音源の長さ
 # note: 初回は右クリックして「開く」を選んでください。   # 使うときの注意
 
-# ▼ トップページの「注目の作品」に載せたいとき
-# featured: true
+# ▼ 一覧で前に出す順番（小さい整数が先）
+# priority: 4
+# ▼ トップの代表作に載せる順番
+# featured: 1
 ---
 
 ## 概要

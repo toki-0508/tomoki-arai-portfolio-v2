@@ -45,10 +45,9 @@ export function WorkDetailPage({ id }) {
     );
   }
 
-  // 一覧は新しい順。「前の作品」は時系列で1つ前(=古い方)
   const index = WORKS.indexOf(work);
-  const older = WORKS[index + 1] ?? null;
-  const newer = WORKS[index - 1] ?? null;
+  const previous = WORKS[index - 1] ?? null;
+  const next = WORKS[index + 1] ?? null;
   const linkedWorks = work.relatedIds.map(workById).filter((w) => w && w !== work);
   const sameCategory = WORKS.filter((w) => w.category === work.category && w !== work);
   const related = [...new Set([...linkedWorks, ...sameCategory])].slice(0, 3);
@@ -154,18 +153,18 @@ export function WorkDetailPage({ id }) {
         </article>
       </section>
 
-      {(older || newer) && (
+      {(previous || next) && (
         <nav className="wrap pager" aria-label="ほかの作品">
-          {older ? (
-            <Link to={`/works/${older.id}`} className="pager-link">
+          {previous ? (
+            <Link to={`/works/${previous.id}`} className="pager-link">
               <small><Icon.Back width={14} height={14} />前の作品</small>
-              <span>{older.name}</span>
+              <span>{previous.name}</span>
             </Link>
           ) : <span />}
-          {newer ? (
-            <Link to={`/works/${newer.id}`} className="pager-link is-next">
+          {next ? (
+            <Link to={`/works/${next.id}`} className="pager-link is-next">
               <small>次の作品<Icon.Arrow width={14} height={14} /></small>
-              <span>{newer.name}</span>
+              <span>{next.name}</span>
             </Link>
           ) : <span />}
         </nav>

@@ -1,6 +1,7 @@
 ---
 name: 自動連射ツール（AutoClicker）
 category: app
+priority: 1
 date: 2026-07
 size: 11.0 MB
 platform: macOS（Apple Silicon）

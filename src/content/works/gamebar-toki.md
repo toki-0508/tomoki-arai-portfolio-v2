@@ -1,11 +1,11 @@
 ---
 name: ゲームバー toki
-category: event
+category: game
 date: 2026-10
 image: /images/projects/toki-gamebar.png
 imageFit: contain
 imageAlt: 「ゲームとドリンクのお店」と書かれたゲームバー tokiのロゴ
-featured: 3
+featured: 2
 role: 企画運営・会計管理・空間設計
 status: 高専祭に友人と2人で出店。
 outcome: 自作ゲームの有料体験と、すだちのモクテルやドリンクバーを提供しました。

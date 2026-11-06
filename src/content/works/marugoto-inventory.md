@@ -1,6 +1,7 @@
 ---
 name: まるごと祭 物品管理ツール
 category: web
+priority: 7
 date: 2026-09
 tags: [JavaScript, Google Apps Script, PWA]
 image: /images/projects/marugoto-inventory.png

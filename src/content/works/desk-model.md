@@ -1,6 +1,7 @@
 ---
 name: 3Dデスク周りモデル
-category: 3d
+category: other
+priority: 11
 date: 2024-09
 tags: [Blender]
 image: /images/projects/desk-model.png

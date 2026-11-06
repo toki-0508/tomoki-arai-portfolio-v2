@@ -1,6 +1,7 @@
 ---
 name: 便利な家計簿！
 category: app
+priority: 4
 date: 2026-06
 tags: [Flutter, Dart, Firebase]
 image: /images/projects/kakeibo-app.png

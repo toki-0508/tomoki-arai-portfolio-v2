@@ -27,10 +27,10 @@ export function ContactPage() {
         form.reset();
         setStatus({ state: 'done', message: '送信しました。内容を確認のうえ、ご連絡します。' });
       } else {
-        setStatus({ state: 'error', message: data.message || '送信できませんでした。時間をおいてもう一度お試しいただくか、メールでご連絡ください。' });
+        setStatus({ state: 'error', message: data.message || '送信できませんでした。時間をおいてもう一度お試しいただくか、SNSからご連絡ください。' });
       }
     } catch {
-      setStatus({ state: 'error', message: '送信できませんでした。通信状況を確認するか、メールでご連絡ください。' });
+      setStatus({ state: 'error', message: '送信できませんでした。通信状況を確認するか、SNSからご連絡ください。' });
     }
   };
 
@@ -76,12 +76,8 @@ export function ContactPage() {
           </form>
 
           <aside className="contact-side">
-            <h2>メールで直接連絡する</h2>
-            <p>フォームが使えない場合は、メールやSNSからもご連絡いただけます。</p>
-            <a className="contact-mail" href={`mailto:${PROFILE.email}`}>
-              <Icon.Mail width={16} height={16} />
-              {PROFILE.email}
-            </a>
+            <h2>SNS・活動リンク</h2>
+            <p>フォームが使えない場合は、Xからもご連絡いただけます。</p>
             <div className="contact-socials">
               {PROFILE.socials.map((s) => (
                 <a key={s.id} href={s.url} target="_blank" rel="noreferrer">

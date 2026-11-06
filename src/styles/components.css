@@ -369,6 +369,19 @@
   transition: color 0.2s;
 }
 
+.work-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.work-card-heading svg {
+  flex: none;
+  margin-top: 5px;
+  color: var(--accent);
+}
+
 .work-card:hover .work-card-title {
   color: var(--accent);
 }
@@ -399,6 +412,47 @@
 
 .showcase-grid .work-card-visual {
   aspect-ratio: 2 / 1;
+}
+
+@media (min-width: 961px) {
+  .showcase-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .showcase-grid .work-card:first-child {
+    grid-row: span 2;
+  }
+
+  .showcase-grid .work-card:first-child .work-card-visual {
+    aspect-ratio: 16 / 10;
+    flex: 1 0 auto;
+  }
+
+  .showcase-grid .work-card:first-child .work-card-title {
+    font-size: 26px;
+  }
+
+  .showcase-grid .work-card:not(:first-child) {
+    display: grid;
+    grid-template-columns: minmax(0, 36%) minmax(0, 1fr);
+  }
+
+  .showcase-grid .work-card:not(:first-child) .work-card-visual {
+    aspect-ratio: auto;
+    border-right: 1px solid var(--rule);
+    border-bottom: 0;
+  }
+
+  .showcase-grid .work-card:not(:first-child) .work-card-body {
+    padding: 14px 16px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 960px) {
+  .showcase-grid .work-card:first-child {
+    grid-column: 1 / -1;
+  }
 }
 
 .work-card-number {
@@ -524,22 +578,23 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rule);
 }
 
 .filter {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 36px;
+  min-height: 40px;
   padding: 0 14px;
   border: 1px solid var(--rule);
   border-radius: 999px;
   background: var(--card);
   font-family: var(--font-mono);
   font-size: 12.5px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0;
   color: var(--pencil);
   transition: color 0.2s, border-color 0.2s, background-color 0.2s;
 }
@@ -557,12 +612,36 @@
 
 .filter-count {
   font-size: 11px;
-  color: var(--faint);
+  color: inherit;
 }
 
 .filter[aria-pressed='true'] .filter-count {
   color: inherit;
   opacity: 0.7;
+}
+
+.catalog-results {
+  display: grid;
+  gap: 42px;
+}
+
+.catalog-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.catalog-group-head h2 {
+  font-size: 22px;
+}
+
+.catalog-total,
+.dl-format {
+  font-size: 12px;
+  color: var(--pencil);
+  white-space: nowrap;
 }
 
 /* ---------- ダウンロード ---------- */
@@ -578,7 +657,7 @@
   gap: 20px;
   padding: 16px;
   border: 1px solid var(--rule);
-  border-radius: var(--r-m);
+  border-radius: var(--r-s);
   background: var(--card);
 }
 

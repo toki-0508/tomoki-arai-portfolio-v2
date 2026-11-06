@@ -1,6 +1,7 @@
 ---
 name: 今日の名言.web
-category: web
+category: other
+priority: 12
 date: 2025-10
 tags: [JavaScript, Firebase, Web API]
 image: /images/projects/kyounomeigen-web.png

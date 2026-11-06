@@ -1,6 +1,7 @@
 ---
 name: じぎょメモ
 category: app
+priority: 9
 date: 2026-05
 tags: [Flutter, Dart, Firebase]
 image: /images/projects/jigyomemo-web.png

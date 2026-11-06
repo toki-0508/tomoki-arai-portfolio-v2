@@ -1,4 +1,4 @@
-const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || 'toki.zeno.0508@gmail.com';
+const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL;
 const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'Portfolio Contact <onboarding@resend.dev>';
 const RESEND_API_URL = 'https://api.resend.com/emails';
 
@@ -109,7 +109,7 @@ function escapeHtml(value) {
 
 async function sendContactEmail(fields) {
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
+  if (!apiKey || !CONTACT_TO_EMAIL) {
     return { ok: false, status: 503, code: 'MAIL_SERVICE_NOT_CONFIGURED' };
   }
 
@@ -153,8 +153,6 @@ export default async function handler(request, response) {
   response.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // GitHub Pages 版はこの API をクロスオリジンで叩くため、許可オリジンを明示する。
-  // Vercel 版は同一オリジンなので、この分岐に関係なく従来どおり動作する。
   const origin = request.headers.origin;
   if (origin && ALLOWED_ORIGINS.has(origin)) {
     response.setHeader('Access-Control-Allow-Origin', origin);

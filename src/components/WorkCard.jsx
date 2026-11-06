@@ -1,4 +1,5 @@
 import { CategoryLabel, Link, TechList, Thumb } from './ui.jsx';
+import { Icon } from './Icon.jsx';
 
 // 作品一覧・トップ・関連作品で共通の作品カード。カード全体がリンク。
 export function WorkCard({ work, number }) {
@@ -13,9 +14,12 @@ export function WorkCard({ work, number }) {
           <CategoryLabel category={work.category} label={work.categoryLabel} />
           <time dateTime={work.date}>{work.dateLabel}</time>
         </p>
-        <h3 className="work-card-title">{work.name}</h3>
+        <div className="work-card-heading">
+          <h3 className="work-card-title">{work.name}</h3>
+          <Icon.Arrow width={16} height={16} />
+        </div>
         <p className="work-card-summary">{work.summary}</p>
-        {number && work.role && <p className="work-card-role">{work.role}</p>}
+        {number && (work.outcome || work.role) && <p className="work-card-role">{work.outcome || work.role}</p>}
         <TechList items={work.tags} className="work-card-tech" />
       </div>
     </Link>
