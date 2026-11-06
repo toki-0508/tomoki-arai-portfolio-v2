@@ -1,6 +1,7 @@
 ---
 name: AI方（あいかた）
 category: game
+priority: 6
 date: 2026-10
 tags: [Unity, C#, 強化学習]
 image: /images/projects/ai-kata.png

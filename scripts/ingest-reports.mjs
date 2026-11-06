@@ -19,6 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { categoryId } from '../src/content/categories.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPORTS_DIR = path.join(ROOT, 'reports');
@@ -31,8 +32,6 @@ const FILES_DIR = path.join(ROOT, 'public', 'downloads');
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
-const WORK_CATEGORIES = ['web', 'app', '3d', 'electronics', 'game', 'event', 'other'];
-const DOWNLOAD_CATEGORIES = ['app', '3d', 'electronics', 'sounds', 'other'];
 // レポートに日本語や別名で書かれた分類を、サイトの分類名にそろえる
 const CATEGORY_ALIASES = {
   ウェブ: 'web',
@@ -204,8 +203,7 @@ function ingest(report, manifest) {
   const rawCategory = CATEGORY_ALIASES[data.category] ?? String(data.category ?? '').toLowerCase();
   const isDownload = data.kind === 'download' || Boolean(data.file) || rawCategory === 'sounds';
   const kind = isDownload ? 'download' : 'work';
-  const categories = isDownload ? DOWNLOAD_CATEGORIES : WORK_CATEGORIES;
-  const category = categories.includes(rawCategory) ? rawCategory : 'other';
+  const category = categoryId(kind, rawCategory);
   const date = /^\d{4}-\d{1,2}/.test(String(data.date)) ? String(data.date).slice(0, 7) : todayMonth();
 
   const targetDir = isDownload ? DOWNLOADS_DIR : WORKS_DIR;
@@ -252,6 +250,7 @@ function ingest(report, manifest) {
 
   // ---- 出力 md を組み立てる ----
   const fm = [`name: ${data.name}`, `category: ${category}`, `date: ${date}`];
+  if (/^[1-9]\d*$/.test(data.priority)) fm.push(`priority: ${data.priority}`);
   const tags = Array.isArray(data.tags) ? data.tags : data.tags ? [data.tags] : [];
   if (isDownload) {
     if (size) fm.push(`size: ${size}`);
@@ -266,7 +265,7 @@ function ingest(report, manifest) {
     if (image) fm.push(`image: ${image}`);
     if (data.url) fm.push(`url: ${data.url}`);
     if (data.github) fm.push(`github: ${data.github}`);
-    if (data.featured === true) fm.push('featured: true');
+    if (data.featured === true || /^[1-9]\d*$/.test(data.featured)) fm.push(`featured: ${data.featured}`);
     if (data.summary) fm.push(`summary: ${data.summary}`);
   }
 

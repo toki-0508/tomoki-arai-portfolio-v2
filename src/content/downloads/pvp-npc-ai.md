@@ -1,6 +1,7 @@
 ---
 name: PvP NPC AI
 category: other
+priority: 4
 date: 2026-07
 size: 156 KB
 platform: Minecraft Java Edition 1.20.1（Forge）

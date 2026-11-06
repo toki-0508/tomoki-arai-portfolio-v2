@@ -64,8 +64,6 @@ const CATEGORY_ICONS = {
   '3d': Icon.Box,
   electronics: Icon.Chip,
   game: Icon.Play,
-  event: Icon.Spark,
-  sounds: Icon.Note,
   other: Icon.Spark,
 };
 

@@ -64,11 +64,12 @@ function AudioPreview({ src, name }) {
 // compact: トップページ用。使うときの注意は省き、説明は1行に収める(注意はダウンロードページで読める)
 export function DownloadRow({ file, compact = false }) {
   const spec = [file.platform && `${file.platform}用`, file.length, file.size].filter(Boolean);
+  const audio = isAudio(file);
 
   return (
     <article className={`dl-row ${compact ? 'is-compact' : ''}`}>
       <div className="dl-cover">
-        {file.category === 'sounds' ? (
+        {audio ? (
           <GeneratedCover name={file.name} label={file.length ? `SOUND · ${file.length}` : 'SOUND'} />
         ) : file.image ? (
           <Thumb src={file.image} alt="" />
@@ -79,6 +80,7 @@ export function DownloadRow({ file, compact = false }) {
       <div className="dl-body">
         <p className="meta">
           <CategoryLabel category={file.category} label={file.categoryLabel} />
+          {audio && <span className="dl-format">音源</span>}
           <time dateTime={file.date}>{file.dateLabel}</time>
         </p>
         <h3 className="dl-title">{file.name}</h3>
@@ -87,9 +89,9 @@ export function DownloadRow({ file, compact = false }) {
         {spec.length > 0 && <p className="dl-spec">{spec.join(' · ')}</p>}
       </div>
       <div className="dl-actions">
-        {isAudio(file) && file.file && <AudioPreview src={file.file} name={file.name} />}
+        {audio && file.file && <AudioPreview src={file.file} name={file.name} />}
         {file.file ? (
-          <a className="btn btn-primary btn-sm" href={file.file} download>
+          <a className="btn btn-primary btn-sm" href={file.file} download aria-label={`${file.name}をダウンロード`}>
             <Icon.Download width={16} height={16} />
             ダウンロード
           </a>

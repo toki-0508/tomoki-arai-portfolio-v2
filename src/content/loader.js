@@ -1,5 +1,6 @@
 import { parseFrontmatter, parseSections, parseLead } from '../lib/markdown.jsx';
 import { asset } from '../asset.js';
+import { categoryId, categoryLabel } from './categories.js';
 
 // ============================================================
 // コンテンツローダー
@@ -12,15 +13,6 @@ import { asset } from '../asset.js';
 // この形式の md を自動生成する。
 // ============================================================
 
-// カテゴリ表記は作品とダウンロードで共通にする
-const LABELS = { all: 'All', web: 'Web', app: 'App', '3d': '3D', electronics: 'Electronics', game: 'Games', event: 'Events', sounds: 'Sounds', other: 'Other' };
-const categories = (ids) => ids.map((id) => ({ id, label: LABELS[id] }));
-
-export const WORK_CATEGORIES = categories(['all', 'web', 'app', '3d', 'electronics', 'game', 'event', 'other']);
-export const DOWNLOAD_CATEGORIES = categories(['all', 'app', '3d', 'electronics', 'sounds', 'other']);
-
-const pickCategory = (value, list) => (list.some((c) => c.id === value && c.id !== 'all') ? value : 'other');
-
 // 'YYYY-MM' → 'YYYY.MM'(表示用)。想定外の形式はそのまま返す。
 const dateLabel = (date) => {
   const m = /^(\d{4})-(\d{1,2})(?:-\d{1,2})?$/.exec(String(date ?? ''));
@@ -29,6 +21,11 @@ const dateLabel = (date) => {
 
 const toList = (value) => (Array.isArray(value) ? value : value ? [value] : []);
 const byDateDesc = (a, b) => String(b.date).localeCompare(String(a.date));
+const LAST = Number.MAX_SAFE_INTEGER;
+const byPriority = (a, b) =>
+  Number(a.category === 'other') - Number(b.category === 'other') ||
+  a.priority - b.priority ||
+  byDateDesc(a, b);
 
 function entries(globbed) {
   return Object.entries(globbed).map(([path, raw]) => {
@@ -38,11 +35,9 @@ function entries(globbed) {
   });
 }
 
-// 順番の指定がない既存の featured: true は、番号付き作品の後ろに並べる。
-function featuredOrder(value) {
+function orderNumber(value) {
   const order = Number(value);
-  if (typeof value === 'string' && Number.isInteger(order) && order > 0) return order;
-  return value === true ? Infinity : null;
+  return typeof value === 'string' && Number.isSafeInteger(order) && order > 0 ? order : LAST;
 }
 
 // ---------- 作品 ----------
@@ -50,12 +45,13 @@ const workFiles = import.meta.glob('./works/*.md', { query: '?raw', import: 'def
 
 export const WORKS = entries(workFiles)
   .map(({ id, data, body }) => {
-    const category = pickCategory(data.category, WORK_CATEGORIES);
+    const category = categoryId('work', data.category);
+    const featuredOrder = orderNumber(data.featured);
     return {
       id,
       name: data.name || id,
       category,
-      categoryLabel: LABELS[category],
+      categoryLabel: categoryLabel(category),
       date: data.date ?? '',
       dateLabel: dateLabel(data.date),
       tags: toList(data.tags),
@@ -66,7 +62,9 @@ export const WORKS = entries(workFiles)
       url: data.url || null,
       github: data.github || null,
       summary: data.summary || '',
-      featuredOrder: featuredOrder(data.featured),
+      featured: featuredOrder !== LAST || data.featured === true,
+      featuredOrder,
+      priority: orderNumber(data.priority),
       role: data.role || '',
       status: data.status || '',
       outcome: data.outcome || '',
@@ -76,19 +74,16 @@ export const WORKS = entries(workFiles)
       lead: parseLead(body),
     };
   })
-  .sort(byDateDesc);
+  .sort((a, b) =>
+    Number(b.featured) - Number(a.featured) ||
+    a.featuredOrder - b.featuredOrder ||
+    byPriority(a, b));
 
 export const workById = (id) => WORKS.find((work) => work.id === id) ?? null;
 
 // featured 指定を優先し、足りない分を新しい順で埋めて count 件返す
 export function featuredWorks(count = 3) {
-  const picked = WORKS.filter((work) => work.featuredOrder !== null)
-    .sort((a, b) => a.featuredOrder - b.featuredOrder || byDateDesc(a, b));
-  for (const work of WORKS) {
-    if (picked.length >= count) break;
-    if (!picked.includes(work)) picked.push(work);
-  }
-  return picked.slice(0, count);
+  return WORKS.slice(0, count);
 }
 
 // ---------- ダウンロード ----------
@@ -96,12 +91,13 @@ const downloadFiles = import.meta.glob('./downloads/*.md', { query: '?raw', impo
 
 export const DOWNLOADS = entries(downloadFiles)
   .map(({ id, data, body }) => {
-    const category = pickCategory(data.category, DOWNLOAD_CATEGORIES);
+    const category = categoryId('download', data.category);
     return {
       id,
       name: data.name || id,
       category,
-      categoryLabel: LABELS[category],
+      categoryLabel: categoryLabel(category),
+      priority: orderNumber(data.priority),
       date: data.date ?? '',
       dateLabel: dateLabel(data.date),
       size: data.size || '',
@@ -115,7 +111,7 @@ export const DOWNLOADS = entries(downloadFiles)
       lead: parseLead(body),
     };
   })
-  .sort(byDateDesc);
+  .sort(byPriority);
 
 export const isAudio = (download) => /\.(mp3|wav|m4a|ogg)$/i.test(download.rawFile);
 

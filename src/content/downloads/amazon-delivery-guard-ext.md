@@ -1,6 +1,7 @@
 ---
 name: Amazon 配送先ロケーションガード
 category: app
+priority: 2
 date: 2026-08
 size: 24 KB
 platform: Google Chrome

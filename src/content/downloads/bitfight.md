@@ -1,6 +1,6 @@
 ---
 name: BitFight
-category: sounds
+category: other
 date: 2026-07
 size: 1.05 MB
 length: 1:08

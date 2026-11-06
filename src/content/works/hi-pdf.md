@@ -7,7 +7,7 @@ image: /images/projects/hi-pdf.png
 imageFit: contain
 imageAlt: 左にHi PDFのプロジェクト一覧、右に写真の追加・並べ替えとPDF作成を行う画面
 imageCaption: 左：iPhoneのプロジェクト一覧。右：Androidの撮影・並べ替え・PDF作成画面。
-featured: 2
+featured: 1
 role: アプリの設計・実装、実機検証
 status: iPhoneとAndroidで主要な操作を検証済み。
 outcome: アカウントやサーバーなしで、撮影からPDF保存まで端末内で完結します。

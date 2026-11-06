@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Icon } from '../components/Icon.jsx';
 import { Link, PageHead, SectionHead } from '../components/ui.jsx';
-import { usageOf } from '../content/loader.js';
+import { usageOf, workById } from '../content/loader.js';
 import { HISTORY, INTERESTS, MVV, NOW, NOW_UPDATED, PROFILE, SKILL_GROUPS } from '../content/site.js';
 
 const INTEREST_ICONS = { pen: Icon.Pen, play: Icon.Play, box: Icon.Box, chart: Icon.Chart };
@@ -13,7 +13,7 @@ export function AboutPage() {
       <PageHead
         eyebrow="About"
         title="プロフィール"
-        lead="使ってくれる人に「これ好きだなぁ」と感じてもらえる体験を届けたいと思っています。いまは実装力を高めるために、作りたい・面白そうと思ったアプリや3D、ガジェットの制作に取り組んでいます。"
+        lead="神山まるごと高専2期生の新井智己です。身近な不便からアプリを作ったり、欲しい操作感を求めて基板からガジェットを作ったりしています。"
       />
 
       <section className="section section-tight">
@@ -50,6 +50,29 @@ export function AboutPage() {
               </div>
             </dl>
           </div>
+        </div>
+      </section>
+
+      <section className="section section-band">
+        <div className="wrap">
+          <SectionHead eyebrow="History" title="制作と活動の歩み" />
+          <ol className="timeline career-timeline">
+            {HISTORY.map(({ time, title, text, work }) => {
+              const relatedWork = workById(work);
+              return (
+                <li key={title}>
+                  <p className="career-time">{time}</p>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                  {relatedWork && (
+                    <Link to={`/works/${relatedWork.id}`} className="text-link">
+                      {relatedWork.name}<Icon.Arrow width={15} height={15} />
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </section>
 
@@ -103,7 +126,7 @@ export function AboutPage() {
       </section>
 
       <section className="section">
-        <div className="wrap about-columns">
+        <div className="wrap">
           <div>
             <SectionHead eyebrow="Interests" title="好きなこと" />
             <ul className="interests">
@@ -120,17 +143,6 @@ export function AboutPage() {
                 );
               })}
             </ul>
-          </div>
-          <div>
-            <SectionHead eyebrow="History" title="これまで" />
-            <ol className="timeline">
-              {HISTORY.map(({ time, text }) => (
-                <li key={time}>
-                  <h3>{time}</h3>
-                  <p>{text}</p>
-                </li>
-              ))}
-            </ol>
           </div>
         </div>
       </section>

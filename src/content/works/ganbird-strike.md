@@ -1,6 +1,7 @@
 ---
 name: ガンバードストライク
 category: game
+priority: 5
 date: 2026-10
 tags: [Python, Panda3D, MediaPipe, OpenCV]
 image: /images/projects/ganbird-strike.png

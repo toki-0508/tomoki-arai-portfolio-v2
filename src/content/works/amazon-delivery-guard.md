@@ -1,6 +1,7 @@
 ---
 name: Amazon 配送先ロケーションガード
 category: app
+priority: 8
 date: 2026-08
 tags: [JavaScript, Chrome Extensions]
 image: /images/projects/amazon-delivery-guard.png

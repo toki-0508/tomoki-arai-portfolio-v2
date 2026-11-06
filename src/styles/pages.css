@@ -663,15 +663,10 @@
   color: var(--accent);
 }
 
-.about-columns {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(40px, 6vw, 88px);
-}
-
 .interests {
   display: grid;
-  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 28px;
 }
 
 .interests li {
@@ -734,6 +729,26 @@
   border: 2px solid var(--accent);
   border-radius: 50%;
   background: var(--paper);
+}
+
+.career-timeline {
+  max-width: 800px;
+  gap: 28px;
+}
+
+.career-timeline h3 {
+  font-size: 20px;
+  margin-block: 4px 6px;
+}
+
+.career-timeline .career-time {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.career-timeline .text-link {
+  margin-top: 5px;
 }
 
 .now {
@@ -872,25 +887,6 @@
   color: var(--pencil);
 }
 
-.contact-mail {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 18px;
-  padding: 10px 14px;
-  border: 1px solid var(--rule-strong);
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 700;
-  word-break: break-all;
-  transition: border-color 0.2s, color 0.2s;
-}
-
-.contact-mail:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
 .contact-socials {
   display: flex;
   gap: 8px;
@@ -955,7 +951,6 @@
   }
 
   .profile,
-  .about-columns,
   .contact-grid,
   .footer-grid {
     grid-template-columns: 1fr;
@@ -993,6 +988,7 @@
 
 @media (max-width: 640px) {
   .card-grid,
+  .interests,
   .skill-groups,
   .form-row,
   .pager {

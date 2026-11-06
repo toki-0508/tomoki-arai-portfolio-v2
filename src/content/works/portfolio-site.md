@@ -1,6 +1,7 @@
 ---
 name: ポートフォリオサイト
-category: web
+category: other
+priority: 10
 date: 2026-10
 tags: [React, Three.js, Vite, Vercel]
 image: /images/projects/portfolio-site.png
