@@ -11,6 +11,7 @@ import { categoryId, categoryLabel } from './categories.js';
 // ファイルを置くだけでビルドに取り込まれる(コード変更は不要)。
 // reports/ に置いたレポートから scripts/ingest-reports.mjs が
 // この形式の md を自動生成する。
+// 各項目の source と body は編集モードが使う(本番の表示には使わない)。
 // ============================================================
 
 // 'YYYY-MM' → 'YYYY.MM'(表示用)。想定外の形式はそのまま返す。
@@ -49,6 +50,8 @@ export const WORKS = entries(workFiles)
     const featuredOrder = orderNumber(data.featured);
     return {
       id,
+      source: `src/content/works/${id}.md`,
+      body,
       name: data.name || id,
       category,
       categoryLabel: categoryLabel(category),
@@ -95,6 +98,8 @@ export const DOWNLOADS = entries(downloadFiles)
     const category = categoryId('download', data.category);
     return {
       id,
+      source: `src/content/downloads/${id}.md`,
+      body,
       name: data.name || id,
       category,
       categoryLabel: categoryLabel(category),
@@ -108,7 +113,7 @@ export const DOWNLOADS = entries(downloadFiles)
       tags: toList(data.tags),
       file: data.file ? asset(data.file) : null,
       rawFile: data.file || '',
-      downloadLabel: data.downloadLabel || 'ダウンロード',
+      downloadLabel: data.downloadLabel || '',
       guide: data.guide ? asset(data.guide) : null,
       image: data.image ? asset(data.image) : null,
       lead: parseLead(body),

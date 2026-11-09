@@ -114,7 +114,7 @@ export function WorkDetailPage({ id }) {
               <div className="work-download-actions">
                 <a href={download.file} download className="btn btn-primary">
                   <Icon.Download width={16} height={16} />
-                  {download.downloadLabel}
+                  {download.downloadLabel || 'ダウンロード'}
                 </a>
                 {download.guide && <a href={download.guide} className="text-link">インストール方法<Icon.Arrow width={15} height={15} /></a>}
               </div>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon } from './Icon.jsx';
 import { CategoryLabel, Link } from './ui.jsx';
+import { F } from '../editor/index.jsx';
 
 const PREVIEW_W = 280;
 const PREVIEW_H = 175;
@@ -59,7 +60,7 @@ export function WorkIndex({ works }) {
               onMouseLeave={() => setActive(null)}
             >
               <time className="index-year" dateTime={work.date}>{work.date.slice(0, 4)}</time>
-              <span className="index-title">{work.name}</span>
+              <span className="index-title"><F item={work} field="name" /></span>
               <span className="index-cat"><CategoryLabel category={work.category} label={work.categoryLabel} /></span>
               <span className="index-tech">{work.tags.slice(0, 3).join(' · ')}</span>
               <Icon.Arrow className="index-arrow" width={16} height={16} />

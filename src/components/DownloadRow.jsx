@@ -3,6 +3,8 @@ import { Icon } from './Icon.jsx';
 import { GeneratedCover } from './GeneratedCover.jsx';
 import { CategoryLabel, Thumb } from './ui.jsx';
 import { isAudio } from '../content/loader.js';
+import { t } from '../content/copy.js';
+import { C, EditableImage, F, Prose } from '../editor/index.jsx';
 
 // 同時に鳴るのは常に1曲だけにするため、Audio はモジュールで共有する。
 let sharedAudio = null;
@@ -53,26 +55,27 @@ function AudioPreview({ src, name }) {
       className={`audio-btn ${playing ? 'is-playing' : ''}`}
       onClick={toggle}
       aria-pressed={playing}
-      aria-label={playing ? `${name}の再生を停止` : `${name}を試聴`}
+      aria-label={playing ? t('common.download.stopLabel', { name }) : t('common.download.playLabel', { name })}
     >
       {playing ? <Icon.Pause width={14} height={14} /> : <Icon.Play width={14} height={14} />}
-      <span>{playing ? '停止' : '試聴'}</span>
+      <span>{playing ? <C k="common.download.stop" /> : <C k="common.download.play" />}</span>
     </button>
   );
 }
 
 // compact: トップページ用。使うときの注意は省き、説明は1行に収める(注意はダウンロードページで読める)
 export function DownloadRow({ file, compact = false }) {
-  const spec = [file.platform && `${file.platform}用`, file.length, file.size].filter(Boolean);
+  const spec = [file.platform && t('common.download.platform', { platform: file.platform }), file.length, file.size].filter(Boolean);
+  const sound = t('common.download.coverSound');
   const audio = isAudio(file);
 
   return (
     <article className={`dl-row ${compact ? 'is-compact' : ''}`}>
       <div className="dl-cover">
         {audio ? (
-          <GeneratedCover name={file.name} label={file.length ? `SOUND · ${file.length}` : 'SOUND'} />
+          <GeneratedCover name={file.name} label={file.length ? `${sound} · ${file.length}` : sound} />
         ) : file.image ? (
-          <Thumb src={file.image} alt="" />
+          <EditableImage item={file}><Thumb src={file.image} alt="" /></EditableImage>
         ) : (
           <GeneratedCover name={file.name} label={(file.tags[1] ?? file.categoryLabel).toUpperCase()} pattern="blocks" />
         )}
@@ -80,26 +83,28 @@ export function DownloadRow({ file, compact = false }) {
       <div className="dl-body">
         <p className="meta">
           <CategoryLabel category={file.category} label={file.categoryLabel} />
-          {audio && <span className="dl-format">音源</span>}
+          {audio && <span className="dl-format"><C k="common.download.audio" /></span>}
           <time dateTime={file.date}>{file.dateLabel}</time>
         </p>
-        <h3 className="dl-title">{file.name}</h3>
-        {file.lead.map((block, i) => (block.type === 'p' ? <p key={i} className="dl-desc">{block.text}</p> : null))}
-        {file.note && !compact && <p className="dl-note">{file.note}</p>}
+        <h3 className="dl-title"><F item={file} field="name" /></h3>
+        <Prose item={file} part="lead">
+          {file.lead.map((block, i) => (block.type === 'p' ? <p key={i} className="dl-desc">{block.text}</p> : null))}
+        </Prose>
+        {file.note && !compact && <p className="dl-note"><F item={file} field="note" /></p>}
         {spec.length > 0 && <p className="dl-spec">{spec.join(' · ')}</p>}
       </div>
       <div className={`dl-actions${file.guide && !compact ? ' has-guide' : ''}`}>
         {audio && file.file && <AudioPreview src={file.file} name={file.name} />}
         {file.file ? (
-          <a className="btn btn-primary btn-sm" href={file.file} download aria-label={`${file.name}をダウンロード`}>
+          <a className="btn btn-primary btn-sm" href={file.file} download aria-label={t('common.download.buttonLabel', { name: file.name })}>
             <Icon.Download width={16} height={16} />
-            {file.downloadLabel}
+            {file.downloadLabel ? <F item={file} field="downloadLabel" /> : <C k="common.download.button" />}
           </a>
         ) : (
-          <span className="dl-unavailable">準備中です</span>
+          <span className="dl-unavailable"><C k="common.download.unavailable" /></span>
         )}
         {file.guide && !compact && (
-          <a className="btn btn-secondary btn-sm" href={file.guide}>インストール方法</a>
+          <a className="btn btn-secondary btn-sm" href={file.guide}><C k="common.download.guide" /></a>
         )}
       </div>
     </article>

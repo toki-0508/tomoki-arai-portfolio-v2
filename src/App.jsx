@@ -8,6 +8,8 @@ import { DownloadsPage } from './pages/downloads.jsx';
 import { ContactPage } from './pages/contact.jsx';
 import { workById } from './content/loader.js';
 import { NAV_LINKS, PROFILE } from './content/site.js';
+import { t } from './content/copy.js';
+import { EditorRoot } from './editor/index.jsx';
 
 // '#/works?cat=web' → '/works' のようにクエリを除いたパスを返す
 function getRoute() {
@@ -20,16 +22,15 @@ function getRoute() {
 
 // タブのタイトルは「ページ名 | 新井智己 – Tomoki Arai Portfolio」に統一する。
 // トップだけは名前の読みを含めた形(検索結果に出るため)。
-const SITE_NAME = `${PROFILE.nameJa} – ${PROFILE.nameEn} Portfolio`;
-const HOME_TITLE = `${PROFILE.nameJa}（${PROFILE.reading}・${PROFILE.nickname}）| ${PROFILE.nameEn} Portfolio`;
-
 function titleFor(route) {
+  const site = t('layout.title.site', { nameJa: PROFILE.nameJa, nameEn: PROFILE.nameEn });
   if (route.startsWith('/works/')) {
     const work = workById(route.split('/').pop());
-    if (work) return `${work.name} | ${SITE_NAME}`;
+    if (work) return t('layout.title.page', { page: work.name, site });
   }
   const link = NAV_LINKS.find((l) => l.id === route);
-  return link ? `${link.title} | ${SITE_NAME}` : HOME_TITLE;
+  if (link) return t('layout.title.page', { page: link.title, site });
+  return t('layout.title.home', { nameJa: PROFILE.nameJa, reading: PROFILE.reading, nickname: PROFILE.nickname, nameEn: PROFILE.nameEn });
 }
 
 const PAGES = {
@@ -72,6 +73,7 @@ export function App() {
       </main>
       <Footer />
       <BackToTop />
+      <EditorRoot route={route} />
     </div>
   );
 }

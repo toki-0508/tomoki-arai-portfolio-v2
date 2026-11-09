@@ -1,5 +1,7 @@
 import { useEffect, useId, useState } from 'react';
 import { categoryId } from '../content/categories.js';
+import { t } from '../content/copy.js';
+import { C } from '../editor/index.jsx';
 
 function categoryFromHash(kind) {
   const params = new URLSearchParams(window.location.hash.split('?')[1]);
@@ -33,7 +35,7 @@ export function FilterTabs({ categories, items, value, onChange }) {
   for (const { category } of items) counts.set(category, (counts.get(category) ?? 0) + 1);
 
   return (
-    <div className="filters" role="group" aria-label="カテゴリで絞り込む">
+    <div className="filters" role="group" aria-label={t('common.filter.label')}>
       {categories.filter(({ id }) => id === 'all' || id === value || counts.has(id)).map(({ id, label }) => (
         <button key={id} type="button" className="filter" aria-pressed={value === id} onClick={() => onChange(id)}>
           {label}
@@ -60,14 +62,14 @@ export function CatalogGroups({ categories, items, value, onReset, mainTitle, ot
         <section key={group.id} className="catalog-group" aria-labelledby={`${headingId}-${group.id}`}>
           <header className="catalog-group-head">
             <h2 id={`${headingId}-${group.id}`}>{group.title}</h2>
-            <span className="catalog-total">{group.items.length}件</span>
+            <span className="catalog-total"><C k="common.catalog.count" vars={{ count: group.items.length }} /></span>
           </header>
           {renderItems(group.items)}
         </section>
       )) : (
         <div className="empty">
-          <p>このカテゴリにはまだありません。</p>
-          {value !== 'all' && <button type="button" className="btn btn-secondary" onClick={onReset}>すべて表示</button>}
+          <p><C k="common.catalog.empty" /></p>
+          {value !== 'all' && <button type="button" className="btn btn-secondary" onClick={onReset}><C k="common.catalog.showAll" /></button>}
         </div>
       )}
     </div>

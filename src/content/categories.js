@@ -1,14 +1,17 @@
-const LABELS = {
-  all: 'All',
-  app: 'App',
-  web: 'Web',
-  electronics: 'Electronics',
-  game: 'Games & Events',
-  '3d': '3D',
-  other: 'Other',
+import { t } from './copy.js';
+
+// 表示名は copy.json(common.category.*)にある
+const LABEL_KEYS = {
+  all: 'common.category.all',
+  app: 'common.category.app',
+  web: 'common.category.web',
+  electronics: 'common.category.electronics',
+  game: 'common.category.game',
+  '3d': 'common.category.3d',
+  other: 'common.category.other',
 };
 
-const categories = (ids) => ids.map((id) => ({ id, label: LABELS[id] }));
+const categories = (ids) => ids.map((id) => ({ id, label: t(LABEL_KEYS[id]) }));
 
 export const WORK_CATEGORIES = categories(['all', 'app', 'web', 'electronics', 'game', 'other']);
 export const DOWNLOAD_CATEGORIES = categories(['all', 'app', '3d', 'electronics', 'other']);
@@ -24,4 +27,4 @@ export function categoryId(kind, value, fallback = 'other') {
   return available.some(({ id }) => id === requested && id !== 'all') ? requested : fallback;
 }
 
-export const categoryLabel = (id) => LABELS[id];
+export const categoryLabel = (id) => (LABEL_KEYS[id] ? t(LABEL_KEYS[id]) : undefined);

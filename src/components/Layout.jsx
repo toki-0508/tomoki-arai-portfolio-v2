@@ -4,6 +4,8 @@ import { Link, navigate } from './ui.jsx';
 import { EasterEgg } from './EasterEgg.jsx';
 import { CLICKS_NEEDED, WINDOW_MS } from '../effects/index.js';
 import { NAV_LINKS, PROFILE } from '../content/site.js';
+import { t } from '../content/copy.js';
+import { C, S } from '../editor/index.jsx';
 
 // ---------- テーマ(ライト / ダーク) ----------
 // 初期値は index.html のインラインスクリプトが決める(ちらつき防止)。
@@ -21,7 +23,7 @@ function ThemeToggle() {
     }
     setTheme(next);
   };
-  const label = theme === 'dark' ? 'ライトモードに切り替える' : 'ダークモードに切り替える';
+  const label = theme === 'dark' ? t('layout.theme.toLight') : t('layout.theme.toDark');
   return (
     <button type="button" className="icon-btn" onClick={toggle} aria-label={label} title={label}>
       {theme === 'dark' ? <Icon.Sun /> : <Icon.Moon />}
@@ -47,11 +49,11 @@ function Logo({ onRapidClicks }) {
     }
   };
   return (
-    <a href="#/" className="brand" onClick={handleClick} aria-label={`${PROFILE.nameJa}（トップページへ）`}>
+    <a href="#/" className="brand" onClick={handleClick} aria-label={t('layout.logo.label', { nameJa: PROFILE.nameJa })}>
       <span className="brand-mark" aria-hidden="true">TA</span>
       <span className="brand-name">
-        <span className="brand-ja">{PROFILE.nameJa}</span>
-        <span className="brand-en">{PROFILE.nameEn}</span>
+        <span className="brand-ja"><S path="PROFILE.nameJa" /></span>
+        <span className="brand-en"><S path="PROFILE.nameEn" /></span>
       </span>
     </a>
   );
@@ -108,20 +110,20 @@ export function Nav({ route }) {
           document.getElementById('main')?.focus();
         }}
       >
-        本文へ移動
+        <C k="layout.skipLink" />
       </a>
       <header className={`site-header ${scrolled || open ? 'is-raised' : ''}`}>
         <div className="wrap header-inner">
           <Logo onRapidClicks={route === '/' ? setEggOrigin : null} />
-          <nav className="nav" aria-label="メイン">
-            {NAV_LINKS.map((link) => (
+          <nav className="nav" aria-label={t('layout.nav.label')}>
+            {NAV_LINKS.map((link, i) => (
               <Link
                 key={link.id}
                 to={link.id}
                 className="nav-link"
                 aria-current={isActive(route, link.id) ? 'page' : undefined}
               >
-                {link.label}
+                <S path={`NAV_LINKS.${i}.label`} />
               </Link>
             ))}
           </nav>
@@ -130,7 +132,7 @@ export function Nav({ route }) {
             <button
               type="button"
               className={`icon-btn menu-btn ${open ? 'is-open' : ''}`}
-              aria-label={open ? 'メニューを閉じる' : 'メニューを開く'}
+              aria-label={open ? t('layout.menu.close') : t('layout.menu.open')}
               aria-expanded={open}
               aria-controls="mobile-menu"
               onClick={() => setOpen(!open)}
@@ -141,8 +143,8 @@ export function Nav({ route }) {
         </div>
       </header>
       <div id="mobile-menu" className={`mobile-menu ${open ? 'is-open' : ''}`} hidden={!open}>
-        <nav className="wrap mobile-menu-inner" aria-label="モバイル">
-          {NAV_LINKS.map((link) => (
+        <nav className="wrap mobile-menu-inner" aria-label={t('layout.mobileNav.label')}>
+          {NAV_LINKS.map((link, i) => (
             <Link
               key={link.id}
               to={link.id}
@@ -150,8 +152,8 @@ export function Nav({ route }) {
               className="mobile-link"
               aria-current={isActive(route, link.id) ? 'page' : undefined}
             >
-              <span className="mobile-link-en">{link.label}</span>
-              <span className="mobile-link-ja">{link.title}</span>
+              <span className="mobile-link-en"><S path={`NAV_LINKS.${i}.label`} /></span>
+              <span className="mobile-link-ja"><S path={`NAV_LINKS.${i}.title`} /></span>
               <Icon.Arrow />
             </Link>
           ))}
@@ -168,25 +170,25 @@ export function Footer() {
       <div className="wrap footer-grid">
         <div className="footer-brand">
           <Logo />
-          <p className="footer-tagline">{PROFILE.tagline}</p>
+          <p className="footer-tagline"><S path="PROFILE.tagline" /></p>
           <p className="footer-desc">
-            {PROFILE.nameJa}（{PROFILE.reading}、通称{PROFILE.nickname}、{PROFILE.nameEn}）のポートフォリオです。{PROFILE.fields}の作品と公開データを紹介しています。
+            <C k="layout.footer.desc" vars={{ nameJa: PROFILE.nameJa, reading: PROFILE.reading, nickname: PROFILE.nickname, nameEn: PROFILE.nameEn, fields: PROFILE.fields }} />
           </p>
           <div className="footer-socials">
             {PROFILE.socials.map((social) => (
-              <a key={social.id} className="icon-btn" href={social.url} target="_blank" rel="noreferrer" aria-label={`${social.label}（新しいタブで開く）`}>
+              <a key={social.id} className="icon-btn" href={social.url} target="_blank" rel="noreferrer" aria-label={t('common.newTab', { label: social.label })}>
                 {social.id === 'github' ? <Icon.GitHub width={16} height={16} /> : <Icon.X width={14} height={14} />}
               </a>
             ))}
           </div>
         </div>
-        <nav className="footer-nav" aria-label="フッター">
+        <nav className="footer-nav" aria-label={t('layout.footerNav.label')}>
           <ul>
-            {NAV_LINKS.map((link) => (
+            {NAV_LINKS.map((link, i) => (
               <li key={link.id}>
                 <Link to={link.id}>
-                  <span className="footer-nav-en">{link.label}</span>
-                  <span className="footer-nav-ja">{link.title}</span>
+                  <span className="footer-nav-en"><S path={`NAV_LINKS.${i}.label`} /></span>
+                  <span className="footer-nav-ja"><S path={`NAV_LINKS.${i}.title`} /></span>
                 </Link>
               </li>
             ))}
@@ -194,7 +196,7 @@ export function Footer() {
         </nav>
       </div>
       <div className="wrap footer-bottom">
-        <small>© 2026 {PROFILE.nameEn}</small>
+        <small><C k="layout.footer.copyright" vars={{ nameEn: PROFILE.nameEn }} /></small>
       </div>
     </footer>
   );
@@ -220,7 +222,7 @@ export function BackToTop() {
     <button
       type="button"
       className={`icon-btn back-to-top ${show ? 'is-shown' : ''}`}
-      aria-label="ページの先頭へ戻る"
+      aria-label={t('layout.backToTop')}
       tabIndex={show ? 0 : -1}
       onClick={toTop}
     >

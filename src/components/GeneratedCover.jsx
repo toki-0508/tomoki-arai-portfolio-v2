@@ -1,3 +1,5 @@
+import { t } from '../content/copy.js';
+
 // 画像のない配布物のカバー。名前から色と模様を決めて生成するので、
 // 1件ごとに見た目が違いつつ、シリーズとしての統一感が出る。
 //   pattern="wave"   … 音源(波形)
@@ -51,7 +53,7 @@ export function GeneratedCover({ name, label, pattern = 'wave' }) {
   const rand = seeded(h);
 
   return (
-    <svg className={`gen-cover gen-cover-${variant}`} viewBox="0 0 120 120" role="img" aria-label={`${name} のカバー`}>
+    <svg className={`gen-cover gen-cover-${variant}`} viewBox="0 0 120 120" role="img" aria-label={t('common.download.coverLabel', { name })}>
       <rect className="gc-bg" width="120" height="120" />
       <text className="gc-label" x="12" y="21">{label}</text>
       <g className="gc-shapes">{pattern === 'blocks' ? <Blocks rand={rand} /> : <Wave rand={rand} />}</g>

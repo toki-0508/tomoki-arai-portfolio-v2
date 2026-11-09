@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Icon } from './Icon.jsx';
+import { t } from '../content/copy.js';
 
 // ---------- ルーティング ----------
 export function navigate(path) {
@@ -81,7 +82,7 @@ export function CategoryLabel({ category, label }) {
 export function TechList({ items, className = '' }) {
   if (!items?.length) return null;
   return (
-    <ul className={`tech-list ${className}`} aria-label="使用技術">
+    <ul className={`tech-list ${className}`} aria-label={t('common.techList')}>
       {items.map((item) => <li key={item}>{item}</li>)}
     </ul>
   );
@@ -125,9 +126,9 @@ export function Lightbox({ src, alt = '', onClose }) {
   }, [onClose]);
 
   return (
-    <div className="lightbox" role="dialog" aria-modal="true" aria-label={alt || '画像の拡大表示'} onClick={onClose}>
+    <div className="lightbox" role="dialog" aria-modal="true" aria-label={alt || t('common.lightbox.label')} onClick={onClose}>
       <img src={src} alt={alt} onClick={(e) => e.stopPropagation()} />
-      <button type="button" className="lightbox-close" aria-label="閉じる" onClick={onClose} autoFocus>
+      <button type="button" className="lightbox-close" aria-label={t('common.lightbox.close')} onClick={onClose} autoFocus>
         <Icon.Close width={20} height={20} />
       </button>
     </div>
