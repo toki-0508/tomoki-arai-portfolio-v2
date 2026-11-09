@@ -88,15 +88,18 @@ export function DownloadRow({ file, compact = false }) {
         {file.note && !compact && <p className="dl-note">{file.note}</p>}
         {spec.length > 0 && <p className="dl-spec">{spec.join(' · ')}</p>}
       </div>
-      <div className="dl-actions">
+      <div className={`dl-actions${file.guide && !compact ? ' has-guide' : ''}`}>
         {audio && file.file && <AudioPreview src={file.file} name={file.name} />}
         {file.file ? (
           <a className="btn btn-primary btn-sm" href={file.file} download aria-label={`${file.name}をダウンロード`}>
             <Icon.Download width={16} height={16} />
-            ダウンロード
+            {file.downloadLabel}
           </a>
         ) : (
           <span className="dl-unavailable">準備中です</span>
+        )}
+        {file.guide && !compact && (
+          <a className="btn btn-secondary btn-sm" href={file.guide}>インストール方法</a>
         )}
       </div>
     </article>

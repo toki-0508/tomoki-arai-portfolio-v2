@@ -107,6 +107,8 @@ export const DOWNLOADS = entries(downloadFiles)
       tags: toList(data.tags),
       file: data.file ? asset(data.file) : null,
       rawFile: data.file || '',
+      downloadLabel: data.downloadLabel || 'ダウンロード',
+      guide: data.guide ? asset(data.guide) : null,
       image: data.image ? asset(data.image) : null,
       lead: parseLead(body),
     };

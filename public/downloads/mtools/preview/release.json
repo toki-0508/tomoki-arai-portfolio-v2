@@ -1,0 +1,23 @@
+{
+  "version": "2.2.0",
+  "build": 8,
+  "channel": "preview",
+  "notarized": false,
+  "minimumMacOS": "14.0",
+  "architectures": [
+    "arm64",
+    "x86_64"
+  ],
+  "downloadPageURL": "https://tomoki-arai.vercel.app/#/downloads",
+  "zip": {
+    "file": "mtools-2.2.0-8-preview-universal.zip",
+    "bytes": 3511196,
+    "sha256": "93af672df274534bc98ac546d2c61a58e9c98c2b821745359875aff9fca7b95d",
+    "edSignature": "ZsNZ9BYJ/0Xa9tHFi0YnzBXQ1FGIZubY6lIYJxKXZGGK81ND9wNL+7Eqwt5SpWfUJxfiHRD3SXxDzURiMc6JDQ=="
+  },
+  "dmg": {
+    "file": "mtools-2.2.0-8-preview-universal.dmg",
+    "bytes": 3688237,
+    "sha256": "d7e5b6f486a3d270cbbf6bcce3a6b67374343a4acb0d339a31667772985709cf"
+  }
+}

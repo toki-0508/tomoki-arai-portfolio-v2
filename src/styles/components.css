@@ -733,6 +733,11 @@
   gap: 8px;
 }
 
+.dl-actions.has-guide {
+  flex-direction: column;
+  align-items: stretch;
+}
+
 .dl-unavailable {
   font-size: 13px;
   color: var(--pencil);

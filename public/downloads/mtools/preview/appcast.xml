@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="yes"?><!-- sparkle-sign-warning:
+IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
+--><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>m+tools</title>
+        <item>
+            <title>2.2.0</title>
+            <pubDate>Mon, 09 Nov 2026 15:24:31 +0900</pubDate>
+            <link>https://tomoki-arai.vercel.app/#/downloads</link>
+            <sparkle:version>8</sparkle:version>
+            <sparkle:shortVersionString>2.2.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[# m+tools 2.2.0
+
+- ZIP／DMGから導入できる、Apple Silicon・Intel両対応のMacアプリになりました。
+- 初回起動で使う機能を選べます。権限は必要な機能を使うときに案内します。
+- アプリ内の「アップデート」から新しいテスト版を確認できます。
+- Love Tab、範囲コピー、クリップボード履歴、ウィンドウ整列を独立してON／OFFできます。
+
+この配布物はApple未公証のテスト版です。macOSのセキュリティ設定によって起動できない場合があります。
+]]></description>
+            <enclosure url="https://tomoki-arai.vercel.app/downloads/mtools/preview/mtools-2.2.0-8-preview-universal.zip" length="3511196" type="application/octet-stream" sparkle:edSignature="ZsNZ9BYJ/0Xa9tHFi0YnzBXQ1FGIZubY6lIYJxKXZGGK81ND9wNL+7Eqwt5SpWfUJxfiHRD3SXxDzURiMc6JDQ=="></enclosure>
+        </item>
+    </channel>
+</rss><!-- sparkle-signatures:
+edSignature: gbWtSTyOIhj00UAD7B0c0x0Ir+l5ttZa8aTdCmhQleDUAHQMiy6beV4vZIf4vqz/ZUruipDy5NFwrk+mgWWXCw==
+length: 1783
+-->
