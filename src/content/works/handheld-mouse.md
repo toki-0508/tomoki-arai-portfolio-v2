@@ -7,7 +7,7 @@ image: /images/projects/handheld-mouse.jpg
 imageFit: contain
 imageAlt: 左にケースに組み込んだマウスの試作機、右に配線した入力用の子基板
 imageCaption: 左：専用基板をケースに組み込んだ試作機。右：クリック・ホイール・ジョイスティック用の子基板。
-featured: 3
+priority: 3
 role: 回路・基板設計、ファームウェア
 status: ケース組み込みまで完了。実機検証と2.4GHzレシーバーはこれから。
 outcome: 本体基板と3種類の子基板を製作し、配線してケースに収めました。

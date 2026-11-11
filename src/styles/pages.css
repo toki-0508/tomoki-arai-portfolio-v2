@@ -330,6 +330,19 @@
   color: var(--pencil);
 }
 
+.work-download-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin-bottom: 10px;
+}
+
+.work-download .dl-note {
+  max-width: 62em;
+  margin-top: 10px;
+}
+
 .detail-walkthrough {
   margin-top: 24px;
 }

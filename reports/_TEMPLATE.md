@@ -33,6 +33,8 @@ summary: ひとことで言うとどんな作品かを書きます。
 # priority: 4
 # ▼ トップのピックアップに載せる順番
 # featured: 1
+# ▼ 既存の配布物を作品詳細に表示する場合（src/content/downloads/のファイル名）
+# download: mtools
 ---
 
 ## 概要

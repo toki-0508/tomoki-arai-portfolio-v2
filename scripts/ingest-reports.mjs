@@ -265,6 +265,7 @@ function ingest(report, manifest) {
     if (image) fm.push(`image: ${image}`);
     if (data.url) fm.push(`url: ${data.url}`);
     if (data.github) fm.push(`github: ${data.github}`);
+    if (typeof data.download === 'string' && /^[a-z0-9-]+$/.test(data.download)) fm.push(`download: ${data.download}`);
     if (data.featured === true || /^[1-9]\d*$/.test(data.featured)) fm.push(`featured: ${data.featured}`);
     if (data.summary) fm.push(`summary: ${data.summary}`);
   }

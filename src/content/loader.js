@@ -61,6 +61,7 @@ export const WORKS = entries(workFiles)
       imageCaption: data.imageCaption || '',
       url: data.url || null,
       github: data.github || null,
+      downloadId: typeof data.download === 'string' ? data.download : null,
       summary: data.summary || '',
       featured: featuredOrder !== LAST || data.featured === true,
       featuredOrder,
@@ -116,6 +117,8 @@ export const DOWNLOADS = entries(downloadFiles)
   .sort(byPriority);
 
 export const isAudio = (download) => /\.(mp3|wav|m4a|ogg)$/i.test(download.rawFile);
+
+export const downloadById = (id) => DOWNLOADS.find((download) => download.id === id) ?? null;
 
 // ---------- 技術の使用実績 ----------
 // 作品・ダウンロードの tags を数える。プロフィールのスキル欄で「実際に使っている技術」を示すのに使う。
