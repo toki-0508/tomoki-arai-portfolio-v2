@@ -3,7 +3,7 @@ import { Icon } from '../components/Icon.jsx';
 import { WorkCard } from '../components/WorkCard.jsx';
 import { CategoryLabel, Lightbox, Link, PageHead, SectionHead, TechList, Thumb } from '../components/ui.jsx';
 import { BlockList } from '../lib/markdown.jsx';
-import { WORKS, workById } from '../content/loader.js';
+import { WORKS, downloadById, workById } from '../content/loader.js';
 
 const hostOf = (url) => {
   try {
@@ -52,6 +52,7 @@ export function WorkDetailPage({ id }) {
   const sameCategory = WORKS.filter((w) => w.category === work.category && w !== work);
   const related = [...new Set([...linkedWorks, ...sameCategory])].slice(0, 3);
   const imageAlt = work.imageAlt || `${work.name}の画像`;
+  const download = downloadById(work.downloadId);
 
   return (
     <Fragment>
@@ -107,6 +108,19 @@ export function WorkDetailPage({ id }) {
               サイトを開く
               <Icon.External width={15} height={15} />
             </a>
+          )}
+          {download?.file && (
+            <div className="work-download page-head-action">
+              <div className="work-download-actions">
+                <a href={download.file} download className="btn btn-primary">
+                  <Icon.Download width={16} height={16} />
+                  {download.downloadLabel}
+                </a>
+                {download.guide && <a href={download.guide} className="text-link">インストール方法<Icon.Arrow width={15} height={15} /></a>}
+              </div>
+              <p className="dl-spec">{[download.platform, download.size].filter(Boolean).join(' · ')}</p>
+              {download.note && <p className="dl-note">{download.note}</p>}
+            </div>
           )}
         </div>
       </header>
