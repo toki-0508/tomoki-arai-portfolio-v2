@@ -1,7 +1,66 @@
-// 編集モード用の部品(仮)。差し替えが効いていることを確かめるため、編集バーの目印だけを出す。
-// '../index.jsx' はこのフォルダからの読み込みなので、プラグインに差し替えられず本番用が読まれる。
-export { C, S, F, SectionTitle, Prose, L, EditableImage } from '../index.jsx';
+// ============================================================
+// 編集モード用の部品。src/editor/index.jsx(本番用)と同じ名前・同じ引数で、
+// 表示に加えてクリックで書き換えられるようにする。Vite プラグインが差し替える。
+// ============================================================
+import './editor.css';
+import { COPY, t } from '../../content/copy.js';
+import { SITE } from '../../content/site.js';
+import { splitBody } from '../../lib/markdown-parse.js';
+import { COPY_FILE, SITE_FILE, getPath } from '../shared.js';
+import { Editable } from './Editable.jsx';
 
-export function EditorRoot() {
-  return <div className="portfolio-editor-bar" data-editor-ui>編集モード</div>;
+export { EditableImage } from '../index.jsx';
+export { EditorRoot } from './EditorBar.jsx';
+
+const PLACEHOLDER_HINT = '{…} は自動で入る部分です';
+
+export function C({ k, vars }) {
+  const raw = COPY[k];
+  return (
+    <Editable file={COPY_FILE} target={{ key: k }} raw={raw} hint={/\{\w+\}/.test(raw) ? PLACEHOLDER_HINT : null}>
+      {t(k, vars)}
+    </Editable>
+  );
+}
+
+export function S({ path, children }) {
+  const raw = getPath(SITE, path) ?? '';
+  return <Editable file={SITE_FILE} target={{ path }} raw={raw}>{children ?? raw}</Editable>;
+}
+
+export function F({ item, field, children }) {
+  return (
+    <Editable file={item.source} target={{ field }} raw={item[field] ?? ''} required={field === 'name'}>
+      {children ?? item[field] ?? ''}
+    </Editable>
+  );
+}
+
+export function SectionTitle({ item, section }) {
+  const title = item.sections[section]?.title ?? '';
+  return <Editable file={item.source} target={{ section, part: 'title' }} raw={title}>{title}</Editable>;
+}
+
+export function Prose({ item, part, section, children }) {
+  const body = splitBody(item.body);
+  const lead = part === 'lead';
+  return (
+    <Editable
+      file={item.source}
+      target={lead ? { part: 'lead' } : { section, part: 'body' }}
+      raw={lead ? body.lead : body.sections[section]?.body ?? ''}
+      kind="blocks"
+      required={!lead}
+    >
+      {children}
+    </Editable>
+  );
+}
+
+export function L({ item, field, children }) {
+  return (
+    <Editable file={item.source} target={{ field }} raw={item[field] ?? []} kind="list" required={false}>
+      {children}
+    </Editable>
+  );
 }

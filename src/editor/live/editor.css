@@ -1,0 +1,125 @@
+/* 編集モード(npm run edit)でだけ読み込まれる。本番には入らない。色は tokens.css の変数を使う。 */
+
+html[data-editor-mode] body {
+  padding-bottom: 112px;
+}
+
+/* ---------- 編集できる文章 ---------- */
+html[data-editor-mode='edit'] [data-portfolio-editable] {
+  border-radius: 2px;
+  outline: 1px dashed transparent;
+  outline-offset: 3px;
+  cursor: text;
+  transition: outline-color 0.15s;
+}
+html[data-editor-mode='edit'] [data-portfolio-editable]:hover {
+  outline-color: var(--accent);
+}
+
+.ped.is-editing {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  background: var(--accent-tint);
+  color: var(--ink);
+  text-transform: none;
+}
+span.ped.is-editing {
+  white-space: pre-wrap;
+}
+
+.ped-textarea {
+  display: block;
+  width: 100%;
+  min-height: 6em;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--r-s);
+  font: inherit;
+  line-height: inherit;
+  resize: vertical;
+}
+
+.ped-hint {
+  display: inline-block;
+  margin-left: 0.5em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 500 11px/1.6 var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  pointer-events: none;
+}
+p.ped-hint {
+  display: block;
+  width: fit-content;
+  margin: 6px 0 0;
+}
+
+/* ---------- 編集バー ---------- */
+.portfolio-editor-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100vw - 24px);
+  padding: 8px 10px 8px 16px;
+  transform: translateX(-50%);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-l);
+  background: var(--card);
+  box-shadow: var(--shadow-2);
+  color: var(--ink);
+  font: 500 13px/1.4 var(--font-sans);
+}
+.portfolio-editor-bar button {
+  padding: 6px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+.portfolio-editor-bar button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.portfolio-editor-bar button[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.portfolio-editor-bar button:disabled {
+  border-color: var(--rule);
+  color: var(--ink);
+  opacity: 0.45;
+  cursor: default;
+}
+.portfolio-editor-bar .peb-danger:not(:disabled):hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.peb-title {
+  font-weight: 700;
+}
+.peb-switch {
+  display: inline-flex;
+  gap: 4px;
+}
+.peb-count {
+  color: var(--pencil);
+  font-family: var(--font-mono);
+}
+.peb-error {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--danger);
+}
