@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { editorPlugin } from './scripts/editor/vite-plugin.mjs';
 
 // ============================================================
 // 公開先ごとの設定(すべて環境変数で切り替える)
@@ -7,6 +8,8 @@ import react from '@vitejs/plugin-react';
 //   GITHUB_PAGES_BASE : 配信ベースパス。GitHub Pages は '/<リポジトリ名>/'
 //   SITE_URL          : 公開URL。canonical / OG / 構造化データ / sitemap に使う
 //   NOINDEX           : 'true' で検索エンジンに載せない(プレビュー用)
+//   --mode edit       : 編集モード(npm run edit)。手元の Mac だけで開き、文章と画像を下書きに保存する
+//                       (仕組みは scripts/editor/、使い方は docs/editor.md)
 //
 // index.html には既定URL(v1のVercel)が直書きされているので、
 // ビルド時に SITE_URL へ一括置換する。公開先を移しても
@@ -71,22 +74,27 @@ const seoPlugin = {
   },
 };
 
-export default defineConfig({
-  base,
-  plugins: [react(), seoPlugin],
-  // プレビュー環境が PORT を指定してくることがあるため、あれば従う
-  server: {
-    port: Number(process.env.PORT) || 5174,
-  },
-  build: {
-    chunkSizeWarningLimit: 700,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules/three')) return 'three';
-          if (id.includes('node_modules/react')) return 'react-vendor';
+export default defineConfig(({ mode }) => {
+  const editing = mode === 'edit';
+  return {
+    base,
+    plugins: [react(), seoPlugin, ...(editing ? [editorPlugin()] : [])],
+    // プレビュー環境が PORT を指定してくることがあるため、あれば従う。
+    // 編集モードはこのMacの中からだけ開けるようにする
+    server: {
+      port: Number(process.env.PORT) || 5174,
+      ...(editing ? { host: '127.0.0.1' } : {}),
+    },
+    build: {
+      chunkSizeWarningLimit: 700,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules/three')) return 'three';
+            if (id.includes('node_modules/react')) return 'react-vendor';
+          },
         },
       },
     },
-  },
+  };
 });
