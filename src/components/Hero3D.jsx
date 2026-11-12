@@ -1,5 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { asset } from '../asset.js';
+import { t } from '../content/copy.js';
+import { C } from '../editor/index.jsx';
 
 // Three.js 本体(約590KB)はここで初めて読み込む。
 // さらに、ページの初回表示が終わってブラウザが空いてから読み込みを始める
@@ -26,12 +28,12 @@ export function Hero3D() {
   return (
     <figure className={`hero-visual${interactive ? ' is-interactive' : ''}`}>
       {!interactive && (
-        <img className="hero-poster" src={asset('/images/projects/mouse-model.png')} alt="デスクマウスの3Dレンダリング" width="320" height="320" />
+        <img className="hero-poster" src={asset('/images/projects/mouse-model.png')} alt={t('home.hero3d.alt')} width="320" height="320" />
       )}
       {loadCanvas && <Suspense fallback={null}><LazyCanvas onReady={setInteractive} /></Suspense>}
       <figcaption className="intro-caption hero-caption">
-        <span>デスクマウスの3Dモデル</span>
-        <span>Blender{interactive && ' / ドラッグで回転'}</span>
+        <span><C k="home.hero3d.caption" /></span>
+        <span><C k="home.hero3d.tool" />{interactive && ' / '}{interactive && <C k="home.hero3d.dragHint" />}</span>
       </figcaption>
     </figure>
   );

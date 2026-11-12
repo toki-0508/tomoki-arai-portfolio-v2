@@ -7,6 +7,7 @@ import { DownloadRow } from '../components/DownloadRow.jsx';
 import { Link, SectionHead } from '../components/ui.jsx';
 import { DOWNLOADS, WORKS, featuredWorks } from '../content/loader.js';
 import { PROFILE } from '../content/site.js';
+import { C, S } from '../editor/index.jsx';
 
 // キャッチコピーは PROFILE.tagline から組み立てる(フッターや OG 画像と必ず一致させるため)。
 // 「、」の後ろで改行し、「好き」に手書きの下線を引く。
@@ -41,19 +42,19 @@ export function HomePage() {
       <section className="hero intro-band" aria-labelledby="hero-title">
         <div className="wrap hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow intro-kicker">{PROFILE.nameEn} / Portfolio</p>
+            <p className="eyebrow intro-kicker"><C k="home.hero.eyebrow" vars={{ nameEn: PROFILE.nameEn }} /></p>
             <h1 className="intro-title" id="hero-title">
-              <Tagline text={PROFILE.tagline} />
+              <S path="PROFILE.tagline"><Tagline text={PROFILE.tagline} /></S>
             </h1>
             <p className="intro-lead">
-              {PROFILE.affiliation}の{PROFILE.nameJa}です。アプリや電子工作で、日常の小さな不便を使えるものに変えています。
+              <C k="home.hero.lead" vars={{ affiliation: PROFILE.affiliation, nameJa: PROFILE.nameJa }} />
             </p>
             <div className="hero-actions">
               <Link to="/works" className="btn btn-primary">
-                作品を見る
+                <C k="home.hero.worksButton" />
                 <Icon.Arrow width={16} height={16} />
               </Link>
-              <Link to="/about" className="text-link">プロフィール<Icon.Arrow width={15} height={15} /></Link>
+              <Link to="/about" className="text-link"><C k="home.hero.profileLink" /><Icon.Arrow width={15} height={15} /></Link>
             </div>
           </div>
         </div>
@@ -63,7 +64,11 @@ export function HomePage() {
       {featured.length > 0 && (
         <section className="section showcase-section">
           <div className="wrap">
-            <SectionHead eyebrow="Selected Works" title="ピックアップ" link={{ to: '/works', label: 'すべての作品を見る' }} />
+            <SectionHead
+              eyebrow={<C k="home.featured.eyebrow" />}
+              title={<C k="home.featured.title" />}
+              link={{ to: '/works', label: <C k="home.featured.link" /> }}
+            />
             <div className="card-grid showcase-grid">
               {featured.map((work, index) => (
                 <WorkCard key={work.id} work={work} number={String(index + 1).padStart(2, '0')} />
@@ -76,7 +81,11 @@ export function HomePage() {
       {others.length > 0 && (
         <section className="section section-flush">
           <div className="wrap">
-            <SectionHead eyebrow="More Works" title="そのほかの作品" link={{ to: '/works', label: '作品一覧へ' }} />
+            <SectionHead
+              eyebrow={<C k="home.more.eyebrow" />}
+              title={<C k="home.more.title" />}
+              link={{ to: '/works', label: <C k="home.more.link" /> }}
+            />
             <WorkIndex works={others} />
           </div>
         </section>
@@ -84,7 +93,11 @@ export function HomePage() {
 
       <section className="section">
         <div className="wrap">
-          <SectionHead eyebrow="Downloads" title="ダウンロード" link={{ to: '/downloads', label: 'すべて見る' }} />
+          <SectionHead
+            eyebrow={<C k="home.downloads.eyebrow" />}
+            title={<C k="home.downloads.title" />}
+            link={{ to: '/downloads', label: <C k="home.downloads.link" /> }}
+          />
           <div className="dl-list">
             {DOWNLOADS.slice(0, 3).map((file) => <DownloadRow key={file.id} file={file} compact />)}
           </div>
@@ -95,11 +108,11 @@ export function HomePage() {
         <div className="wrap">
           <div className="cta">
             <div>
-              <h2 className="section-title">一緒に何か作りませんか？</h2>
-              <p>インターンや制作のご相談など、お気軽にご連絡ください。</p>
+              <h2 className="section-title"><C k="home.cta.title" /></h2>
+              <p><C k="home.cta.text" /></p>
             </div>
             <Link to="/contact" className="btn btn-primary">
-              お問い合わせ
+              <C k="home.cta.button" />
               <Icon.Arrow width={16} height={16} />
             </Link>
           </div>

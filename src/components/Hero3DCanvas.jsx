@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { asset } from '../asset.js';
+import { t } from '../content/copy.js';
 
 // ============================================================
 // トップの3D表示
@@ -59,7 +60,7 @@ export default function Hero3DCanvas({ onReady }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(width, height);
     renderer.domElement.style.cursor = 'grab';
-    renderer.domElement.setAttribute('aria-label', '自作の3Dモデル（マウス）。ドラッグで回転できます');
+    renderer.domElement.setAttribute('aria-label', t('home.hero3d.canvasLabel'));
     renderer.domElement.setAttribute('role', 'img');
     mount.appendChild(renderer.domElement);
 
