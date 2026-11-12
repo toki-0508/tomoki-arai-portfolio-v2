@@ -128,3 +128,40 @@ export function parseLead(body) {
   }
   return parseBlocks(lines);
 }
+
+// ---------- 書き換え用: 本文を行の範囲で分ける ----------
+// 編集モードは本文を「リード」「各セクションの見出し」「各セクションの本文」に分けて書き換える。
+// 表示用の parseSections / parseLead と同じく、「## 」で始まる行をセクションの区切りとみなす。
+export function bodyRegions(body) {
+  const lines = body.split('\n');
+  const headings = [];
+  lines.forEach((line, i) => {
+    if (/^##\s+/.test(line)) headings.push(i);
+  });
+  return {
+    lines,
+    lead: { start: 0, end: headings[0] ?? lines.length },
+    sections: headings.map((heading, n) => ({ heading, start: heading + 1, end: headings[n + 1] ?? lines.length })),
+  };
+}
+
+function trimBlankLines(lines) {
+  let start = 0;
+  let end = lines.length;
+  while (start < end && !lines[start].trim()) start++;
+  while (end > start && !lines[end - 1].trim()) end--;
+  return lines.slice(start, end);
+}
+
+// 本文を、書き換えの入力欄に出す生の文字列に分ける
+export function splitBody(body) {
+  const { lines, lead, sections } = bodyRegions(body);
+  const text = ({ start, end }) => trimBlankLines(lines.slice(start, end)).join('\n');
+  return {
+    lead: text(lead),
+    sections: sections.map((section) => ({
+      title: lines[section.heading].replace(/^##\s+/, '').trim(),
+      body: text(section),
+    })),
+  };
+}
