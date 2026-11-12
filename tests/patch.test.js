@@ -2,6 +2,11 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { applyPatch, PatchError } from '../src/editor/patch.js';
 import { parseFrontmatter, parseSections, splitBody } from '../src/lib/markdown-parse.js';
+import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 const WORK = 'src/content/works/sample.md';
 const RAW = [
@@ -130,4 +135,34 @@ test('copy.json と site.json は既存の文字列だけを書き換える', ()
 test('対象外のファイルは書き換えない', () => {
   assert.throws(() => applyPatch('src/App.jsx', 'x', { field: 'name' }, 'y'), PatchError);
   assert.throws(() => applyPatch('src/content/works/../site.json', RAW, { field: 'name' }, 'y'), PatchError);
+});
+
+test('frontmatter: 項目名は許可リストの自前のキーだけ(継承プロパティは不可)', () => {
+  for (const field of ['constructor', '__proto__', 'toString', 'hasOwnProperty']) {
+    assert.throws(() => applyPatch(WORK, RAW, { field }, 'hi'), PatchError, field);
+    assert.throws(() => applyPatch('src/content/downloads/sample.md', RAW, { field }, 'hi'), PatchError, field);
+  }
+});
+
+test('JSON: 整形されていない入力は書き換えず PatchError', () => {
+  assert.throws(() => applyPatch('src/content/copy.json', '{"a":"b"}', { key: 'a' }, 'c'), PatchError);
+});
+
+test('JSON: 壊れた入力は PatchError(SyntaxError のまま出さない)', () => {
+  assert.throws(() => applyPatch('src/content/copy.json', '{', { key: 'a' }, 'c'), PatchError);
+});
+
+test('JSON: 実ファイル(copy.json / site.json)は指定した1か所だけ変わる', () => {
+  const copyFile = 'src/content/copy.json';
+  const copyRaw = readFileSync(resolve(ROOT, copyFile), 'utf8');
+  const key = Object.keys(JSON.parse(copyRaw))[0];
+  const copyOut = applyPatch(copyFile, copyRaw, { key }, '差し替え');
+  assert.equal(diffLines(copyRaw, copyOut).length, 1);
+  assert.equal(JSON.parse(copyOut)[key], '差し替え');
+
+  const siteFile = 'src/content/site.json';
+  const siteRaw = readFileSync(resolve(ROOT, siteFile), 'utf8');
+  const siteOut = applyPatch(siteFile, siteRaw, { path: 'MVV.0.label' }, '差し替え');
+  assert.equal(diffLines(siteRaw, siteOut).length, 1);
+  assert.equal(JSON.parse(siteOut).MVV[0].label, '差し替え');
 });

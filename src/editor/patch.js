@@ -84,7 +84,16 @@ function setJsonString(raw, path, value) {
   if (path.some((key) => key === '__proto__' || key === 'constructor' || key === 'prototype')) {
     throw new PatchError('書き換えられない場所です');
   }
-  const data = JSON.parse(raw);
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch {
+    throw new PatchError('JSON を読めませんでした');
+  }
+  // 整形の決まった形でないファイルは、書き換えると他の行まで変わるので触らない
+  if (`${JSON.stringify(data, null, 2)}\n` !== raw) {
+    throw new PatchError('この JSON は決まった形で書かれていないため、書き換えられません');
+  }
   let parent = data;
   for (const key of path.slice(0, -1)) parent = parent?.[key];
   const last = path[path.length - 1];
@@ -181,8 +190,9 @@ export function applyPatch(file, raw, target = {}, value, { allowImage = false }
         if (!IMAGE_VALUE.test(String(value))) throw new PatchError('画像のパスが正しくありません');
         return setFrontmatterField(raw, 'image', value);
       }
-      const type = (kind === 'work' ? WORK_FIELDS : DOWNLOAD_FIELDS)[target.field];
-      if (!type) throw new PatchError(`「${target.field}」はここでは変更できません`);
+      const fields = kind === 'work' ? WORK_FIELDS : DOWNLOAD_FIELDS;
+      if (!Object.hasOwn(fields, target.field)) throw new PatchError(`「${target.field}」はここでは変更できません`);
+      const type = fields[target.field];
       return setFrontmatterField(raw, target.field, normalizeField(type, value));
     }
     if (['lead', 'title', 'body'].includes(target.part)) return patchBody(raw, target, value);
