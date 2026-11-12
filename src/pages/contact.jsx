@@ -2,11 +2,13 @@ import { Fragment, useState } from 'react';
 import { Icon } from '../components/Icon.jsx';
 import { PageHead } from '../components/ui.jsx';
 import { PROFILE } from '../content/site.js';
+import { t } from '../content/copy.js';
+import { C, S } from '../editor/index.jsx';
 
 // 問い合わせ API の向き先。未設定なら同一オリジン(Vercel の /api/contact)。
 const API_BASE = import.meta.env.VITE_CONTACT_API_BASE || '';
 
-const TYPES = ['インターン・採用について', '制作のご依頼', 'ご質問', 'その他'];
+const TYPE_KEYS = ['contact.form.typeInternship', 'contact.form.typeRequest', 'contact.form.typeQuestion', 'contact.form.typeOther'];
 
 export function ContactPage() {
   const [status, setStatus] = useState({ state: 'idle', message: '' });
@@ -25,64 +27,64 @@ export function ContactPage() {
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.ok) {
         form.reset();
-        setStatus({ state: 'done', message: '送信しました。内容を確認のうえ、ご連絡します。' });
+        setStatus({ state: 'done', message: t('contact.status.done') });
       } else {
-        setStatus({ state: 'error', message: data.message || '送信できませんでした。時間をおいてもう一度お試しいただくか、SNSからご連絡ください。' });
+        setStatus({ state: 'error', message: data.message || t('contact.status.error') });
       }
     } catch {
-      setStatus({ state: 'error', message: '送信できませんでした。通信状況を確認するか、SNSからご連絡ください。' });
+      setStatus({ state: 'error', message: t('contact.status.networkError') });
     }
   };
 
   return (
     <Fragment>
       <PageHead
-        eyebrow="Contact"
-        title="お問い合わせ"
-        lead="インターンや制作のご相談など、お気軽にご連絡ください。"
+        eyebrow={<C k="contact.head.eyebrow" />}
+        title={<C k="contact.head.title" />}
+        lead={<C k="contact.head.lead" />}
       />
       <section className="section section-tight">
         <div className="wrap contact-grid">
           <form className="contact-form" onSubmit={onSubmit}>
             <div className="form-row">
               <label className="field">
-                <span className="field-label">お名前<em>必須</em></span>
+                <span className="field-label"><C k="contact.form.name" /><em><C k="contact.form.required" /></em></span>
                 <input name="name" type="text" required maxLength={80} autoComplete="name" />
               </label>
               <label className="field">
-                <span className="field-label">メールアドレス<em>必須</em></span>
+                <span className="field-label"><C k="contact.form.email" /><em><C k="contact.form.required" /></em></span>
                 <input name="email" type="email" required maxLength={160} autoComplete="email" inputMode="email" />
               </label>
             </div>
             <label className="field">
-              <span className="field-label">ご相談の種類<em>必須</em></span>
+              <span className="field-label"><C k="contact.form.type" /><em><C k="contact.form.required" /></em></span>
               <select name="type" required defaultValue="">
-                <option value="" disabled>選択してください</option>
-                {TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                <option value="" disabled>{t('contact.form.typePlaceholder')}</option>
+                {TYPE_KEYS.map((key) => <option key={key} value={t(key)}>{t(key)}</option>)}
               </select>
             </label>
             <label className="field">
-              <span className="field-label">メッセージ<em>必須</em></span>
+              <span className="field-label"><C k="contact.form.message" /><em><C k="contact.form.required" /></em></span>
               <textarea name="message" required maxLength={3000} rows={7} />
             </label>
             {/* スパム対策のダミー項目。人には見えず、入力されていたら送信を弾く */}
             <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hp-field" aria-hidden="true" />
             <div className="form-foot">
               <button type="submit" className="btn btn-primary" disabled={status.state === 'sending'}>
-                {status.state === 'sending' ? '送信しています…' : '送信する'}
+                {status.state === 'sending' ? <C k="contact.form.sending" /> : <C k="contact.form.submit" />}
               </button>
               <p className={`form-status is-${status.state}`} role="status" aria-live="polite">{status.message}</p>
             </div>
           </form>
 
           <aside className="contact-side">
-            <h2>SNS・活動リンク</h2>
-            <p>フォームが使えない場合は、Xからもご連絡いただけます。</p>
+            <h2><C k="contact.side.title" /></h2>
+            <p><C k="contact.side.text" /></p>
             <div className="contact-socials">
-              {PROFILE.socials.map((s) => (
+              {PROFILE.socials.map((s, i) => (
                 <a key={s.id} href={s.url} target="_blank" rel="noreferrer">
                   {s.id === 'github' ? <Icon.GitHub width={15} height={15} /> : <Icon.X width={13} height={13} />}
-                  {s.label}
+                  <S path={`PROFILE.socials.${i}.label`} />
                 </a>
               ))}
             </div>

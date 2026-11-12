@@ -4,6 +4,7 @@ import { WorkCard } from '../components/WorkCard.jsx';
 import { PageHead } from '../components/ui.jsx';
 import { WORK_CATEGORIES } from '../content/categories.js';
 import { WORKS } from '../content/loader.js';
+import { C } from '../editor/index.jsx';
 
 export function WorksPage() {
   const [category, setCategory] = useCategoryFilter('work');
@@ -11,9 +12,9 @@ export function WorksPage() {
   return (
     <Fragment>
       <PageHead
-        eyebrow="Works"
-        title="作品"
-        lead="アプリ、電子工作、ゲーム、高専祭の企画。実際に使ったものや、作り方に工夫を重ねたものから紹介します。"
+        eyebrow={<C k="works.head.eyebrow" />}
+        title={<C k="works.head.title" />}
+        lead={<C k="works.head.lead" />}
       />
       <section className="section section-tight">
         <div className="wrap">
@@ -23,8 +24,8 @@ export function WorksPage() {
             items={WORKS}
             value={category}
             onReset={() => setCategory('all')}
-            mainTitle="主な作品"
-            otherTitle="その他の作品"
+            mainTitle={<C k="works.groups.main" />}
+            otherTitle={<C k="works.groups.other" />}
             renderItems={(works) => (
               <div className="card-grid">
                 {works.map((work) => <WorkCard key={work.id} work={work} />)}
