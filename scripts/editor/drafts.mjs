@@ -70,8 +70,9 @@ export class DraftStore {
   readManifest() {
     try {
       return JSON.parse(fs.readFileSync(this.manifestPath, 'utf8'));
-    } catch {
-      return {};
+    } catch (err) {
+      if (err && err.code === 'ENOENT') return {};
+      throw new EditorError(500, '下書きの記録(.editor/manifest.json)が壊れています。Claude に相談してください');
     }
   }
 

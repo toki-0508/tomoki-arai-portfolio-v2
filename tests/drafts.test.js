@@ -106,3 +106,11 @@ test('メモ', () => {
   assert.equal(store.getNotes(), 'ここ長いかも');
   rejects(() => store.setNotes('あ'.repeat(20001)), 413);
 });
+
+test('壊れた manifest は 500 で知らせる', () => {
+  const root = makeRoot();
+  fs.mkdirSync(path.join(root, '.editor'), { recursive: true });
+  fs.writeFileSync(path.join(root, '.editor/manifest.json'), '{broken');
+  const store = new DraftStore(root);
+  rejects(() => store.list(), 500);
+});

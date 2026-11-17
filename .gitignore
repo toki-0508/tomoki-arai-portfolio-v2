@@ -9,7 +9,10 @@ output/
 
 # 編集モードの下書き(公開前の書きかけ。公開リポジトリに含めない)
 .editor/
+# ブラウザ確認・開発支援ツールの作業ファイル
 .playwright-cli/
+.playwright-mcp/
+.superpowers/
 .vercel
 .claude/
 

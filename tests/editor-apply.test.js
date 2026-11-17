@@ -87,3 +87,13 @@ test('下書きがなければ何もしない', () => {
   assert.deepEqual(planApply(root).items, []);
   assert.deepEqual(applyDrafts(root, { now: NOW }), { applied: [], historyDir: null, unusedImages: [] });
 });
+
+test('許可リスト外のファイルは無視する', () => {
+  const { root } = setup();
+  fs.mkdirSync(path.join(root, '.editor/drafts/src'), { recursive: true });
+  fs.writeFileSync(path.join(root, '.editor/drafts/.DS_Store'), 'x');
+  fs.writeFileSync(path.join(root, '.editor/drafts/src/notes.txt'), 'x');
+  const plan = planApply(root);
+  assert.deepEqual(plan.conflicts, []);
+  assert.ok(!plan.items.some((i) => i.rel === '.DS_Store' || i.rel === 'src/notes.txt'));
+});

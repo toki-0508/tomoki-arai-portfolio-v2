@@ -13,6 +13,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseFrontmatter } from '../src/lib/markdown-parse.js';
 import { sha256 } from './editor/drafts.mjs';
+import { fileKind } from '../src/editor/patch.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -75,7 +76,9 @@ function readManifest(file) {
 export function planApply(root = ROOT) {
   const p = paths(root);
   const manifest = readManifest(p.manifest);
-  const items = walk(p.drafts).map((rel) => {
+  const items = walk(p.drafts)
+    .filter((rel) => fileKind(rel) !== null || /^public\/images\/projects\/[a-z0-9][a-z0-9-]*\.(png|jpg)$/.test(rel))
+    .map((rel) => {
     const draft = fs.readFileSync(path.join(p.drafts, rel));
     const target = path.join(root, rel);
     if (rel.startsWith('public/images/projects/')) {
