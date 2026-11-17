@@ -43,6 +43,7 @@ export const DOWNLOAD_FIELDS = {
   length: 'text',
   platform: 'text',
   note: 'text',
+  downloadLabel: 'text',
   tags: 'list',
 };
 

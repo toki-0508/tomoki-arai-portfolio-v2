@@ -34,6 +34,7 @@ const DOWNLOAD_LABELS = {
   length: '長さ(音源)',
   platform: '対応環境',
   note: '使うときの注意',
+  downloadLabel: 'ダウンロードボタンの文言(空なら共通の文言)',
   tags: 'タグ(カンマ区切り)',
 };
 const PROFILE_LABELS = {
