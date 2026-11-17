@@ -158,7 +158,9 @@ function replaceRegion(lines, { start, end }, body) {
 }
 
 function patchBody(raw, target, value) {
-  const head = FRONTMATTER.exec(raw)?.[0] ?? '';
+  // frontmatter のないファイルの本文は書き換えない(リードに「---」を書かれると frontmatter になってしまうため)
+  const head = FRONTMATTER.exec(raw)?.[0];
+  if (!head) throw new PatchError('frontmatter が見つかりません');
   const { lines, lead, sections } = bodyRegions(raw.slice(head.length));
   if (target.part === 'lead') return head + replaceRegion(lines, lead, blockLines(value, { allowEmpty: true }));
 

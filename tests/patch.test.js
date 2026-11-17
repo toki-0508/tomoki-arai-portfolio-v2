@@ -166,3 +166,7 @@ test('JSON: 実ファイル(copy.json / site.json)は指定した1か所だけ�
   assert.equal(diffLines(siteRaw, siteOut).length, 1);
   assert.equal(JSON.parse(siteOut).MVV[0].label, '差し替え');
 });
+
+test('frontmatter のないファイルの本文は書き換えない', () => {
+  assert.throws(() => applyPatch(WORK, 'リードだけ\n', { part: 'lead' }, '---\nname: x\n---'), PatchError);
+});
