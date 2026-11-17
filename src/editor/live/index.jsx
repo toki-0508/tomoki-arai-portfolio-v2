@@ -9,7 +9,7 @@ import { splitBody } from '../../lib/markdown-parse.js';
 import { COPY_FILE, SITE_FILE, getPath } from '../shared.js';
 import { Editable } from './Editable.jsx';
 
-export { EditableImage } from '../index.jsx';
+export { EditableImage } from './EditableImage.jsx';
 export { EditorRoot } from './EditorBar.jsx';
 
 const PLACEHOLDER_HINT = '{…} は自動で入る部分です';

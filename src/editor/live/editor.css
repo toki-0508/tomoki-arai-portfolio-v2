@@ -123,3 +123,40 @@ p.ped-hint {
   margin: 0;
   color: var(--danger);
 }
+
+/* ---------- 画像の差し替え ---------- */
+.ped-image-host {
+  position: relative;
+}
+.ped-image-host.is-dropping {
+  outline: 2px dashed var(--accent);
+  outline-offset: 4px;
+}
+.ped-image-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  padding: 6px 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: var(--shadow-1);
+  color: var(--ink);
+  font: 600 12px/1.4 var(--font-sans);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+html[data-editor-mode='edit'] .ped-image-host:hover > .ped-image-btn,
+.ped-image-btn:focus-visible,
+.ped-image-btn:disabled {
+  opacity: 1;
+}
+.ped-image-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+html[data-editor-mode='view'] .ped-image-btn {
+  display: none;
+}
