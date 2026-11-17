@@ -46,7 +46,9 @@ SNS で共有したときに出る画像（`public/og-image.png`）は [scripts/
 src/content/
 ├── works/        # 作品（frontmatter + 「## 見出し」のセクション）
 ├── downloads/    # ダウンロード
-└── site.js       # プロフィール・スキル・キャッチコピーなどの固定情報
+├── site.json     # プロフィール・歩み・MVV など(site.js が読み込んで書き出す)
+├── copy.json     # ページや部品の文言
+└── site.js       # 表記ルールと、site.json の書き出し
 ```
 
 プロフィールのスキル欄は、作品・ダウンロードの `tags` から「実際に使っている技術」を自動で判定して表示します。
@@ -66,6 +68,13 @@ src/content/
 - 書き方と表記ルール: [reports/README.md](reports/README.md)、[reports/_TEMPLATE.md](reports/_TEMPLATE.md)
 - 変換スクリプト: [scripts/ingest-reports.mjs](scripts/ingest-reports.mjs)（`npm run ingest`、`--dry-run` 対応）
 - `reports/` の原稿は git 管理外で、公開リポジトリには含まれません
+
+### 文章と画像はブラウザで直せる(編集モード)
+
+`npm run edit`(または `編集する.command` をダブルクリック)で、このMacの中だけで編集モードのサイトが開きます。文章をクリックして書き換えたり、画像を差し替えたりでき、内容は下書き(`.editor/`、Git 管理外)に保存されます。公開は Claude に頼むと、表記とレイアウトを整えてから行います。公開サイトには編集の仕組みは入りません。
+
+- 使い方と公開の手順: [docs/editor.md](docs/editor.md)
+- ページの文言は `src/content/copy.json`、プロフィール系は `src/content/site.json`
 
 ### 配布ファイルの安全チェック
 
@@ -102,8 +111,12 @@ main に push
 ```bash
 npm install
 npm run dev      # 開発サーバー
-npm run build    # 本番ビルド
+npm run edit     # 編集モード(文章・画像を下書きに保存)
+npm run build    # 本番ビルド(配布ファイルの安全チェックと、編集機能の混入チェックつき)
 npm run preview  # ビルド結果の確認
+npm test         # 単体テスト
+npm run snapshot -- output/snapshots/a.txt  # 全ページの表示テキストを書き出す(build の後)
+npm run editor:apply -- --dry-run           # 下書きの差分を見る(公開の手順で使う)
 npm run ingest   # reports/ のレポートを取り込む（--dry-run 可）
 npm run check:files  # 配布ファイルと画像の安全チェック（build 前にも自動実行）
 ```
