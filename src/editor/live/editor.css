@@ -160,3 +160,113 @@ html[data-editor-mode='edit'] .ped-image-host:hover > .ped-image-btn,
 html[data-editor-mode='view'] .ped-image-btn {
   display: none;
 }
+
+/* ---------- パネル ---------- */
+.portfolio-editor-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 88px;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  width: min(440px, calc(100vw - 32px));
+  max-height: min(70vh, 680px);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-m);
+  background: var(--card);
+  box-shadow: var(--shadow-2);
+  color: var(--ink);
+  font: 400 13px/1.6 var(--font-sans);
+}
+.portfolio-editor-panel header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--rule);
+}
+.portfolio-editor-panel h2 {
+  margin: 0;
+  font-size: 14px;
+}
+.portfolio-editor-panel button {
+  padding: 5px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+.portfolio-editor-panel button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.pep-body {
+  overflow: auto;
+  padding: 12px 16px 16px;
+}
+.portfolio-editor-panel details {
+  margin: 0 0 14px;
+}
+.portfolio-editor-panel summary {
+  margin-bottom: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pep-field {
+  display: grid;
+  gap: 4px;
+  margin: 0 0 12px;
+}
+.pep-field > span {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  color: var(--pencil);
+  font-size: 12px;
+}
+.pep-field code,
+.pep-changes code {
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.pep-field input,
+.pep-field textarea,
+.pep-field select,
+.pep-notes {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-s);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+}
+.pep-changes {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pep-changes li {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.pep-changes li > div {
+  display: grid;
+  gap: 2px;
+}
+.pep-muted {
+  margin: 0 0 8px;
+  color: var(--pencil);
+}
+.pep-warn {
+  color: var(--danger);
+}
