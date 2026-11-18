@@ -3,7 +3,7 @@
 新井智己（Tomoki Arai）のポートフォリオサイトです。React + Vite で作り、Vercel で公開しています。
 
 - 公開URL: **https://tomoki-arai.vercel.app/**
-- テーマ: **身の回りを、ちょっと好きになる。**
+- テーマ: **QOLを今よりちょっとプラスに**
 
 > 現行版はこのリポジトリで管理しています。旧版のリポジトリとGitHub Pagesは終了しました。
 

@@ -9,4 +9,4 @@ file: /downloads/mouse-model.glb
 image: /images/projects/mouse-model.png
 ---
 
-トップページで回せる、Blenderで作ったマウスの3Dモデルです。glTF（.glb）形式なので、Blenderなどの3Dソフトや、Webの3D表示で使えます。
+Blenderで作ったマウスの3Dモデルです。glTF（.glb）形式なので、Blenderなどの3Dソフトや、Webの3D表示で使えます。遊びで作ったやつです。
