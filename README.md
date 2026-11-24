@@ -26,6 +26,12 @@
 
 色はすべて [src/styles/tokens.css](src/styles/tokens.css) の CSS 変数で管理しています（ライト / ダーク）。
 
+### Aboutのスキルツリー
+
+スキルのデータは従来どおり `src/content/site.json` の `SKILL_GROUPS` です。編集モードでは「閲覧」に切り替えて「スキルを一覧で見る」を開き、「編集」に戻すと名前を編集できます。分野・用途の枝分けは `src/content/skill-tree.js`、配置・ズーム計算は `src/lib/skill-tree.js`、UIは `src/components/skill-tree/` に分離しています。分類にない名前は Tools & AI の「その他」に入り、表示から消えません。
+
+通常表示は系統の全体像を示し、拡大画面では分野選択・ドラッグ・ホイール・ピンチ・キーボードで探索できます。ノードの数字は掲載作品と配布物のタグに基づく件数で、習熟度ではありません。ノードの大きさは分野・用途・技術という階層を表します。参考画像自体はサイトに転載していません。
+
 ### OG 画像の作り直し
 
 SNS で共有したときに出る画像（`public/og-image.png`）は [scripts/og/og.html](scripts/og/og.html) から作っています。文言を変えたら、次のコマンドで書き出し直してください。

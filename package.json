@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "ingest": "node scripts/ingest-reports.mjs",
     "check:files": "node scripts/check-public-files.mjs",
-    "test": "node --test 'tests/**/*.test.js'",
+    "test": "node --test tests/*.test.js",
     "snapshot": "node scripts/text-snapshot.mjs",
     "editor:apply": "node scripts/editor-apply.mjs"
   },
