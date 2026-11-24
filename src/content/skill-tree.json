@@ -8,8 +8,8 @@
     {
       "id": "javascript",
       "name": "JavaScript",
-      "x": 950,
-      "y": 1020,
+      "x": 1020,
+      "y": 1040,
       "parent": null,
       "branch": "web",
       "notable": true,
@@ -18,8 +18,8 @@
     {
       "id": "typescript",
       "name": "TypeScript",
-      "x": 740,
-      "y": 1030,
+      "x": 720,
+      "y": 900,
       "parent": "javascript",
       "branch": "web",
       "notable": false,
@@ -28,8 +28,8 @@
     {
       "id": "react",
       "name": "React",
-      "x": 740,
-      "y": 810,
+      "x": 720,
+      "y": 1040,
       "parent": "javascript",
       "branch": "web",
       "notable": true,
@@ -38,9 +38,9 @@
     {
       "id": "next-js",
       "name": "Next.js",
-      "x": 500,
-      "y": 770,
-      "parent": "react",
+      "x": 540,
+      "y": 780,
+      "parent": "javascript",
       "branch": "web",
       "notable": false,
       "icon": "nextjs"
@@ -48,9 +48,9 @@
     {
       "id": "three-js",
       "name": "Three.js",
-      "x": 790,
-      "y": 540,
-      "parent": "react",
+      "x": 360,
+      "y": 660,
+      "parent": "javascript",
       "branch": "web",
       "notable": false,
       "icon": "threejs"
@@ -58,8 +58,8 @@
     {
       "id": "vite",
       "name": "Vite",
-      "x": 300,
-      "y": 950,
+      "x": 540,
+      "y": 900,
       "parent": "typescript",
       "branch": "web",
       "notable": false,
@@ -68,8 +68,8 @@
     {
       "id": "tailwind-css",
       "name": "Tailwind CSS",
-      "x": 460,
-      "y": 520,
+      "x": 360,
+      "y": 780,
       "parent": "next-js",
       "branch": "web",
       "notable": false,
@@ -78,9 +78,9 @@
     {
       "id": "flutter",
       "name": "Flutter",
-      "x": 1210,
-      "y": 930,
-      "parent": null,
+      "x": 900,
+      "y": 680,
+      "parent": "dart",
       "branch": "app",
       "notable": true,
       "icon": "flutter"
@@ -88,29 +88,19 @@
     {
       "id": "dart",
       "name": "Dart",
-      "x": 1080,
-      "y": 700,
-      "parent": "flutter",
+      "x": 1040,
+      "y": 820,
+      "parent": "c",
       "branch": "app",
-      "notable": false,
+      "notable": true,
       "icon": "dart"
-    },
-    {
-      "id": "chrome-extensions",
-      "name": "Chrome Extensions",
-      "x": 850,
-      "y": 300,
-      "parent": "dart",
-      "branch": "app",
-      "notable": false,
-      "icon": "chrome"
     },
     {
       "id": "python",
       "name": "Python",
-      "x": 1390,
-      "y": 700,
-      "parent": "flutter",
+      "x": 1200,
+      "y": 820,
+      "parent": "c",
       "branch": "app",
       "notable": true,
       "icon": "python"
@@ -118,9 +108,9 @@
     {
       "id": "java",
       "name": "Java",
-      "x": 1290,
-      "y": 470,
-      "parent": "python",
+      "x": 1200,
+      "y": 620,
+      "parent": "c",
       "branch": "app",
       "notable": false,
       "icon": "java"
@@ -128,18 +118,18 @@
     {
       "id": "c",
       "name": "C",
-      "x": 1530,
-      "y": 330,
-      "parent": "java",
+      "x": 1200,
+      "y": 1000,
+      "parent": null,
       "branch": "app",
-      "notable": false,
+      "notable": true,
       "icon": "c"
     },
     {
       "id": "minecraft-forge",
       "name": "Minecraft Forge",
-      "x": 1110,
-      "y": 260,
+      "x": 1320,
+      "y": 520,
       "parent": "java",
       "branch": "app",
       "notable": false,
@@ -148,9 +138,9 @@
     {
       "id": "firebase",
       "name": "Firebase",
-      "x": 1670,
-      "y": 800,
-      "parent": "supabase",
+      "x": 1540,
+      "y": 1000,
+      "parent": null,
       "branch": "backend",
       "notable": true,
       "icon": "firebase"
@@ -158,9 +148,9 @@
     {
       "id": "sqlite",
       "name": "SQLite",
-      "x": 1870,
-      "y": 600,
-      "parent": "firebase",
+      "x": 1840,
+      "y": 700,
+      "parent": null,
       "branch": "backend",
       "notable": false,
       "icon": "sqlite"
@@ -168,8 +158,8 @@
     {
       "id": "supabase",
       "name": "Supabase",
-      "x": 1490,
-      "y": 1020,
+      "x": 1660,
+      "y": 900,
       "parent": null,
       "branch": "backend",
       "notable": true,
@@ -178,8 +168,8 @@
     {
       "id": "google-apps-script",
       "name": "Google Apps Script",
-      "x": 2050,
-      "y": 1160,
+      "x": 2040,
+      "y": 1120,
       "parent": "node-js",
       "branch": "backend",
       "notable": false,
@@ -188,9 +178,9 @@
     {
       "id": "node-js",
       "name": "Node.js",
-      "x": 1740,
-      "y": 1090,
-      "parent": "supabase",
+      "x": 1680,
+      "y": 1120,
+      "parent": null,
       "branch": "backend",
       "notable": true,
       "icon": "nodejs"
@@ -198,9 +188,9 @@
     {
       "id": "vercel",
       "name": "Vercel",
-      "x": 1960,
-      "y": 920,
-      "parent": "node-js",
+      "x": 1760,
+      "y": 800,
+      "parent": null,
       "branch": "backend",
       "notable": false,
       "icon": "vercel"
@@ -208,9 +198,9 @@
     {
       "id": "github-actions",
       "name": "GitHub Actions",
-      "x": 2150,
-      "y": 740,
-      "parent": "vercel",
+      "x": 1900,
+      "y": 1020,
+      "parent": "node-js",
       "branch": "backend",
       "notable": false,
       "icon": "githubactions"
@@ -218,8 +208,8 @@
     {
       "id": "blender",
       "name": "Blender",
-      "x": 1500,
-      "y": 1380,
+      "x": 1680,
+      "y": 1540,
       "parent": null,
       "branch": "creative",
       "notable": true,
@@ -228,9 +218,9 @@
     {
       "id": "garageband",
       "name": "GarageBand",
-      "x": 1580,
-      "y": 1610,
-      "parent": "blender",
+      "x": 1800,
+      "y": 1680,
+      "parent": null,
       "branch": "creative",
       "notable": false,
       "icon": "garageband"
@@ -238,9 +228,9 @@
     {
       "id": "figma",
       "name": "Figma",
-      "x": 1760,
-      "y": 1360,
-      "parent": "blender",
+      "x": 1580,
+      "y": 1420,
+      "parent": null,
       "branch": "creative",
       "notable": true,
       "icon": "figma"
@@ -248,9 +238,9 @@
     {
       "id": "adobe-illustrator",
       "name": "Adobe Illustrator",
-      "x": 1830,
-      "y": 1750,
-      "parent": "figma",
+      "x": 1840,
+      "y": 1220,
+      "parent": "skill-1048d7e6-a7da-421d-813e-ddf3777bc8f8",
       "branch": "creative",
       "notable": false,
       "icon": "illustrator"
@@ -258,9 +248,9 @@
     {
       "id": "adobe-photoshop",
       "name": "Adobe Photoshop",
-      "x": 2020,
-      "y": 1530,
-      "parent": "figma",
+      "x": 1840,
+      "y": 1380,
+      "parent": "skill-1048d7e6-a7da-421d-813e-ddf3777bc8f8",
       "branch": "creative",
       "notable": false,
       "icon": "photoshop"
@@ -268,9 +258,9 @@
     {
       "id": "kicad",
       "name": "KiCad",
-      "x": 1100,
-      "y": 1740,
-      "parent": "arduino",
+      "x": 1200,
+      "y": 1720,
+      "parent": null,
       "branch": "hardware",
       "notable": true,
       "icon": "kicad"
@@ -278,7 +268,7 @@
     {
       "id": "arduino",
       "name": "Arduino",
-      "x": 1240,
+      "x": 1200,
       "y": 1500,
       "parent": null,
       "branch": "hardware",
@@ -286,30 +276,10 @@
       "icon": "arduino"
     },
     {
-      "id": "nrf52840",
-      "name": "nRF52840",
-      "x": 1360,
-      "y": 1900,
-      "parent": "kicad",
-      "branch": "hardware",
-      "notable": false,
-      "icon": "nordic"
-    },
-    {
-      "id": "zephyr",
-      "name": "Zephyr",
-      "x": 1220,
-      "y": 2140,
-      "parent": "nrf52840",
-      "branch": "hardware",
-      "notable": false,
-      "icon": "zephyr"
-    },
-    {
       "id": "git",
       "name": "Git",
-      "x": 960,
-      "y": 1410,
+      "x": 800,
+      "y": 1480,
       "parent": null,
       "branch": "tools",
       "notable": true,
@@ -318,9 +288,9 @@
     {
       "id": "vs-code",
       "name": "VS Code",
-      "x": 730,
-      "y": 1410,
-      "parent": "git",
+      "x": 900,
+      "y": 1380,
+      "parent": null,
       "branch": "tools",
       "notable": true,
       "icon": "vscode"
@@ -328,9 +298,9 @@
     {
       "id": "notion",
       "name": "Notion",
-      "x": 500,
-      "y": 1270,
-      "parent": "vs-code",
+      "x": 720,
+      "y": 1600,
+      "parent": null,
       "branch": "tools",
       "notable": false,
       "icon": "notion"
@@ -338,9 +308,9 @@
     {
       "id": "chatgpt",
       "name": "ChatGPT",
-      "x": 740,
-      "y": 1660,
-      "parent": "vs-code",
+      "x": 800,
+      "y": 1200,
+      "parent": null,
       "branch": "tools",
       "notable": true,
       "icon": "openai"
@@ -348,18 +318,18 @@
     {
       "id": "claude",
       "name": "Claude",
-      "x": 500,
-      "y": 1810,
+      "x": 580,
+      "y": 1200,
       "parent": "chatgpt",
       "branch": "tools",
-      "notable": false,
+      "notable": true,
       "icon": "claude"
     },
     {
       "id": "codex",
       "name": "Codex",
-      "x": 780,
-      "y": 1990,
+      "x": 700,
+      "y": 1320,
       "parent": "chatgpt",
       "branch": "tools",
       "notable": false,
@@ -368,9 +338,9 @@
     {
       "id": "qwen",
       "name": "Qwen",
-      "x": 270,
-      "y": 1630,
-      "parent": "claude",
+      "x": 380,
+      "y": 1200,
+      "parent": null,
       "branch": "tools",
       "notable": false,
       "icon": "qwen"
@@ -378,12 +348,22 @@
     {
       "id": "premiere-pro",
       "name": "Adobe Premiere Pro",
-      "x": 2070,
-      "y": 1850,
-      "parent": "blender",
+      "x": 1980,
+      "y": 1300,
+      "parent": "skill-1048d7e6-a7da-421d-813e-ddf3777bc8f8",
       "branch": "creative",
       "notable": false,
       "icon": "premierepro"
+    },
+    {
+      "id": "skill-1048d7e6-a7da-421d-813e-ddf3777bc8f8",
+      "name": "Adobe",
+      "x": 1460,
+      "y": 1300,
+      "parent": null,
+      "branch": "creative",
+      "notable": true,
+      "icon": null
     }
   ]
 }
