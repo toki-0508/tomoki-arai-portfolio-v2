@@ -583,58 +583,6 @@
   color: var(--pencil);
 }
 
-.skill-groups {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px clamp(24px, 4vw, 56px);
-}
-
-.skill-group h3 {
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: var(--pencil);
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 34px;
-  padding: 0 12px;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  background: var(--paper);
-  font-size: 13.5px;
-  color: var(--pencil);
-}
-
-.chip.is-used {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
-  background: var(--card);
-  color: var(--ink);
-  font-weight: 500;
-}
-
-.chip.is-used::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-.chip-count {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent);
-}
-
 .interests {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -966,7 +914,6 @@
 @media (max-width: 640px) {
   .card-grid,
   .interests,
-  .skill-groups,
   .form-row,
   .pager {
     grid-template-columns: 1fr;

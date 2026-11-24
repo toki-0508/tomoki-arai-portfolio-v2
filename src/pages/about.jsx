@@ -1,9 +1,10 @@
 import { Fragment } from 'react';
 import { Icon } from '../components/Icon.jsx';
 import { Link, SectionHead } from '../components/ui.jsx';
-import { usageOf, workById } from '../content/loader.js';
+import { workById } from '../content/loader.js';
+import { SkillTree } from '../components/skill-tree/SkillTree.jsx';
 import { C, EditableImage, F, S } from '../editor/index.jsx';
-import { HISTORY, INTERESTS, MVV, NOW, NOW_UPDATED, PROFILE, SKILL_GROUPS } from '../content/site.js';
+import { HISTORY, INTERESTS, MVV, NOW, NOW_UPDATED, PROFILE } from '../content/site.js';
 
 const INTEREST_ICONS = { pen: Icon.Pen, play: Icon.Play, box: Icon.Box, chart: Icon.Chart };
 const monthLabel = (ym) => ym.replace('-', '.');
@@ -91,30 +92,7 @@ export function AboutPage() {
             title={<C k="about.skills.title" />}
             note={<C k="about.skills.note" />}
           />
-          <div className="skill-groups">
-            {SKILL_GROUPS.map((group, gi) => (
-              <div key={group.title} className="skill-group">
-                <h3><S path={`SKILL_GROUPS.${gi}.title`} /></h3>
-                <ul className="chips">
-                  {group.skills.map((skill, si) => {
-                    const used = usageOf(skill);
-                    return (
-                      <li key={skill} className={`chip ${used ? 'is-used' : ''}`}>
-                        <S path={`SKILL_GROUPS.${gi}.skills.${si}`} />
-                        {used > 0 && (
-                          <span className="chip-count">
-                            <span className="visually-hidden"><C k="about.skills.usagePrefix" /></span>
-                            {used}
-                            <span className="visually-hidden"><C k="about.skills.usageSuffix" /></span>
-                          </span>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <SkillTree />
         </div>
       </section>
 

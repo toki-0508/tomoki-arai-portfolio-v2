@@ -36,6 +36,14 @@
   --success: #15803d;
   --danger: #c2410c;
 
+  /* スキルツリーの系統 */
+  --skill-web: #3046b5;
+  --skill-app: #247560;
+  --skill-backend: #9a425d;
+  --skill-creative: #966318;
+  --skill-hardware: #1b718d;
+  --skill-tools: #765c93;
+
   /* 影 */
   --shadow-1: 0 1px 2px rgb(22 27 46 / 0.05);
   --shadow-2: 0 18px 40px -22px rgb(22 27 46 / 0.35), 0 2px 6px -2px rgb(22 27 46 / 0.06);
@@ -78,6 +86,13 @@
 
   --success: #4ade80;
   --danger: #fb923c;
+
+  --skill-web: #a1b4ff;
+  --skill-app: #8ad8b9;
+  --skill-backend: #efa5bc;
+  --skill-creative: #e9c284;
+  --skill-hardware: #89d4ea;
+  --skill-tools: #c4afe8;
 
   --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
   --shadow-2: 0 18px 40px -22px rgb(0 0 0 / 0.8), 0 2px 6px -2px rgb(0 0 0 / 0.4);

@@ -1,0 +1,155 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { branchBounds, constrainCamera, fitCamera, zoomCamera } from '../../lib/skill-tree.js';
+
+export function useElementSize(ref) {
+  const [size, setSize] = useState({ width: 1, height: 1 });
+  useEffect(() => {
+    const element = ref.current;
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setSize({ width, height });
+    });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [ref]);
+  return size;
+}
+
+export function useTreeCamera(ref, nodes) {
+  const size = useElementSize(ref);
+  const [camera, setCamera] = useState(() => fitCamera({ width: 800, height: 600 }));
+  const pointers = useRef(new Map());
+  const gesture = useRef(null);
+  const suppressClick = useRef(false);
+  const fittedBranch = useRef(null);
+  const fit = useCallback(
+    (branch = null) => {
+      fittedBranch.current = branch;
+      const fitted = fitCamera(size, branchBounds(nodes, branch), 48);
+      // スマホで分野を選んだときは、全体の収まりより技術名の可読性を優先する。
+      setCamera(
+        branch && fitted.scale < 0.55
+          ? zoomCamera(fitted, 0.55, { x: size.width / 2, y: size.height / 2 })
+          : fitted,
+      );
+    },
+    [size, nodes],
+  );
+  useEffect(() => {
+    fit(fittedBranch.current);
+  }, [fit]);
+
+  const zoom = useCallback(
+    (factor, point = { x: size.width / 2, y: size.height / 2 }) => {
+      setCamera((current) => constrainCamera(zoomCamera(current, current.scale * factor, point), size));
+    },
+    [size],
+  );
+
+  useEffect(() => {
+    const element = ref.current;
+    const onWheel = (event) => {
+      event.preventDefault();
+      const rect = element.getBoundingClientRect();
+      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? size.height : 1);
+      zoom(Math.exp(-Math.max(-100, Math.min(100, delta)) * 0.005), {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+      });
+    };
+    element.addEventListener('wheel', onWheel, { passive: false });
+    return () => element.removeEventListener('wheel', onWheel);
+  }, [ref, size.height, zoom]);
+
+  function onPointerDown(event) {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    pointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (pointers.current.size === 1) {
+      suppressClick.current = false;
+      gesture.current = {
+        x: event.clientX,
+        y: event.clientY,
+        moved: false,
+      };
+    } else if (gesture.current) gesture.current.moved = true;
+    // ノードの通常タップはネイティブの click に任せる。移動した時点でだけ捕捉する。
+    if (!event.target.closest('[data-node-id]')) event.currentTarget.setPointerCapture(event.pointerId);
+  }
+
+  function onPointerMove(event) {
+    const previous = pointers.current.get(event.pointerId);
+    if (!previous) return;
+    const next = { x: event.clientX, y: event.clientY };
+    const other = [...pointers.current.entries()].find(([id]) => id !== event.pointerId)?.[1];
+    pointers.current.set(event.pointerId, next);
+    if (gesture.current && Math.hypot(next.x - gesture.current.x, next.y - gesture.current.y) > 5)
+      gesture.current.moved = true;
+    if (!gesture.current?.moved) return;
+    if (!event.currentTarget.hasPointerCapture(event.pointerId))
+      event.currentTarget.setPointerCapture(event.pointerId);
+    setCamera((current) => {
+      if (!other)
+        return constrainCamera(
+          { ...current, x: current.x + next.x - previous.x, y: current.y + next.y - previous.y },
+          size,
+        );
+      const rect = ref.current.getBoundingClientRect();
+      const before = { x: (previous.x + other.x) / 2, y: (previous.y + other.y) / 2 };
+      const after = { x: (next.x + other.x) / 2, y: (next.y + other.y) / 2 };
+      const distance = Math.max(1, Math.hypot(previous.x - other.x, previous.y - other.y));
+      const scale = (current.scale * Math.hypot(next.x - other.x, next.y - other.y)) / distance;
+      const panned = { ...current, x: current.x + after.x - before.x, y: current.y + after.y - before.y };
+      return constrainCamera(
+        zoomCamera(panned, scale, { x: after.x - rect.left, y: after.y - rect.top }),
+        size,
+      );
+    });
+  }
+
+  function endPointer(event) {
+    if (!pointers.current.has(event.pointerId)) return;
+    suppressClick.current = gesture.current?.moved || event.type !== 'pointerup';
+    pointers.current.delete(event.pointerId);
+    if (event.currentTarget.hasPointerCapture(event.pointerId))
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    if (!pointers.current.size) gesture.current = null;
+  }
+
+  function onClickCapture(event) {
+    if (suppressClick.current && event.detail > 0) {
+      event.preventDefault();
+      event.stopPropagation();
+      suppressClick.current = false;
+    }
+  }
+
+  function onKeyDown(event) {
+    const directions = { ArrowLeft: [72, 0], ArrowRight: [-72, 0], ArrowUp: [0, 72], ArrowDown: [0, -72] };
+    if (directions[event.key]) {
+      event.preventDefault();
+      const [dx, dy] = directions[event.key];
+      setCamera((current) => constrainCamera({ ...current, x: current.x + dx, y: current.y + dy }, size));
+    } else if (['+', '=', '-', '0'].includes(event.key)) {
+      event.preventDefault();
+      if (event.key === '0') fit();
+      else zoom(event.key === '-' ? 1 / 1.2 : 1.2);
+    }
+  }
+
+  return {
+    camera,
+    zoom,
+    fit,
+    handlers: {
+      onPointerDown,
+      onPointerMove,
+      onPointerUp: endPointer,
+      onPointerCancel: endPointer,
+      onLostPointerCapture: (event) => {
+        if (event.target === event.currentTarget) endPointer(event);
+      },
+      onClickCapture,
+      onKeyDown,
+    },
+  };
+}
