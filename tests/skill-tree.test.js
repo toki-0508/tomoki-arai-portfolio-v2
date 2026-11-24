@@ -27,7 +27,7 @@ test('JSONのすべてのスキルが重複なくツリーに入り、IDも維�
 
 test('すべてのノードは中心からつながり、範囲内に収まる', () => {
   const ids = new Set(tree.nodes.map((node) => node.id));
-  assert.equal(tree.edges.filter((edge) => !edge.cross).length, tree.nodes.length - 1);
+  assert.equal(tree.edges.length, tree.nodes.length - 1);
   for (const edge of tree.edges) {
     assert.ok(ids.has(edge.from));
     assert.ok(ids.has(edge.to));
@@ -71,7 +71,7 @@ test('編集で未知のスキルが増えてもツリーから消さない', ()
   assert.equal(result.edges.length, 1);
 });
 
-test('横断する関連は双方向指定でも1本だけで、親子の経路を上書きしない', () => {
+test('以前のJSONを読んでも廃止した横断線は描画しない', () => {
   const result = buildSkillTree({
     version: 1,
     root: model.root,
@@ -79,8 +79,8 @@ test('横断する関連は双方向指定でも1本だけで、親子の経路�
       .slice(0, 2)
       .map((node, index) => ({ ...node, parent: null, related: [model.nodes[1 - index].id] })),
   });
-  assert.equal(result.edges.filter((edge) => edge.cross).length, 1);
-  assert.equal(result.edges.filter((edge) => !edge.cross).length, 2);
+  assert.equal(result.edges.length, 2);
+  assert.ok(result.edges.every((edge) => edge.from === 'root'));
 });
 
 test('直線・折れ線・曲線と曲がりを描画用の経路に変換する', () => {

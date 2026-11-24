@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import ICONS from '../../content/skill-icons.json';
-import { isDescendant, SKILL_TONES, SKILL_LEVELS, SKILL_EXPERIENCE } from '../../lib/skill-tree-model.js';
+import {
+  isDescendant,
+  SKILL_TONES,
+  SKILL_LEVELS,
+  SKILL_EXPERIENCE,
+  sortSkillsByName,
+  compareSkillNames,
+} from '../../lib/skill-tree-model.js';
 import { SkillEmblem } from '../../components/skill-tree/SkillEmblem.jsx';
 
 const colors = ['青緑', '青', '紫', 'オレンジ', '緑', 'ピンク'];
@@ -89,7 +96,7 @@ export function SkillNodeInspector({ node, model, onApply, onDelete, onPending }
               onChange={(event) => field('parent', event.target.value || null)}
             >
               <option value="">制作元</option>
-              {model.nodes
+              {sortSkillsByName(model.nodes)
                 .filter((candidate) => !isDescendant(model, candidate.id, node.id))
                 .map((candidate) => (
                   <option key={candidate.id} value={candidate.id}>
@@ -202,29 +209,6 @@ export function SkillNodeInspector({ node, model, onApply, onDelete, onPending }
             </select>
           </label>
           <label>
-            分野をまたぐ関連先
-            <select
-              aria-label="分野をまたぐ関連先"
-              multiple
-              size="5"
-              value={form.related}
-              onChange={(event) =>
-                field(
-                  'related',
-                  [...event.target.selectedOptions].map((option) => option.value),
-                )
-              }
-            >
-              {model.nodes
-                .filter((candidate) => candidate.id !== node.id && candidate.id !== form.parent)
-                .map((candidate) => (
-                  <option key={candidate.id} value={candidate.id}>
-                    {candidate.name}
-                  </option>
-                ))}
-            </select>
-          </label>
-          <label>
             ロゴ
             <select
               aria-label="ロゴ"
@@ -233,7 +217,7 @@ export function SkillNodeInspector({ node, model, onApply, onDelete, onPending }
             >
               <option value="">未選択</option>
               {Object.entries(ICONS)
-                .sort(([, a], [, b]) => a.label.localeCompare(b.label))
+                .sort(([, a], [, b]) => compareSkillNames(a.label, b.label))
                 .map(([id, icon]) => (
                   <option key={id} value={id}>
                     {icon.label}

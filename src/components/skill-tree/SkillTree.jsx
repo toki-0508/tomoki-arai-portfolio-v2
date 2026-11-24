@@ -4,6 +4,7 @@ import { Icon } from '../Icon.jsx';
 import { C } from '../../editor/index.jsx';
 import { t } from '../../content/copy.js';
 import MODEL from '../../content/skill-tree.json';
+import { sortSkillsByName } from '../../lib/skill-tree-model.js';
 import { buildSkillTree, branchBounds, fitCamera } from '../../lib/skill-tree.js';
 import { useElementSize, useTreeCamera } from './useTreeCamera.js';
 import { SkillGraph } from './SkillGraph.jsx';
@@ -14,7 +15,6 @@ function ConnectionLegend() {
   return (
     <p className="skill-tree-legend">
       <span>技術・制作上の関連</span>
-      <span>分野をまたぐ関連</span>
       <small>線は学習順や依存関係、形・大きさは習熟度を示しません。</small>
     </p>
   );
@@ -178,7 +178,7 @@ export function SkillTree() {
           <C k="about.tree.list" />
         </summary>
         <ul>
-          {MODEL.nodes.map((node) => (
+          {sortSkillsByName(MODEL.nodes).map((node) => (
             <li key={node.id}>{node.name}</li>
           ))}
         </ul>

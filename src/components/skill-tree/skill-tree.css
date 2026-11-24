@@ -104,17 +104,6 @@
 .is-origin-edge.is-lit .skill-path {
   opacity: 1;
 }
-.is-cross .skill-path {
-  stroke-dasharray: 8 12;
-  opacity: 0.14;
-  stroke-width: 1.8;
-}
-.is-cross .skill-path-shadow {
-  display: none;
-}
-.is-cross.is-lit .skill-path {
-  opacity: 1;
-}
 .is-lit .skill-path {
   stroke: var(--skill-tone);
   stroke-width: 4;
@@ -294,9 +283,6 @@
   width: 24px;
   border-top: 1px solid var(--skill-game-gold);
   margin: 0 8px 3px 0;
-}
-.skill-tree-legend span:last-child::before {
-  border-top-style: dashed;
 }
 .skill-tree-experience {
   margin-top: 14px;

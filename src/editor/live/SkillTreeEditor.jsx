@@ -3,7 +3,13 @@ import { Icon } from '../../components/Icon.jsx';
 import { SkillGraph } from '../../components/skill-tree/SkillGraph.jsx';
 import { useTreeCamera } from '../../components/skill-tree/useTreeCamera.js';
 import { buildSkillTree } from '../../lib/skill-tree.js';
-import { MAX_SKILLS, moveSkill, removeSkill, validateSkillTree } from '../../lib/skill-tree-model.js';
+import {
+  MAX_SKILLS,
+  moveSkill,
+  removeSkill,
+  validateSkillTree,
+  sortSkillsByName,
+} from '../../lib/skill-tree-model.js';
 import ICONS from '../../content/skill-icons.json';
 import { SkillNodeInspector } from './SkillNodeInspector.jsx';
 import '../../styles/tokens.css';
@@ -54,6 +60,7 @@ export function SkillTreeEditor() {
   const fileInput = useRef(null);
   const viewport = useRef(null);
   const model = state.model;
+  const sortedNodes = useMemo(() => sortSkillsByName(model?.nodes || []), [model]);
   const visibleModel = useMemo(
     () => (model && drag ? moveSkill(model, drag.id, drag.x, drag.y, snap) : model),
     [model, drag, snap],
@@ -315,7 +322,7 @@ export function SkillTreeEditor() {
           >
             制作元
           </button>
-          {model?.nodes.map((candidate) => (
+          {sortedNodes.map((candidate) => (
             <button
               type="button"
               key={candidate.id}
@@ -380,7 +387,7 @@ export function SkillTreeEditor() {
                 onChange={(event) => choose(event.target.value, true)}
               >
                 <option value="root">制作元</option>
-                {model.nodes.map((candidate) => (
+                {sortedNodes.map((candidate) => (
                   <option key={candidate.id} value={candidate.id}>
                     {candidate.name}
                   </option>
