@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/check-public-files.mjs",
+    "prebuild": "node scripts/check-public-files.mjs && node scripts/check-skill-tree.mjs",
     "build": "vite build",
     "postbuild": "node scripts/check-no-editor.mjs",
     "edit": "vite --mode edit --open",
+    "edit:skills": "vite --mode edit --host 127.0.0.1 --open /__skill-tree",
     "preview": "vite preview",
     "ingest": "node scripts/ingest-reports.mjs",
     "check:files": "node scripts/check-public-files.mjs",

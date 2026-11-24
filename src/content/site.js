@@ -15,11 +15,10 @@
 //   NAV_LINKS        : ナビは英語(label)、ページ内の見出しは日本語(title)。
 //                      title はページの h1 とブラウザタブのタイトルに使う
 //   INTERESTS        : Values を3つの行動に分けたもの。「どう考えて作るか」を短く伝える
-//   SKILL_GROUPS     : 作品・ダウンロードの tags に含まれる技術は「作品で使用」と表示される
-//                      (判定は loader.js の usageOf。名前は tags と同じ表記で書くこと)
+//   スキルツリーは skill-tree.json。名前は作品 tags と同じ表記にすると使用実績がつく。
 //   NOW_UPDATED      : 「いま」の内容は古くなりやすいので、いつ時点の情報かを必ず表示する
 // ============================================================
 import SITE from './site.json';
 
 export { SITE };
-export const { PROFILE, NAV_LINKS, MVV, INTERESTS, SKILL_GROUPS, HISTORY, NOW_UPDATED, NOW } = SITE;
+export const { PROFILE, NAV_LINKS, MVV, INTERESTS, HISTORY, NOW_UPDATED, NOW } = SITE;

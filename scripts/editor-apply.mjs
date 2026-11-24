@@ -14,6 +14,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseFrontmatter } from '../src/lib/markdown-parse.js';
 import { sha256 } from './editor/drafts.mjs';
 import { fileKind } from '../src/editor/patch.js';
+import { SKILL_TREE_FILE, validateSkillTree } from '../src/lib/skill-tree-model.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -114,6 +115,11 @@ export function applyDrafts(root = ROOT, { now = new Date() } = {}) {
     throw new Error(`衝突があるため反映しませんでした: ${plan.conflicts.map((item) => item.rel).join(', ')}`);
   }
   if (!plan.items.length) return { applied: [], historyDir: null, unusedImages: [] };
+
+  if (plan.items.some((item) => item.rel === SKILL_TREE_FILE)) {
+    const icons = JSON.parse(fs.readFileSync(path.join(root, 'src/content/skill-icons.json'), 'utf8'));
+    validateSkillTree(JSON.parse(fs.readFileSync(path.join(p.drafts, SKILL_TREE_FILE), 'utf8')), Object.keys(icons));
+  }
 
   const applied = [];
   const replacedImages = [];

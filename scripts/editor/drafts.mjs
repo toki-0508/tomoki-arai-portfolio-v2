@@ -172,6 +172,7 @@ export class DraftStore {
     const kind = fileKind(rel);
     if (kind === 'copy') return 'サイトの文言';
     if (kind === 'site') return 'プロフィール・サイトの情報';
+    if (kind === 'skill-tree') return 'スキルツリーの配置・ノード';
     const name = parseFrontmatter(this.read(rel)).data.name || this.itemId(rel);
     return `${kind === 'work' ? '作品' : 'ダウンロード'}「${name}」`;
   }

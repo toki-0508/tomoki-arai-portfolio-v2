@@ -17,6 +17,9 @@ export function useElementSize(ref) {
 
 export function useTreeCamera(ref, nodes) {
   const size = useElementSize(ref);
+  const nodesRef = useRef(nodes);
+  nodesRef.current = nodes;
+  const ready = nodes.length > 0;
   const [camera, setCamera] = useState(() => fitCamera({ width: 800, height: 600 }));
   const pointers = useRef(new Map());
   const gesture = useRef(null);
@@ -25,7 +28,7 @@ export function useTreeCamera(ref, nodes) {
   const fit = useCallback(
     (target = null, minimumScale = 0) => {
       fittedView.current = { target, minimumScale };
-      const fitted = fitCamera(size, branchBounds(nodes, target), 48);
+      const fitted = fitCamera(size, branchBounds(nodesRef.current, target), 48);
       const readableScale = target ? Math.max(0.55, minimumScale) : minimumScale;
       setCamera(
         fitted.scale < readableScale
@@ -33,14 +36,14 @@ export function useTreeCamera(ref, nodes) {
           : fitted,
       );
     },
-    [size, nodes],
+    [size],
   );
   useEffect(() => {
-    if (size.width <= 1 || size.height <= 1) return;
+    if (!ready || size.width <= 1 || size.height <= 1) return;
     const { target, minimumScale } = fittedView.current;
     // 開いた直後は技術を読める倍率、リセットでは全体像を表示する。
     fit(target, minimumScale ?? (size.width < 640 ? 0.34 : 0.48));
-  }, [fit]);
+  }, [fit, ready]);
 
   const zoom = useCallback(
     (factor, point = { x: size.width / 2, y: size.height / 2 }) => {

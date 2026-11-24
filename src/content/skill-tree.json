@@ -1,0 +1,389 @@
+{
+  "version": 1,
+  "root": {
+    "x": 1200,
+    "y": 1200
+  },
+  "nodes": [
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "x": 950,
+      "y": 1020,
+      "parent": null,
+      "branch": "web",
+      "notable": true,
+      "icon": "javascript"
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "x": 740,
+      "y": 1030,
+      "parent": "javascript",
+      "branch": "web",
+      "notable": false,
+      "icon": "typescript"
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "x": 740,
+      "y": 810,
+      "parent": "javascript",
+      "branch": "web",
+      "notable": true,
+      "icon": "react"
+    },
+    {
+      "id": "next-js",
+      "name": "Next.js",
+      "x": 500,
+      "y": 770,
+      "parent": "react",
+      "branch": "web",
+      "notable": false,
+      "icon": "nextjs"
+    },
+    {
+      "id": "three-js",
+      "name": "Three.js",
+      "x": 790,
+      "y": 540,
+      "parent": "react",
+      "branch": "web",
+      "notable": false,
+      "icon": "threejs"
+    },
+    {
+      "id": "vite",
+      "name": "Vite",
+      "x": 300,
+      "y": 950,
+      "parent": "typescript",
+      "branch": "web",
+      "notable": false,
+      "icon": "vitejs"
+    },
+    {
+      "id": "tailwind-css",
+      "name": "Tailwind CSS",
+      "x": 460,
+      "y": 520,
+      "parent": "next-js",
+      "branch": "web",
+      "notable": false,
+      "icon": "tailwindcss"
+    },
+    {
+      "id": "flutter",
+      "name": "Flutter",
+      "x": 1210,
+      "y": 930,
+      "parent": null,
+      "branch": "app",
+      "notable": true,
+      "icon": "flutter"
+    },
+    {
+      "id": "dart",
+      "name": "Dart",
+      "x": 1080,
+      "y": 700,
+      "parent": "flutter",
+      "branch": "app",
+      "notable": false,
+      "icon": "dart"
+    },
+    {
+      "id": "chrome-extensions",
+      "name": "Chrome Extensions",
+      "x": 850,
+      "y": 300,
+      "parent": "dart",
+      "branch": "app",
+      "notable": false,
+      "icon": "chrome"
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "x": 1390,
+      "y": 700,
+      "parent": "flutter",
+      "branch": "app",
+      "notable": true,
+      "icon": "python"
+    },
+    {
+      "id": "java",
+      "name": "Java",
+      "x": 1290,
+      "y": 470,
+      "parent": "python",
+      "branch": "app",
+      "notable": false,
+      "icon": "java"
+    },
+    {
+      "id": "c",
+      "name": "C",
+      "x": 1530,
+      "y": 330,
+      "parent": "java",
+      "branch": "app",
+      "notable": false,
+      "icon": "c"
+    },
+    {
+      "id": "minecraft-forge",
+      "name": "Minecraft Forge",
+      "x": 1110,
+      "y": 260,
+      "parent": "java",
+      "branch": "app",
+      "notable": false,
+      "icon": "forge"
+    },
+    {
+      "id": "firebase",
+      "name": "Firebase",
+      "x": 1670,
+      "y": 800,
+      "parent": "supabase",
+      "branch": "backend",
+      "notable": true,
+      "icon": "firebase"
+    },
+    {
+      "id": "sqlite",
+      "name": "SQLite",
+      "x": 1870,
+      "y": 600,
+      "parent": "firebase",
+      "branch": "backend",
+      "notable": false,
+      "icon": "sqlite"
+    },
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "x": 1490,
+      "y": 1020,
+      "parent": null,
+      "branch": "backend",
+      "notable": true,
+      "icon": "supabase"
+    },
+    {
+      "id": "google-apps-script",
+      "name": "Google Apps Script",
+      "x": 2050,
+      "y": 1160,
+      "parent": "node-js",
+      "branch": "backend",
+      "notable": false,
+      "icon": "googleappsscript"
+    },
+    {
+      "id": "node-js",
+      "name": "Node.js",
+      "x": 1740,
+      "y": 1090,
+      "parent": "supabase",
+      "branch": "backend",
+      "notable": true,
+      "icon": "nodejs"
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "x": 1960,
+      "y": 920,
+      "parent": "node-js",
+      "branch": "backend",
+      "notable": false,
+      "icon": "vercel"
+    },
+    {
+      "id": "github-actions",
+      "name": "GitHub Actions",
+      "x": 2150,
+      "y": 740,
+      "parent": "vercel",
+      "branch": "backend",
+      "notable": false,
+      "icon": "githubactions"
+    },
+    {
+      "id": "blender",
+      "name": "Blender",
+      "x": 1500,
+      "y": 1380,
+      "parent": null,
+      "branch": "creative",
+      "notable": true,
+      "icon": "blender"
+    },
+    {
+      "id": "garageband",
+      "name": "GarageBand",
+      "x": 1580,
+      "y": 1610,
+      "parent": "blender",
+      "branch": "creative",
+      "notable": false,
+      "icon": "garageband"
+    },
+    {
+      "id": "figma",
+      "name": "Figma",
+      "x": 1760,
+      "y": 1360,
+      "parent": "blender",
+      "branch": "creative",
+      "notable": true,
+      "icon": "figma"
+    },
+    {
+      "id": "adobe-illustrator",
+      "name": "Adobe Illustrator",
+      "x": 1830,
+      "y": 1750,
+      "parent": "figma",
+      "branch": "creative",
+      "notable": false,
+      "icon": "illustrator"
+    },
+    {
+      "id": "adobe-photoshop",
+      "name": "Adobe Photoshop",
+      "x": 2020,
+      "y": 1530,
+      "parent": "figma",
+      "branch": "creative",
+      "notable": false,
+      "icon": "photoshop"
+    },
+    {
+      "id": "kicad",
+      "name": "KiCad",
+      "x": 1100,
+      "y": 1740,
+      "parent": "arduino",
+      "branch": "hardware",
+      "notable": true,
+      "icon": "kicad"
+    },
+    {
+      "id": "arduino",
+      "name": "Arduino",
+      "x": 1240,
+      "y": 1500,
+      "parent": null,
+      "branch": "hardware",
+      "notable": true,
+      "icon": "arduino"
+    },
+    {
+      "id": "nrf52840",
+      "name": "nRF52840",
+      "x": 1360,
+      "y": 1900,
+      "parent": "kicad",
+      "branch": "hardware",
+      "notable": false,
+      "icon": "nordic"
+    },
+    {
+      "id": "zephyr",
+      "name": "Zephyr",
+      "x": 1220,
+      "y": 2140,
+      "parent": "nrf52840",
+      "branch": "hardware",
+      "notable": false,
+      "icon": "zephyr"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "x": 960,
+      "y": 1410,
+      "parent": null,
+      "branch": "tools",
+      "notable": true,
+      "icon": "git"
+    },
+    {
+      "id": "vs-code",
+      "name": "VS Code",
+      "x": 730,
+      "y": 1410,
+      "parent": "git",
+      "branch": "tools",
+      "notable": true,
+      "icon": "vscode"
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "x": 500,
+      "y": 1270,
+      "parent": "vs-code",
+      "branch": "tools",
+      "notable": false,
+      "icon": "notion"
+    },
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "x": 740,
+      "y": 1660,
+      "parent": "vs-code",
+      "branch": "tools",
+      "notable": true,
+      "icon": "openai"
+    },
+    {
+      "id": "claude",
+      "name": "Claude",
+      "x": 500,
+      "y": 1810,
+      "parent": "chatgpt",
+      "branch": "tools",
+      "notable": false,
+      "icon": "claude"
+    },
+    {
+      "id": "codex",
+      "name": "Codex",
+      "x": 780,
+      "y": 1990,
+      "parent": "chatgpt",
+      "branch": "tools",
+      "notable": false,
+      "icon": "codex"
+    },
+    {
+      "id": "qwen",
+      "name": "Qwen",
+      "x": 270,
+      "y": 1630,
+      "parent": "claude",
+      "branch": "tools",
+      "notable": false,
+      "icon": "qwen"
+    },
+    {
+      "id": "premiere-pro",
+      "name": "Adobe Premiere Pro",
+      "x": 2070,
+      "y": 1850,
+      "parent": "blender",
+      "branch": "creative",
+      "notable": false,
+      "icon": "premierepro"
+    }
+  ]
+}

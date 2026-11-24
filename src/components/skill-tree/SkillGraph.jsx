@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { t } from '../../content/copy.js';
 import { PROFILE } from '../../content/site.js';
 import { usageOf } from '../../content/loader.js';
-import { S } from '../../editor/index.jsx';
 import { NODE_SIZE, TREE_SIZE } from '../../lib/skill-tree.js';
 import { SkillEmblem } from './SkillEmblem.jsx';
 
@@ -13,6 +12,7 @@ const shortNames = {
   'Adobe Illustrator': 'Illustrator',
   'Adobe Photoshop': 'Photoshop',
   'Tailwind CSS': 'Tailwind',
+  'Adobe Premiere Pro': 'Premiere Pro',
 };
 
 function route(from, to) {
@@ -34,6 +34,7 @@ export function SkillGraph({ tree, camera, selected, interactive = false, onSele
     ancestry.add(cursor);
   }
   const byId = new Map(tree.nodes.map((node) => [node.id, node]));
+  const origin = byId.get('root');
   return (
     <div
       className="skill-tree-world"
@@ -44,7 +45,7 @@ export function SkillGraph({ tree, camera, selected, interactive = false, onSele
       }}
     >
       <svg className="skill-tree-lines" width={TREE_SIZE} height={TREE_SIZE} aria-hidden="true">
-        <g className="skill-tree-origin">
+        <g className="skill-tree-origin" transform={`translate(${origin.x - 1200} ${origin.y - 1200})`}>
           <circle cx="1200" cy="1200" r="116" />
           <circle cx="1200" cy="1200" r="134" />
           <path d="M 1060 1200 H 1080 M 1320 1200 H 1340 M 1200 1060 V 1080 M 1200 1320 V 1340" />
@@ -80,9 +81,9 @@ export function SkillGraph({ tree, camera, selected, interactive = false, onSele
         };
         const content = (
           <>
-            <SkillEmblem name={node.name} root={root} />
+              <SkillEmblem name={node.name} icon={node.icon} root={root} />
             <span className="skill-tree-node-name">
-              {root ? PROFILE.nameEn : shortNames[node.name] || <S path={node.path} />}
+                {root ? PROFILE.nameEn : shortNames[node.name] || node.name}
             </span>
           </>
         );

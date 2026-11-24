@@ -17,6 +17,7 @@ function setup() {
   fs.mkdirSync(path.join(root, 'public/images/projects'), { recursive: true });
   fs.writeFileSync(path.join(root, 'src/content/works/sample.md'), SAMPLE);
   fs.writeFileSync(path.join(root, 'src/content/copy.json'), '{\n  "home.cta.title": "一緒に何か作りませんか？"\n}\n');
+  for (const name of ['skill-tree.json', 'skill-icons.json']) fs.copyFileSync(`src/content/${name}`, path.join(root, 'src/content', name));
 
   const plugin = editorPlugin();
   plugin.configResolved({ root });
@@ -105,4 +106,24 @@ test('画像の差し替え・取り消し・メモ', async () => {
   await call({ method: 'POST', url: '/__editor/discard', body: { file } });
   assert.equal(plugin.load(`${path.join(root, file)}?raw`), null);
   assert.equal(fs.readdirSync(path.join(root, '.editor/drafts/public/images/projects')).length, 0);
+});
+
+test('スキル配置は検証・競合確認して下書きだけに保存する', async () => {
+  const { root, call, plugin } = setup();
+  const file = 'src/content/skill-tree.json';
+  const original = fs.readFileSync(path.join(root, file), 'utf8');
+  const state = await call({ url: '/__editor/skill-tree' });
+  state.body.model.nodes[0].x += 20;
+  const body = { model: state.body.model, revision: state.body.revision };
+  const saved = await call({ method: 'POST', url: '/__editor/skill-tree', body });
+  assert.equal(saved.status, 200);
+  assert.equal(fs.readFileSync(path.join(root, file), 'utf8'), original);
+  assert.equal(JSON.parse(plugin.load(path.join(root, file))).nodes[0].x, state.body.model.nodes[0].x);
+  assert.equal((await call({ method: 'POST', url: '/__editor/skill-tree', body })).status, 409);
+  const next = await call({ url: '/__editor/skill-tree' });
+  next.body.model.nodes[0].parent = next.body.model.nodes[0].id;
+  assert.equal((await call({ method: 'POST', url: '/__editor/skill-tree', body: { model: next.body.model, revision: next.body.revision } })).status, 400);
+  assert.equal((await call({ url: '/__editor/skill-tree', headers: { host: '127.0.0.1:5174' } })).status, 403);
+  const listed = await call({ url: '/__editor/state' });
+  assert.equal(listed.body.drafts[0].label, 'スキルツリーの配置・ノード');
 });

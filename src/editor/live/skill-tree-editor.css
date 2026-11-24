@@ -1,0 +1,264 @@
+.skill-layout-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 480px;
+  background: var(--paper);
+  letter-spacing: 0;
+}
+.skill-layout-editor button:not(.skill-tree-node),
+.skill-layout-editor a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 7px 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 5px;
+  color: var(--ink);
+  background: var(--card);
+  font-size: 12px;
+  text-decoration: none;
+}
+.skill-layout-editor button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.skill-layout-editor .sle-primary {
+  color: var(--on-accent);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.sle-toolbar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--card);
+}
+.sle-toolbar h1 {
+  margin-right: auto;
+  font-size: 17px;
+  line-height: 1.4;
+}
+.sle-history {
+  display: flex;
+  gap: 4px;
+}
+.sle-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 7px 16px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 12px;
+  color: var(--pencil);
+}
+.sle-status[role='alert'] {
+  color: var(--danger);
+}
+.sle-status button {
+  min-height: 26px;
+  padding: 2px 8px;
+}
+.sle-workspace {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 280px;
+  flex: 1;
+  min-height: 0;
+}
+.sle-node-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 0;
+  padding: 10px;
+  overflow-y: auto;
+  border-right: 1px solid var(--rule);
+}
+.sle-node-list button {
+  flex-shrink: 0;
+  justify-content: flex-start;
+  border-color: transparent;
+  background: transparent;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.sle-node-list button[aria-current='true'] {
+  color: var(--accent);
+  background: var(--accent-tint);
+  border-color: var(--accent);
+}
+.sle-canvas-area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--skill-game-board);
+}
+.sle-canvas-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--card);
+}
+.sle-canvas-toolbar [role='group'] {
+  display: flex;
+  gap: 4px;
+}
+.sle-canvas-toolbar button[aria-pressed='true'] {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-tint);
+}
+.sle-canvas-toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+}
+.sle-canvas {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+  --skill-tone: var(--skill-game-gold);
+}
+.sle-zoom {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px;
+  border: 1px solid var(--skill-game-frame);
+  border-radius: 5px;
+  background: var(--skill-game-panel);
+}
+.sle-zoom button {
+  border: 0;
+  background: transparent;
+  color: var(--skill-game-ink);
+}
+.sle-zoom output {
+  min-width: 44px;
+  color: var(--skill-game-ink);
+  text-align: center;
+  font: 12px var(--font-mono);
+}
+.sle-sidebar {
+  min-height: 0;
+  padding: 16px;
+  overflow-y: auto;
+  border-left: 1px solid var(--rule);
+  background: var(--card);
+}
+.sle-sidebar label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: var(--pencil);
+}
+.sle-sidebar input,
+.sle-sidebar select {
+  display: block;
+  width: 100%;
+  min-height: 38px;
+  min-width: 0;
+  padding: 7px 9px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 5px;
+  color: var(--ink);
+  background: var(--card);
+  font: 13px var(--font-sans);
+}
+.sle-sidebar h2 {
+  margin: 14px 0;
+  font-size: 16px;
+}
+.sle-icon-preview {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+  padding: 15px;
+  border-radius: 5px;
+  background: var(--skill-game-board);
+}
+.sle-coordinate-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.sle-inspector > button {
+  width: 100%;
+  margin-top: 5px;
+}
+.skill-layout-editor .sle-delete {
+  margin-top: 14px;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.sle-error {
+  font-size: 12px;
+  color: var(--danger);
+}
+@media (max-width: 1100px) {
+  .sle-workspace {
+    grid-template-columns: minmax(0, 1fr) 260px;
+  }
+  .sle-node-list {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .skill-layout-editor {
+    min-height: 620px;
+  }
+  .sle-toolbar {
+    gap: 6px;
+    padding: 10px;
+  }
+  .sle-toolbar h1 {
+    flex-basis: 100%;
+    font-size: 16px;
+  }
+  .sle-toolbar > a {
+    margin-left: auto;
+  }
+  .sle-status {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+  .sle-workspace {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(220px, 1fr) minmax(0, 38%);
+  }
+  .sle-sidebar {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .sle-canvas-toolbar {
+    padding: 5px;
+    gap: 4px;
+  }
+  .sle-canvas-toolbar button {
+    font-size: 10px;
+    padding: 5px 7px;
+  }
+}

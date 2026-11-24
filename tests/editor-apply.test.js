@@ -30,6 +30,31 @@ function setup() {
 }
 const read = (root, rel) => fs.readFileSync(path.join(root, rel), 'utf8');
 
+test('スキルツリーの下書きを確認して反映・履歴保存する', () => {
+  const { root, store } = setup();
+  for (const name of ['skill-tree.json', 'skill-icons.json']) fs.copyFileSync(`src/content/${name}`, path.join(root, 'src/content', name));
+  const file = 'src/content/skill-tree.json';
+  const model = JSON.parse(read(root, file));
+  model.nodes[0].x += 20;
+  store.write(file, `${JSON.stringify(model, null, 2)}\n`);
+  assert.equal(planApply(root).conflicts.length, 0);
+  const result = applyDrafts(root, { now: NOW });
+  assert.ok(result.applied.includes(file));
+  assert.equal(JSON.parse(read(root, file)).nodes[0].x, model.nodes[0].x);
+  assert.ok(fs.existsSync(path.join(result.historyDir, 'drafts', file)));
+});
+
+test('不正なスキル下書きが混じる場合、ほかのファイルも反映しない', () => {
+  const { root, store } = setup();
+  for (const name of ['skill-tree.json', 'skill-icons.json']) fs.copyFileSync(`src/content/${name}`, path.join(root, 'src/content', name));
+  const file = 'src/content/skill-tree.json';
+  const model = JSON.parse(read(root, file));
+  model.nodes[0].parent = model.nodes[0].id;
+  store.write(file, JSON.stringify(model));
+  assert.throws(() => applyDrafts(root), /循環/);
+  assert.equal(read(root, WORK), SAMPLE);
+});
+
 test('lineDiff は消えた行と足された行を返す', () => {
   assert.deepEqual(lineDiff('a\nb\nc', 'a\nB\nc\nd'), ['- b', '+ B', '+ d']);
   assert.deepEqual(lineDiff('same', 'same'), []);

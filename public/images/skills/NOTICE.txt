@@ -3,3 +3,19 @@ Source: https://github.com/devicons/devicon/tree/v2.17.0
 License: MIT (see LICENSE.txt).
 Product names and logos are trademarks of their respective owners.
 Used to identify the technologies in this portfolio; no endorsement is implied.
+
+Additional AI logos: Lobe Icons, MIT (LOBE-LICENSE.txt)
+https://github.com/lobehub/lobe-icons/tree/05260484d9f4de68f90cc87a634ae68fa4043efd
+Files: openai.svg, claude.svg, codex.svg, qwen.svg
+
+Additional brand logos: Simple Icons, CC0 (SIMPLE-ICONS-LICENSE.txt)
+https://github.com/simple-icons/simple-icons/tree/c01109118e134e061c9bdf2e1a7f814117f1f032
+Files: googleappsscript.svg, kicad.svg, nordic.svg
+nRF52840 is represented by its manufacturer Nordic Semiconductor's logo.
+
+Zephyr logo: https://github.com/zephyrproject-rtos/zephyr/blob/main/doc/_static/images/logo.svg
+Minecraft Forge icon: https://docs.minecraftforge.net/en/latest/images/favicon-32x32.png
+GarageBand app icon: Apple, https://apps.apple.com/us/app/garageband/id682658836
+GarageBand artwork was retrieved from Apple's iTunes Lookup API.
+Adobe Premiere Pro: Devicon v2.17.0 (premierepro-original.svg).
+All product names and marks remain the property of their respective owners.

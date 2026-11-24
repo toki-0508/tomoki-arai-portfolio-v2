@@ -4,7 +4,7 @@ import fs from 'node:fs';
 
 test('site.json にプロフィール系データがそろっている', () => {
   const site = JSON.parse(fs.readFileSync('src/content/site.json', 'utf8'));
-  assert.deepEqual(Object.keys(site), ['PROFILE', 'NAV_LINKS', 'MVV', 'INTERESTS', 'SKILL_GROUPS', 'HISTORY', 'NOW_UPDATED', 'NOW']);
+  assert.deepEqual(Object.keys(site), ['PROFILE', 'NAV_LINKS', 'MVV', 'INTERESTS', 'HISTORY', 'NOW_UPDATED', 'NOW']);
   assert.equal(typeof site.PROFILE.tagline, 'string');
   assert.ok(site.HISTORY.length > 0);
 });

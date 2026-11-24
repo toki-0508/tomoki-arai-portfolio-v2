@@ -9,7 +9,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { applyPatch, PatchError } from '../../src/editor/patch.js';
-import { DraftStore, EditorError, MAX_IMAGE_BYTES } from './drafts.mjs';
+import { DraftStore, EditorError, MAX_IMAGE_BYTES, sha256 } from './drafts.mjs';
+import { SKILL_TREE_FILE, SkillTreeError, validateSkillTree } from '../../src/lib/skill-tree-model.js';
 import { isTrustedRequest, readBody, readJson, sendJson } from './http.mjs';
 
 export function editorPlugin() {
@@ -25,6 +26,20 @@ export function editorPlugin() {
 
   async function handle(req, res, url) {
     const route = `${req.method} ${url.pathname}`;
+    if (route === 'GET /__editor/skill-tree') {
+      const raw = store.read(SKILL_TREE_FILE);
+      return sendJson(res, 200, { model: JSON.parse(raw), revision: sha256(raw) });
+    }
+    if (route === 'POST /__editor/skill-tree') {
+      const { model, revision } = await readJson(req, 256 * 1024);
+      if (revision !== sha256(store.read(SKILL_TREE_FILE))) throw new EditorError(409, '別の画面で更新されました。再読み込みしてから編集してください');
+      const iconIds = Object.keys(JSON.parse(fs.readFileSync(path.join(root, 'src/content/skill-icons.json'), 'utf8')));
+      const validated = validateSkillTree(model, iconIds);
+      const raw = `${JSON.stringify(validated, null, 2)}\n`;
+      store.write(SKILL_TREE_FILE, raw);
+      reload(SKILL_TREE_FILE);
+      return sendJson(res, 200, { ok: true, revision: sha256(raw) });
+    }
     if (route === 'GET /__editor/state') {
       return sendJson(res, 200, { drafts: store.list(), notes: store.getNotes() });
     }
@@ -112,6 +127,17 @@ export function editorPlugin() {
 
       server.middlewares.use(async (req, res, next) => {
         const url = new URL(req.url, 'http://localhost');
+        if (req.method === 'GET' && url.pathname === '/__skill-tree') {
+          if (!/^(127\.0\.0\.1|localhost)(:\d{1,5})?$/.test(req.headers.host ?? '')) {
+            sendJson(res, 403, { error: 'このMacから開いてください' });
+            return;
+          }
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          res.setHeader('Cache-Control', 'no-store');
+          const html = '<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.svg"><title>スキルツリーを編集</title></head><body><div id="root"></div><script type="module" src="/src/editor/live/skill-tree-entry.jsx"></script></body></html>';
+          res.end(await server.transformIndexHtml(url.pathname, html));
+          return;
+        }
         if (req.method === 'GET' && url.pathname.startsWith('/images/projects/')) {
           if (!serveDraftImage(url.pathname, res)) next();
           return;
@@ -124,7 +150,7 @@ export function editorPlugin() {
           if (!isTrustedRequest(req.headers)) throw new EditorError(403, 'このリクエストは受け付けられません');
           await handle(req, res, url);
         } catch (err) {
-          const status = err instanceof EditorError ? err.status : err instanceof PatchError ? 400 : 500;
+          const status = err instanceof EditorError ? err.status : err instanceof PatchError || err instanceof SkillTreeError ? 400 : 500;
           sendJson(res, status, { error: err.message });
         }
       });
