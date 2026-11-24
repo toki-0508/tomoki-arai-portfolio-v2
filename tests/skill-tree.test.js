@@ -9,12 +9,31 @@ import {
   NODE_SIZE,
   TREE_SIZE,
   skillRoute,
+  centerCamera,
+  reframeCamera,
   zoomCamera,
 } from '../src/lib/skill-tree.js';
 
 const model = JSON.parse(fs.readFileSync('src/content/skill-tree.json', 'utf8'));
 const icons = JSON.parse(fs.readFileSync('src/content/skill-icons.json', 'utf8'));
 const tree = buildSkillTree(model);
+
+test('中心を大きく表示し、画面サイズが変わっても見ていた地点を維持する', () => {
+  const from = { width: 1120, height: 600 };
+  const point = { x: 1200, y: 1200 };
+  const camera = centerCamera(from, point, 0.72);
+  assert.equal(camera.x + point.x * camera.scale, from.width / 2);
+  assert.equal(camera.y + point.y * camera.scale, from.height / 2);
+  const to = { width: 1280, height: 900 };
+  const expanded = reframeCamera(camera, from, to, 1.12);
+  assert.equal(expanded.x + point.x * expanded.scale, to.width / 2);
+  assert.equal(expanded.y + point.y * expanded.scale, to.height / 2);
+  const restored = reframeCamera(expanded, to, from);
+  assert.equal(restored.x + point.x * restored.scale, from.width / 2);
+  assert.equal(restored.y + point.y * restored.scale, from.height / 2);
+  assert.equal(reframeCamera(camera, from, to, 100).scale, 2);
+  assert.equal(reframeCamera(camera, from, to, 0.001).scale, 0.1);
+});
 
 test('JSONのすべてのスキルが重複なくツリーに入り、IDも維持する', () => {
   const skills = tree.nodes.filter((node) => node.type === 'skill');

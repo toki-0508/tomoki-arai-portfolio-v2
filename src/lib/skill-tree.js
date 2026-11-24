@@ -4,6 +4,18 @@ export const TREE_SIZE = 2400;
 export const NODE_SIZE = { root: [180, 150], skill: [112, 112] };
 export const normalizeSkill = (name) => String(name).trim().toLowerCase();
 
+export function centerCamera(size, point, scale) {
+  return { scale, x: size.width / 2 - point.x * scale, y: size.height / 2 - point.y * scale };
+}
+
+export function reframeCamera(camera, from, to, factor = 1) {
+  const point = {
+    x: (from.width / 2 - camera.x) / camera.scale,
+    y: (from.height / 2 - camera.y) / camera.scale,
+  };
+  return centerCamera(to, point, Math.max(0.1, Math.min(2, camera.scale * factor)));
+}
+
 export function buildSkillTree(model) {
   const valid = validateSkillTree(model);
   const nodes = [
