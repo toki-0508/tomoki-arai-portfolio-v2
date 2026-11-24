@@ -18,7 +18,6 @@
       "size": 82,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -35,7 +34,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -52,7 +50,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -69,7 +66,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -86,9 +82,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "typescript"
-      ],
       "level": null,
       "experience": "project"
     },
@@ -105,7 +98,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -122,9 +114,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "typescript"
-      ],
       "level": null,
       "experience": "project"
     },
@@ -141,7 +130,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -158,7 +146,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -175,7 +162,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -192,7 +178,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "coursework"
     },
@@ -209,7 +194,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "coursework"
     },
@@ -226,9 +210,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "postgresql"
-      ],
       "level": null,
       "experience": "coursework"
     },
@@ -245,7 +226,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -262,7 +242,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -279,7 +258,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -296,7 +274,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -313,7 +290,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "indirect"
     },
@@ -330,9 +306,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "postgresql"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -349,7 +322,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -366,7 +338,6 @@
       "size": 82,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -383,7 +354,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -400,7 +370,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -417,7 +386,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -434,7 +402,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -451,10 +418,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "firebase",
-        "sqlite"
-      ],
       "level": null,
       "experience": "project"
     },
@@ -471,7 +434,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -488,7 +450,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -505,9 +466,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "swift"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -524,7 +482,6 @@
       "size": 82,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -541,9 +498,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "unity"
-      ],
       "level": null,
       "experience": "project"
     },
@@ -560,7 +514,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -577,10 +530,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "python",
-        "pytorch"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -597,7 +546,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -614,7 +562,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -631,7 +578,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -648,7 +594,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -665,7 +610,6 @@
       "size": 82,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -682,7 +626,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -699,7 +642,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -716,7 +658,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -733,7 +674,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -750,9 +690,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "figma"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -769,7 +706,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -786,7 +722,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -803,7 +738,6 @@
       "size": 82,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -820,9 +754,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "blender"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -839,10 +770,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "modeling",
-        "enclosure"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -859,7 +786,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -876,10 +802,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "enclosure",
-        "unity"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -896,7 +818,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -913,7 +834,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -930,7 +850,6 @@
       "size": 82,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -947,9 +866,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "cpp"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -966,7 +882,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -983,7 +898,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1000,10 +914,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "arduino",
-        "cpp"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -1020,10 +930,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "python",
-        "pico"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -1040,10 +946,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "python",
-        "pico"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -1060,7 +962,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1077,10 +978,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "esp32",
-        "nrf52840"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -1097,7 +994,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1114,7 +1010,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1131,9 +1026,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "esp32"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -1150,7 +1042,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -1167,9 +1058,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "kicad"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -1186,7 +1074,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1203,7 +1090,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1220,7 +1106,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1237,9 +1122,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "c"
-      ],
       "level": null,
       "experience": "project"
     },
@@ -1256,7 +1138,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -1273,7 +1154,6 @@
       "size": 82,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1290,7 +1170,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1307,7 +1186,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1324,7 +1202,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1341,7 +1218,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "project"
     },
@@ -1358,7 +1234,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1375,9 +1250,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "linux"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -1394,7 +1266,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1411,7 +1282,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1428,7 +1298,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1445,7 +1314,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1462,7 +1330,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1479,7 +1346,6 @@
       "size": 82,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1496,7 +1362,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1513,7 +1378,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1530,7 +1394,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1547,7 +1410,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1564,7 +1426,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1581,9 +1442,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "qwen"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -1600,9 +1458,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "ollama"
-      ],
       "level": null,
       "experience": "reported"
     },
@@ -1619,7 +1474,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1636,7 +1490,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "reported"
     },
@@ -1653,7 +1506,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [],
       "level": null,
       "experience": "indirect"
     },
@@ -1670,10 +1522,6 @@
       "size": 60,
       "route": "straight",
       "bend": 0,
-      "related": [
-        "ml-agents",
-        "pytorch"
-      ],
       "level": null,
       "experience": "project"
     }

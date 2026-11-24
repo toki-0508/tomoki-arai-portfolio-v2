@@ -19,7 +19,7 @@ export function SkillGraph({ tree, camera, selected, interactive = false, onSele
   const [hovered, setHovered] = useState(null);
   const active = hovered || selected;
   const ancestry = new Set(active ? [active] : []);
-  const parent = new Map(tree.edges.filter((edge) => !edge.cross).map((edge) => [edge.to, edge.from]));
+  const parent = new Map(tree.edges.map((edge) => [edge.to, edge.from]));
   let cursor = active;
   while (parent.has(cursor) && !ancestry.has(parent.get(cursor))) {
     cursor = parent.get(cursor);
@@ -46,11 +46,11 @@ export function SkillGraph({ tree, camera, selected, interactive = false, onSele
           const from = byId.get(edge.from);
           const to = byId.get(edge.to);
           const { path, elbow } = skillRoute(from, to, edge.route, edge.bend);
-          const lit = edge.cross ? edge.from === active || edge.to === active : ancestry.has(edge.to);
+          const lit = ancestry.has(edge.to);
           return (
             <g
               key={edge.id}
-              className={`skill-tone-${edge.branch} ${edge.from === 'root' ? 'is-origin-edge' : ''} ${edge.cross ? 'is-cross' : ''} ${lit ? 'is-lit' : ''}`}
+              className={`skill-tone-${edge.branch} ${edge.from === 'root' ? 'is-origin-edge' : ''} ${lit ? 'is-lit' : ''}`}
             >
               <path className="skill-path-shadow" d={path} />
               <path className="skill-path" d={path} />

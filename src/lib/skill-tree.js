@@ -17,25 +17,7 @@ export function buildSkillTree(model) {
     id: `main-${node.id}`,
     route: node.route,
     bend: node.bend,
-    cross: false,
   }));
-  const pairs = new Set(edges.map((edge) => [edge.from, edge.to].sort().join(':')));
-  for (const node of valid.nodes) {
-    for (const target of node.related) {
-      const key = [node.id, target].sort().join(':');
-      if (pairs.has(key)) continue;
-      pairs.add(key);
-      edges.push({
-        id: key,
-        from: node.id,
-        to: target,
-        branch: node.branch,
-        route: 'curve',
-        bend: 55,
-        cross: true,
-      });
-    }
-  }
   return { nodes, edges };
 }
 

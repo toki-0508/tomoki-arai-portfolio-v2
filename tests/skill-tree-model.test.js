@@ -1,7 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { isDescendant, moveSkill, removeSkill, validateSkillTree } from '../src/lib/skill-tree-model.js';
+import {
+  isDescendant,
+  moveSkill,
+  removeSkill,
+  validateSkillTree,
+  sortSkillsByName,
+} from '../src/lib/skill-tree-model.js';
 
 const model = JSON.parse(fs.readFileSync('src/content/skill-tree.json', 'utf8'));
 const icons = Object.keys(JSON.parse(fs.readFileSync('src/content/skill-icons.json', 'utf8')));
@@ -94,16 +100,13 @@ test('自分と子孫を接続先候補から除外できる', () => {
   assert.equal(isDescendant(model, 'javascript', 'react'), false);
 });
 
-test('形・サイズ・線・自己評価・関連先を検証する', () => {
+test('形・サイズ・線・自己評価を検証する', () => {
   for (const patch of [
     { shape: 'triangle' },
     { size: 1000 },
     { size: '64' },
     { route: 'script' },
     { bend: Infinity },
-    { related: ['missing'] },
-    { related: [model.nodes[0].id] },
-    { related: [model.nodes[1].id, model.nodes[1].id] },
     { level: 6 },
     { level: '5' },
     { experience: 'expert' },
@@ -135,12 +138,23 @@ test('以前の下書きは形と大きさを引き継ぎ、習熟度を勝手�
   assert.equal(validated.nodes[0].level, null);
 });
 
-test('削除したノードは横断する関連先からも外れる', () => {
+test('以前のJSONにある廃止した関連先は読み込み時に取り除く', () => {
   const next = fresh();
   next.nodes[1].related = [next.nodes[0].id];
-  const removed = removeSkill(next, next.nodes[0].id);
-  assert.deepEqual(removed.nodes.find((node) => node.id === next.nodes[1].id).related, []);
-  validateSkillTree(removed, icons);
+  const validated = validateSkillTree(next, icons);
+  assert.ok(validated.nodes.every((node) => !Object.hasOwn(node, 'related')));
+  assert.ok(model.nodes.every((node) => !Object.hasOwn(node, 'related')));
+});
+
+test('名前は大文字小文字を区別せずA-Z順、数字は自然順で元の配列を変えない', () => {
+  const nodes = ['Zephyr', 'react', 'Adobe', 'Tool 10', 'tool 2', 'はんだ付け'].map((name) => ({ name }));
+  const before = structuredClone(nodes);
+  assert.deepEqual(
+    sortSkillsByName(nodes).map((node) => node.name),
+    ['Adobe', 'react', 'tool 2', 'Tool 10', 'Zephyr', 'はんだ付け'],
+  );
+  assert.deepEqual(nodes, before);
+  assert.deepEqual(sortSkillsByName([]), []);
 });
 
 test('言語・製品・実行環境の接続を混同しない', () => {

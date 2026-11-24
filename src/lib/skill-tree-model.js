@@ -1,6 +1,9 @@
 export const SKILL_TREE_FILE = 'src/content/skill-tree.json';
 export const SKILL_TONES = ['web', 'app', 'backend', 'creative', 'hardware', 'tools'];
 export const MAX_SKILLS = 120;
+const nameCollator = new Intl.Collator('en', { sensitivity: 'base', numeric: true });
+export const compareSkillNames = (first, second) => nameCollator.compare(first, second);
+export const sortSkillsByName = (nodes) => [...nodes].sort((a, b) => compareSkillNames(a.name, b.name));
 export const SKILL_SHAPES = ['circle', 'diamond', 'square', 'hexagon'];
 export const SKILL_ROUTES = ['straight', 'elbow', 'curve'];
 export const SKILL_EXPERIENCE = {
@@ -63,7 +66,7 @@ export function validateSkillTree(value, iconIds = null) {
         'size',
         'route',
         'bend',
-        'related',
+        'related', // Accept old JSON backups, but discard retired cross-links on import.
         'level',
         'experience',
       ]) ||
@@ -94,7 +97,6 @@ export function validateSkillTree(value, iconIds = null) {
     const size = node.size ?? (node.notable ? 82 : 64);
     const route = node.route ?? 'elbow';
     const bend = node.bend ?? 0;
-    const related = node.related ?? [];
     const level = node.level ?? null;
     const experience = node.experience ?? 'reported';
     if (
@@ -105,14 +107,10 @@ export function validateSkillTree(value, iconIds = null) {
       !SKILL_ROUTES.includes(route) ||
       !Number.isFinite(bend) ||
       Math.abs(bend) > 300 ||
-      !Array.isArray(related) ||
-      related.length > 12 ||
-      new Set(related).size !== related.length ||
-      related.some((id) => typeof id !== 'string' || id === node.id) ||
       !(level === null || (Number.isInteger(level) && level >= 1 && level <= 5)) ||
       !Object.hasOwn(SKILL_EXPERIENCE, experience)
     ) {
-      throw new SkillTreeError('形・大きさ・線・関連先・習熟度を確認してください');
+      throw new SkillTreeError('形・大きさ・線・習熟度を確認してください');
     }
     return {
       id: node.id,
@@ -127,14 +125,12 @@ export function validateSkillTree(value, iconIds = null) {
       size,
       route,
       bend,
-      related,
       level,
       experience,
     };
   });
   const parents = new Map(nodes.map((node) => [node.id, node.parent]));
   for (const node of nodes) {
-    if (node.related.some((id) => !ids.has(id))) throw new SkillTreeError('関連先のノードが存在しません');
     const visited = new Set([node.id]);
     let parent = node.parent;
     while (parent !== null) {
@@ -166,7 +162,6 @@ export function removeSkill(model, id) {
       .map((node) => ({
         ...node,
         parent: node.parent === id ? removed.parent : node.parent,
-        ...(node.related ? { related: node.related.filter((target) => target !== id) } : {}),
       })),
   };
 }

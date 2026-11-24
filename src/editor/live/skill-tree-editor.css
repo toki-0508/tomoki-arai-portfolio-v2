@@ -204,9 +204,6 @@
 .sle-sidebar output {
   font: 12px var(--font-mono);
 }
-.sle-sidebar select[multiple] {
-  min-height: 126px;
-}
 .sle-icon-preview {
   display: flex;
   justify-content: center;
