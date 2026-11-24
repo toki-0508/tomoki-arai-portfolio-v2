@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { SKILL_BRANCHES } from '../src/content/skill-tree.js';
+import { SKILL_GLYPHS } from '../src/content/skill-nodes.js';
 import {
   branchBounds,
   buildSkillTree,
@@ -31,12 +32,13 @@ test('すべての既存スキルが重複なくツリーに入り、編集パ�
 test('すべてのノードは中心からつながり、範囲内に収まる', () => {
   const ids = new Set(tree.nodes.map((node) => node.id));
   assert.equal(tree.edges.length, tree.nodes.length - 1);
-  const reachable = new Set(['root']);
   for (const edge of tree.edges) {
     assert.ok(ids.has(edge.from));
     assert.ok(ids.has(edge.to));
-    assert.ok(reachable.has(edge.from));
-    reachable.add(edge.to);
+  }
+  const reachable = new Set(['root']);
+  for (let pass = 0; pass < tree.nodes.length; pass += 1) {
+    for (const edge of tree.edges) if (reachable.has(edge.from)) reachable.add(edge.to);
   }
   assert.equal(reachable.size, ids.size);
   for (const node of tree.nodes) {
@@ -59,10 +61,25 @@ test('現在のスキルではノード同士が重ならない', () => {
   }
 });
 
-test('編集で未知のスキルが増えても「その他」から参照できる', () => {
+test('編集で未知のスキルが増えてもツリーから消さない', () => {
   const result = buildSkillTree([{ title: '追加', skills: ['新しいスキル'] }], SKILL_BRANCHES);
   assert.equal(result.nodes.filter((node) => node.type === 'skill').length, 1);
-  assert.ok(result.nodes.some((node) => node.name === 'その他'));
+  assert.ok(result.nodes.some((node) => node.name === '新しいスキル'));
+  assert.equal(result.edges.length, 1);
+});
+
+test('分類名・用途名は表示用のノードとして生成しない', () => {
+  assert.ok(tree.nodes.every((node) => node.type === 'root' || node.type === 'skill'));
+});
+
+test('参照する技術アイコンとライセンスはローカルにそろっている', () => {
+  for (const glyph of Object.values(SKILL_GLYPHS)) {
+    if (!glyph.icon) continue;
+    const svg = fs.readFileSync(`public/images/skills/${glyph.icon}.svg`, 'utf8');
+    assert.match(svg, /<svg/);
+    assert.doesNotMatch(svg, /<script|foreignObject|\son\w+=/i);
+  }
+  assert.ok(fs.existsSync('public/images/skills/LICENSE.txt'));
 });
 
 test('スキルが空でもツリーとカメラは有限の座標になる', () => {

@@ -1,5 +1,7 @@
 export const TREE_SIZE = 2400;
-export const NODE_SIZE = { root: [160, 100], branch: [172, 88], track: [160, 60], skill: [208, 78] };
+import { SKILL_POSITIONS } from '../content/skill-nodes.js';
+
+export const NODE_SIZE = { root: [180, 150], skill: [180, 140] };
 export const normalizeSkill = (name) => String(name).trim().toLowerCase();
 
 const polar = (radius, angle) => ({
@@ -30,37 +32,19 @@ export function buildSkillTree(groups, definitions) {
   const nodes = [{ id: 'root', type: 'root', name: 'Tomoki Arai', x: TREE_SIZE / 2, y: TREE_SIZE / 2 }];
   const edges = [];
   for (const [bi, branch] of branches.entries()) {
-    const angle = (-Math.PI * 5) / 6 + (bi * Math.PI) / 3;
-    const branchId = `branch-${branch.id}`;
-    const tracks = branch.tracks.filter((track) => track.skills.length);
-    nodes.push({
-      id: branchId,
-      type: 'branch',
-      branch: branch.id,
-      name: branch.title,
-      icon: branch.icon,
-      ...polar(345, angle),
-    });
-    edges.push({ from: 'root', to: branchId, branch: branch.id });
-    let leafIndex = 0;
-    const count = tracks.reduce((sum, track) => sum + track.skills.length, 0);
-    tracks.forEach((track, ti) => {
-      const trackId = `${branchId}-${ti}`;
-      const offset = tracks.length === 1 ? 0 : (ti / (tracks.length - 1) - 0.5) * 0.56;
-      nodes.push({
-        id: trackId,
-        type: 'track',
+    const branchSkills = branch.tracks.flatMap((track) => track.skills);
+    const mapped = new Map(branchSkills.map((skill) => [normalizeSkill(skill.name), skill.id]));
+    branchSkills.forEach((skill, index) => {
+      const position = Object.entries(SKILL_POSITIONS).find(
+        ([name]) => normalizeSkill(name) === normalizeSkill(skill.name),
+      )?.[1];
+      const fallback = polar(Math.min(1000, 650 + index * 100), -Math.PI / 6 + (bi * Math.PI) / 3);
+      const [x, y, parent, notable] = position || [fallback.x, fallback.y, null, false];
+      nodes.push({ ...skill, type: 'skill', branch: branch.id, notable: Boolean(notable), x, y });
+      edges.push({
+        from: mapped.get(normalizeSkill(parent || '')) || 'root',
+        to: skill.id,
         branch: branch.id,
-        name: track.title,
-        ...polar(590, angle + offset),
-      });
-      edges.push({ from: branchId, to: trackId, branch: branch.id });
-      track.skills.forEach((skill) => {
-        const spread = count === 1 ? 0 : (leafIndex / (count - 1) - 0.5) * 0.82;
-        const radius = leafIndex % 2 ? 1040 : 850;
-        nodes.push({ ...skill, type: 'skill', branch: branch.id, ...polar(radius, angle + spread) });
-        edges.push({ from: trackId, to: skill.id, branch: branch.id });
-        leafIndex += 1;
       });
     });
   }
@@ -95,7 +79,7 @@ export function constrainCamera(camera, size) {
 }
 
 export function branchBounds(nodes, branch) {
-  const targets = branch ? nodes.filter((node) => node.branch === branch) : nodes;
+  const targets = branch ? nodes.filter((node) => node.branch === branch || node.id === branch) : nodes;
   const xs = targets.map((node) => node.x);
   const ys = targets.map((node) => node.y);
   return {
