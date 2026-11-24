@@ -1,30 +1,73 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon } from '../Icon.jsx';
 import { C } from '../../editor/index.jsx';
 import { t } from '../../content/copy.js';
 import MODEL from '../../content/skill-tree.json';
 import { sortSkillsByName } from '../../lib/skill-tree-model.js';
-import { buildSkillTree, branchBounds, fitCamera } from '../../lib/skill-tree.js';
-import { useElementSize, useTreeCamera } from './useTreeCamera.js';
+import { buildSkillTree, reframeCamera } from '../../lib/skill-tree.js';
+import { useTreeCamera } from './useTreeCamera.js';
 import { SkillGraph } from './SkillGraph.jsx';
 import { SkillDetails } from './SkillDetails.jsx';
 import './skill-tree.css';
 
-function ConnectionLegend() {
+function CameraControls({ camera, zoom, fit }) {
   return (
-    <p className="skill-tree-legend">
-      <span>技術・制作上の関連</span>
-      <small>線は学習順や依存関係、形・大きさは習熟度を示しません。</small>
-    </p>
+    <div className="skill-tree-zoom" role="group" aria-label={t('about.tree.zoomControls')}>
+      <button
+        className="skill-tree-tool"
+        type="button"
+        disabled={camera.scale <= 0.1}
+        onClick={() => zoom(1 / 1.25)}
+        aria-label={t('about.tree.zoomOut')}
+        title={t('about.tree.zoomOut')}
+      >
+        <Icon.Minus />
+      </button>
+      <output aria-live="off">{Math.round(camera.scale * 100)}%</output>
+      <button
+        className="skill-tree-tool"
+        type="button"
+        disabled={camera.scale >= 2}
+        onClick={() => zoom(1.25)}
+        aria-label={t('about.tree.zoomIn')}
+        title={t('about.tree.zoomIn')}
+      >
+        <Icon.Plus />
+      </button>
+      <span className="skill-tree-toolbar-rule" />
+      <button
+        className="skill-tree-tool"
+        type="button"
+        onClick={() => fit()}
+        aria-label={t('about.tree.fit')}
+        title={t('about.tree.fit')}
+      >
+        <Icon.Fit />
+      </button>
+    </div>
   );
 }
 
-function TreeExplorer({ tree, onClose }) {
+function originClip(rect) {
+  return `inset(${Math.max(0, rect.top)}px ${Math.max(0, innerWidth - rect.right)}px ${Math.max(0, innerHeight - rect.bottom)}px ${Math.max(0, rect.left)}px round 6px)`;
+}
+
+const revealTiming = { duration: 420, easing: 'cubic-bezier(.22, 1, .36, 1)' };
+
+function TreeExplorer({ tree, initialView, getOriginRect, onRestore, onClose }) {
   const dialog = useRef(null);
   const viewport = useRef(null);
+  const closing = useRef(false);
   const [selected, setSelected] = useState(null);
-  const { camera, fit, zoom, handlers } = useTreeCamera(viewport, tree.nodes);
+  const initialCamera = {
+    ...initialView.camera,
+    x: initialView.camera.x + initialView.rect.left,
+    y: initialView.camera.y + initialView.rect.top,
+  };
+  const controls = useTreeCamera(viewport, tree.nodes, { smooth: true, initialView, initialCamera });
+  const { camera, size, fit, handlers, restore } = controls;
+
   function select(id, keyboard = false) {
     if (id === 'root') {
       setSelected(null);
@@ -34,16 +77,44 @@ function TreeExplorer({ tree, onClose }) {
     setSelected(id);
     if (keyboard) fit(id);
   }
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = dialog.current;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     element.showModal();
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      element.animate(
+        [{ clipPath: originClip(initialView.rect) }, { clipPath: 'inset(0px round 0px)' }],
+        revealTiming,
+      );
+    }
     return () => {
+      element.getAnimations().forEach((animation) => animation.cancel());
       element.close();
       document.body.style.overflow = previousOverflow;
     };
-  }, []);
+  }, [initialView]);
+
+  function requestClose() {
+    if (closing.current) return;
+    closing.current = true;
+    const rect = getOriginRect();
+    const previewCamera = reframeCamera(camera, size, rect);
+    onRestore(previewCamera);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      onClose();
+      return;
+    }
+    restore({ ...previewCamera, x: previewCamera.x + rect.left, y: previewCamera.y + rect.top });
+    const element = dialog.current;
+    const from = getComputedStyle(element).clipPath;
+    element.getAnimations().forEach((animation) => animation.cancel());
+    const animation = element.animate([{ clipPath: from }, { clipPath: originClip(rect) }], {
+      ...revealTiming,
+      fill: 'forwards',
+    });
+    animation.finished.then(onClose, () => {});
+  }
 
   function trapTab(event) {
     if (event.key !== 'Tab') return;
@@ -65,7 +136,7 @@ function TreeExplorer({ tree, onClose }) {
       onKeyDown={trapTab}
       onCancel={(event) => {
         event.preventDefault();
-        onClose();
+        requestClose();
       }}
     >
       <header className="skill-tree-toolbar">
@@ -75,12 +146,11 @@ function TreeExplorer({ tree, onClose }) {
             <C k="about.tree.title" />
           </h2>
         </div>
-        <button type="button" className="skill-tree-minimize" onClick={onClose} autoFocus>
+        <button type="button" className="skill-tree-minimize" onClick={requestClose} autoFocus>
           <Icon.Minimize />
           <C k="about.tree.minimize" />
         </button>
       </header>
-      <ConnectionLegend />
       <div className="skill-tree-explorer-body">
         <div
           ref={viewport}
@@ -97,39 +167,7 @@ function TreeExplorer({ tree, onClose }) {
           <C k="about.tree.keys" />
         </p>
         {node && <SkillDetails node={node} onClose={() => setSelected(null)} onNavigate={onClose} />}
-        <div className="skill-tree-zoom" role="group" aria-label={t('about.tree.zoomControls')}>
-          <button
-            className="skill-tree-tool"
-            type="button"
-            disabled={camera.scale <= 0.1}
-            onClick={() => zoom(1 / 1.25)}
-            aria-label={t('about.tree.zoomOut')}
-            title={t('about.tree.zoomOut')}
-          >
-            <Icon.Minus />
-          </button>
-          <output aria-live="off">{Math.round(camera.scale * 100)}%</output>
-          <button
-            className="skill-tree-tool"
-            type="button"
-            disabled={camera.scale >= 2}
-            onClick={() => zoom(1.25)}
-            aria-label={t('about.tree.zoomIn')}
-            title={t('about.tree.zoomIn')}
-          >
-            <Icon.Plus />
-          </button>
-          <span className="skill-tree-toolbar-rule" />
-          <button
-            className="skill-tree-tool"
-            type="button"
-            onClick={() => fit()}
-            aria-label={t('about.tree.fit')}
-            title={t('about.tree.fit')}
-          >
-            <Icon.Fit />
-          </button>
-        </div>
+        <CameraControls {...controls} />
       </div>
     </dialog>,
     document.body,
@@ -140,50 +178,75 @@ export function SkillTree() {
   const tree = useMemo(() => buildSkillTree(MODEL), [MODEL]);
   const preview = useRef(null);
   const opener = useRef(null);
-  const size = useElementSize(preview);
-  const [expanded, setExpanded] = useState(false);
-  const skillCount = tree.nodes.filter((node) => node.type === 'skill').length;
+  const [expanded, setExpanded] = useState(null);
+  const controls = useTreeCamera(preview, tree.nodes, { smooth: true, focus: 'root', wheel: 'modified' });
+  const { camera, size, handlers, restore } = controls;
+  const skillCount = tree.nodes.length - 1;
   const close = useCallback(() => {
-    setExpanded(false);
+    setExpanded(null);
     requestAnimationFrame(() => opener.current?.focus({ preventScroll: true }));
   }, []);
+  function open() {
+    setExpanded({ camera, size, rect: preview.current.getBoundingClientRect() });
+  }
   return (
     <div className="skill-tree">
-      <div ref={preview} className="skill-tree-preview">
+      <div className="skill-tree-preview-shell">
+        <div
+          ref={preview}
+          className="skill-tree-preview skill-tree-viewport"
+          tabIndex={0}
+          role="group"
+          aria-label={t('about.tree.mapLabel')}
+          aria-describedby="skill-tree-preview-keys"
+          {...handlers}
+          onClick={open}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              open();
+            } else handlers.onKeyDown(event);
+          }}
+        >
+          <div aria-hidden="true">
+            <SkillGraph tree={tree} camera={camera} />
+          </div>
+        </div>
         <div className="skill-tree-preview-head">
           <span>SKILL TREE</span>
           <span>{String(skillCount).padStart(2, '0')} NODES</span>
         </div>
-        <div aria-hidden="true">
-          <SkillGraph tree={tree} camera={fitCamera(size, branchBounds(tree.nodes), 54)} />
-        </div>
+        <CameraControls {...controls} />
         <button
           ref={opener}
           className="skill-tree-open"
           type="button"
-          onClick={() => setExpanded(true)}
+          onClick={open}
           aria-haspopup="dialog"
-          aria-expanded={expanded}
+          aria-expanded={Boolean(expanded)}
           aria-label={t('about.tree.open')}
+          title={t('about.tree.openCaption')}
         >
-          <span className="skill-tree-open-caption">
-            <Icon.Maximize width={16} height={16} />
-            <C k="about.tree.openCaption" />
-          </span>
+          <Icon.Maximize width={20} height={20} />
         </button>
       </div>
-      <ConnectionLegend />
-      <details className="skill-tree-list">
-        <summary>
-          <C k="about.tree.list" />
-        </summary>
-        <ul>
-          {sortSkillsByName(MODEL.nodes).map((node) => (
-            <li key={node.id}>{node.name}</li>
-          ))}
-        </ul>
-      </details>
-      {expanded && <TreeExplorer tree={tree} onClose={close} />}
+      <p className="visually-hidden" id="skill-tree-preview-keys">
+        <C k="about.tree.previewKeys" />
+      </p>
+      <ul className="skill-tree-list visually-hidden" aria-label={t('about.tree.list')}>
+        {sortSkillsByName(MODEL.nodes).map((node) => (
+          <li key={node.id}>{node.name}</li>
+        ))}
+      </ul>
+      {expanded && (
+        <TreeExplorer
+          tree={tree}
+          initialView={expanded}
+          getOriginRect={() => preview.current.getBoundingClientRect()}
+          onRestore={restore}
+          onClose={close}
+        />
+      )}
     </div>
   );
 }

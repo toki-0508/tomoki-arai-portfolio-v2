@@ -90,6 +90,7 @@
   "about.tree.skillLabel": "{name}：掲載作品・配布物での使用 {count}件",
   "about.tree.mapLabel": "移動・拡大縮小できるスキルマップ",
   "about.tree.keys": "矢印キーで移動、プラスとマイナスで拡大縮小、0で表示をリセット。Tabでスキルを選択し、EscapeでAboutページに戻ります。",
+  "about.tree.previewKeys": "ドラッグやスワイプで移動、ピンチで拡大縮小できます。矢印キーで移動、プラスとマイナスで拡大縮小、0で全体表示。クリックやEnter、全画面ボタンで各スキルの詳細を開けます。",
   "about.tree.zoomControls": "マップの拡大縮小",
   "about.tree.zoomIn": "拡大",
   "about.tree.zoomOut": "縮小",

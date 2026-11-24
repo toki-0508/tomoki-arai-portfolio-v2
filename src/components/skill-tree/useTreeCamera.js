@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { branchBounds, constrainCamera, fitCamera, zoomCamera } from '../../lib/skill-tree.js';
+import {
+  branchBounds,
+  constrainCamera,
+  fitCamera,
+  zoomCamera,
+  centerCamera,
+  reframeCamera,
+} from '../../lib/skill-tree.js';
+import { useMotionCamera } from './useMotionCamera.js';
 
 export function useElementSize(ref) {
   const [size, setSize] = useState({ width: 1, height: 1 });
@@ -15,12 +23,16 @@ export function useElementSize(ref) {
   return size;
 }
 
-export function useTreeCamera(ref, nodes) {
+export function useTreeCamera(ref, nodes, options = {}) {
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
+  const previousSize = useRef(null);
   const size = useElementSize(ref);
   const nodesRef = useRef(nodes);
   nodesRef.current = nodes;
   const ready = nodes.length > 0;
-  const [camera, setCamera] = useState(() => fitCamera({ width: 800, height: 600 }));
+  const [camera, setCamera] = useState(() => options.initialCamera || fitCamera({ width: 800, height: 600 }));
+  const renderedCamera = useMotionCamera(camera, options.smooth);
   const pointers = useRef(new Map());
   const gesture = useRef(null);
   const suppressClick = useRef(false);
@@ -40,6 +52,19 @@ export function useTreeCamera(ref, nodes) {
   );
   useEffect(() => {
     if (!ready || size.width <= 1 || size.height <= 1) return;
+    const config = optionsRef.current;
+    if (config.focus || config.initialView) {
+      const previous = previousSize.current;
+      previousSize.current = size;
+      setCamera((current) => {
+        if (previous) return reframeCamera(current, previous, size);
+        if (config.initialView)
+          return reframeCamera(config.initialView.camera, config.initialView.size, size, 1.12);
+        const focus = nodesRef.current.find((node) => node.id === config.focus) || nodesRef.current[0];
+        return centerCamera(size, focus, size.width < 640 ? 0.4 : 0.72);
+      });
+      return;
+    }
     const { target, minimumScale } = fittedView.current;
     // 開いた直後は技術を読める倍率、リセットでは全体像を表示する。
     fit(target, minimumScale ?? (size.width < 640 ? 0.34 : 0.48));
@@ -54,7 +79,13 @@ export function useTreeCamera(ref, nodes) {
 
   useEffect(() => {
     const element = ref.current;
+    // This surface moves only through its camera, never native focus scrolling.
+    const lockScroll = () => {
+      if (element.scrollLeft || element.scrollTop) element.scrollTo(0, 0);
+    };
+    element.addEventListener('scroll', lockScroll, { passive: true });
     const onWheel = (event) => {
+      if (optionsRef.current.wheel === 'modified' && !event.ctrlKey && !event.metaKey) return;
       event.preventDefault();
       const rect = element.getBoundingClientRect();
       const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? size.height : 1);
@@ -64,7 +95,10 @@ export function useTreeCamera(ref, nodes) {
       });
     };
     element.addEventListener('wheel', onWheel, { passive: false });
-    return () => element.removeEventListener('wheel', onWheel);
+    return () => {
+      element.removeEventListener('wheel', onWheel);
+      element.removeEventListener('scroll', lockScroll);
+    };
   }, [ref, size.height, zoom]);
 
   function onPointerDown(event) {
@@ -143,7 +177,9 @@ export function useTreeCamera(ref, nodes) {
   }
 
   return {
-    camera,
+    camera: renderedCamera,
+    size,
+    restore: setCamera,
     zoom,
     fit,
     handlers: {
