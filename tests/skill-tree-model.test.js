@@ -157,32 +157,14 @@ test('名前は大文字小文字を区別せずA-Z順、数字は自然順で�
   assert.deepEqual(sortSkillsByName([]), []);
 });
 
-test('言語・製品・実行環境の接続を混同しない', () => {
-  const parent = (name) => model.nodes.find((node) => node.name === name)?.parent;
-  const id = (name) => model.nodes.find((node) => node.name === name)?.id;
-  for (const name of [
-    'C',
-    'C++',
-    'C#',
-    'Python',
-    'Java',
-    'Dart',
-    'ChatGPT',
-    'Claude',
-    'Qwen',
-    'KiCad',
-    'Figma',
-    'Blender',
-    'GarageBand',
-  ])
-    assert.equal(parent(name), null, name);
-  assert.equal(parent('Flutter'), id('Dart'));
-  assert.equal(parent('Next.js'), id('React'));
-  assert.equal(parent('Google Apps Script'), id('JavaScript'));
-  assert.equal(parent('GitHub Actions'), id('GitHub'));
-  for (const name of ['PyTorch', 'PostgreSQL'])
-    assert.equal(model.nodes.find((node) => node.name === name).experience, 'indirect');
-  for (const name of ['Express.js', 'Prisma', 'EJS'])
-    assert.equal(model.nodes.find((node) => node.name === name).experience, 'coursework');
-  assert.ok(model.nodes.every((node) => node.level === null));
+test('本人が編集した接続・経験・自己評価を勝手に書き換えない', () => {
+  const next = fresh();
+  next.nodes[0].parent = next.nodes[1].id;
+  next.nodes[1].parent = null;
+  next.nodes[0].experience = 'coursework';
+  next.nodes[0].level = 2;
+  const validated = validateSkillTree(next, icons);
+  assert.equal(validated.nodes[0].parent, next.nodes[1].id);
+  assert.equal(validated.nodes[0].experience, 'coursework');
+  assert.equal(validated.nodes[0].level, 2);
 });

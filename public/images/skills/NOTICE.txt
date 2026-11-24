@@ -1,4 +1,10 @@
 Technology icons: Devicon v2.17.0
+Additional missing-node logos:
+UnrealEngine: Devicon v2.17.0, MIT (LICENSE.txt)
+https://github.com/devicons/devicon/blob/v2.17.0/icons/unrealengine/unrealengine-original.svg
+Fusion: Autodesk Fusion full product icon, used to identify the product.
+Product page: https://www.autodesk.com/products/fusion-360/overview
+Asset: https://images.ctfassets.net/v7wr16nrr0mz/2LMTnQBiZiRv1UZnrX7fvo/d251822704d55dc03fb439d445548d37/fusion-full-product-icon.svg
 Source: https://github.com/devicons/devicon/tree/v2.17.0
 License: MIT (see LICENSE.txt).
 Product names and logos are trademarks of their respective owners.
