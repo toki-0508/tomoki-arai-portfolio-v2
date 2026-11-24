@@ -10,6 +10,16 @@ import { SkillGraph } from './SkillGraph.jsx';
 import { SkillDetails } from './SkillDetails.jsx';
 import './skill-tree.css';
 
+function ConnectionLegend() {
+  return (
+    <p className="skill-tree-legend">
+      <span>技術・制作上の関連</span>
+      <span>分野をまたぐ関連</span>
+      <small>線は学習順や依存関係、形・大きさは習熟度を示しません。</small>
+    </p>
+  );
+}
+
 function TreeExplorer({ tree, onClose }) {
   const dialog = useRef(null);
   const viewport = useRef(null);
@@ -70,6 +80,7 @@ function TreeExplorer({ tree, onClose }) {
           <C k="about.tree.minimize" />
         </button>
       </header>
+      <ConnectionLegend />
       <div className="skill-tree-explorer-body">
         <div
           ref={viewport}
@@ -161,12 +172,15 @@ export function SkillTree() {
           </span>
         </button>
       </div>
+      <ConnectionLegend />
       <details className="skill-tree-list">
         <summary>
           <C k="about.tree.list" />
         </summary>
         <ul>
-          {MODEL.nodes.map((node) => <li key={node.id}>{node.name}</li>)}
+          {MODEL.nodes.map((node) => (
+            <li key={node.id}>{node.name}</li>
+          ))}
         </ul>
       </details>
       {expanded && <TreeExplorer tree={tree} onClose={close} />}

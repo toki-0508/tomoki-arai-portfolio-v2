@@ -5,6 +5,7 @@ import { t } from '../../content/copy.js';
 import { DOWNLOADS, WORKS } from '../../content/loader.js';
 import { normalizeSkill } from '../../lib/skill-tree.js';
 import { SkillEmblem } from './SkillEmblem.jsx';
+import { SKILL_EXPERIENCE, SKILL_LEVELS } from '../../lib/skill-tree-model.js';
 
 export function SkillDetails({ node, onClose, onNavigate }) {
   const matches = (entry) => entry.tags.some((tag) => normalizeSkill(tag) === normalizeSkill(node.name));
@@ -22,9 +23,7 @@ export function SkillDetails({ node, onClose, onNavigate }) {
           <p className="skill-tree-small">
             <C k="about.tree.selected" />
           </p>
-          <h3 id="skill-detail-title">
-            {node.name}
-          </h3>
+          <h3 id="skill-detail-title">{node.name}</h3>
         </div>
         <button
           className="skill-tree-tool"
@@ -35,6 +34,10 @@ export function SkillDetails({ node, onClose, onNavigate }) {
         >
           <Icon.Close />
         </button>
+      </div>
+      <div className="skill-tree-experience">
+        <span>{SKILL_EXPERIENCE[node.experience]}</span>
+        <span>{node.level ? `Lv.${node.level} ${SKILL_LEVELS[node.level]}` : '習熟度は自己評価待ち'}</span>
       </div>
       <p className="skill-tree-detail-count">
         <C k="about.skills.usagePrefix" />

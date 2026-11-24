@@ -135,6 +135,7 @@ export function SkillTreeEditor() {
   });
 
   function choose(id, focus = false) {
+    if (pending && !window.confirm('未適用のノード設定を破棄して選択を変えますか？')) return;
     setSelected(id);
     if (focus) requestAnimationFrame(() => fit(id));
   }
@@ -163,7 +164,8 @@ export function SkillTreeEditor() {
     setSelected('root');
   }
   function startDrag(event) {
-    if (tool !== 'nodes' || !model || (event.pointerType === 'mouse' && event.button !== 0)) return;
+    if (tool !== 'nodes' || !model || pending || (event.pointerType === 'mouse' && event.button !== 0))
+      return;
     const id = event.target.closest('[data-node-id]')?.dataset.nodeId;
     if (!id) return;
     const target = id === 'root' ? model.root : model.nodes.find((candidate) => candidate.id === id);
@@ -388,6 +390,7 @@ export function SkillTreeEditor() {
           )}
           {node && (
             <SkillNodeInspector
+              key={node.id}
               node={node}
               model={model}
               onApply={apply}

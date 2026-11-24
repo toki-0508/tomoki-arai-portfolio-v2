@@ -188,5 +188,305 @@
     "label": "Adobe Premiere Pro",
     "src": "/images/skills/premierepro.svg",
     "monochrome": false
+  },
+  "html5": {
+    "label": "HTML",
+    "src": "/images/skills/html5.svg",
+    "monochrome": false
+  },
+  "css3": {
+    "label": "CSS",
+    "src": "/images/skills/css3.svg",
+    "monochrome": false
+  },
+  "cplusplus": {
+    "label": "C++",
+    "src": "/images/skills/cplusplus.svg",
+    "monochrome": false
+  },
+  "csharp": {
+    "label": "C#",
+    "src": "/images/skills/csharp.svg",
+    "monochrome": false
+  },
+  "unity": {
+    "label": "Unity",
+    "src": "/images/skills/unity.svg",
+    "monochrome": true
+  },
+  "pytorch": {
+    "label": "PyTorch",
+    "src": "/images/skills/pytorch.svg",
+    "monochrome": false
+  },
+  "express": {
+    "label": "Express.js",
+    "src": "/images/skills/express.svg",
+    "monochrome": true
+  },
+  "prisma": {
+    "label": "Prisma",
+    "src": "/images/skills/prisma.svg",
+    "monochrome": true
+  },
+  "ejs": {
+    "label": "EJS",
+    "src": "/images/skills/ejs.svg",
+    "monochrome": true
+  },
+  "postgresql": {
+    "label": "PostgreSQL",
+    "src": "/images/skills/postgresql.svg",
+    "monochrome": false
+  },
+  "xcode": {
+    "label": "Xcode",
+    "src": "/images/skills/xcode.svg",
+    "monochrome": false
+  },
+  "github": {
+    "label": "GitHub",
+    "src": "/images/skills/github.svg",
+    "monochrome": true
+  },
+  "docker": {
+    "label": "Docker",
+    "src": "/images/skills/docker.svg",
+    "monochrome": false
+  },
+  "linux": {
+    "label": "Linux",
+    "src": "/images/skills/linux.svg",
+    "monochrome": false
+  },
+  "swift": {
+    "label": "Swift",
+    "src": "/images/skills/swift.svg",
+    "monochrome": false
+  },
+  "ollama": {
+    "label": "Ollama",
+    "src": "/images/skills/ollama.svg",
+    "monochrome": true
+  },
+  "litellm": {
+    "label": "LiteLLM",
+    "src": "/images/skills/litellm.svg",
+    "monochrome": false
+  },
+  "comfyui": {
+    "label": "ComfyUI",
+    "src": "/images/skills/comfyui.svg",
+    "monochrome": false
+  },
+  "flux": {
+    "label": "FLUX.1",
+    "src": "/images/skills/flux.svg",
+    "monochrome": true
+  },
+  "espressif": {
+    "label": "Espressif / ESP32",
+    "src": "/images/skills/espressif.svg",
+    "monochrome": true
+  },
+  "micropython": {
+    "label": "MicroPython",
+    "src": "/images/skills/micropython.svg",
+    "monochrome": true
+  },
+  "circuitpython": {
+    "label": "CircuitPython",
+    "src": "/images/skills/circuitpython.png",
+    "monochrome": false
+  },
+  "raspberrypi": {
+    "label": "Raspberry Pi Pico",
+    "src": "/images/skills/raspberrypi.svg",
+    "monochrome": true
+  },
+  "bambulab": {
+    "label": "Bambu Lab A1 mini",
+    "src": "/images/skills/bambulab.svg",
+    "monochrome": true
+  },
+  "openmediavault": {
+    "label": "OpenMediaVault",
+    "src": "/images/skills/openmediavault.svg",
+    "monochrome": true
+  },
+  "bluetooth": {
+    "label": "Bluetooth HID",
+    "src": "/images/skills/bluetooth.svg",
+    "monochrome": true
+  },
+  "m5stack": {
+    "label": "M5Stack",
+    "src": "/images/skills/m5stack.svg",
+    "monochrome": true
+  },
+  "adobe": {
+    "label": "Adobe",
+    "src": "/images/skills/adobe.svg",
+    "monochrome": true
+  },
+  "ml-agents": {
+    "label": "ML-Agents",
+    "src": "/images/skills/ml-agents.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "urp": {
+    "label": "URP",
+    "src": "/images/skills/urp.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "llm": {
+    "label": "LLM",
+    "src": "/images/skills/llm.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "reinforcement-learning": {
+    "label": "強化学習",
+    "src": "/images/skills/reinforcement-learning.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "sql": {
+    "label": "SQL",
+    "src": "/images/skills/sql.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "rest-api": {
+    "label": "REST API",
+    "src": "/images/skills/rest-api.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "wifi": {
+    "label": "Wi-Fi",
+    "src": "/images/skills/wifi.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "esp-now": {
+    "label": "ESP-NOW",
+    "src": "/images/skills/esp-now.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "infrared": {
+    "label": "赤外線通信",
+    "src": "/images/skills/infrared.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "sinric-pro": {
+    "label": "Sinric Pro",
+    "src": "/images/skills/sinric-pro.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "circuit-design": {
+    "label": "回路設計",
+    "src": "/images/skills/circuit-design.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "soldering": {
+    "label": "はんだ付け",
+    "src": "/images/skills/soldering.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "sensors": {
+    "label": "センサー",
+    "src": "/images/skills/sensors.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "motor-control": {
+    "label": "モーター制御",
+    "src": "/images/skills/motor-control.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "modeling": {
+    "label": "3Dモデリング",
+    "src": "/images/skills/modeling.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "enclosure": {
+    "label": "筐体・機構設計",
+    "src": "/images/skills/enclosure.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "ui-design": {
+    "label": "UI設計",
+    "src": "/images/skills/ui-design.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "planning": {
+    "label": "企画・要件定義",
+    "src": "/images/skills/planning.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "prototyping": {
+    "label": "プロトタイピング",
+    "src": "/images/skills/prototyping.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "debugging": {
+    "label": "デバッグ",
+    "src": "/images/skills/debugging.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "store-operations": {
+    "label": "店舗運営・収支管理",
+    "src": "/images/skills/store-operations.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "presentation": {
+    "label": "プレゼンテーション",
+    "src": "/images/skills/presentation.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "pc-building": {
+    "label": "自作PC",
+    "src": "/images/skills/pc-building.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "swiftui": {
+    "label": "SwiftUI",
+    "src": "/images/skills/swiftui.svg",
+    "monochrome": true,
+    "concept": true
+  },
+  "opencv": {
+    "label": "OpenCV",
+    "src": "/images/skills/opencv.svg",
+    "monochrome": false
+  },
+  "mediapipe": {
+    "label": "MediaPipe",
+    "src": "/images/skills/mediapipe.svg",
+    "monochrome": true
+  },
+  "panda3d": {
+    "label": "Panda3D",
+    "src": "/images/skills/panda3d.svg",
+    "monochrome": true,
+    "concept": true
   }
 }
