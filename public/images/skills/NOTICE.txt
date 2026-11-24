@@ -19,3 +19,65 @@ GarageBand app icon: Apple, https://apps.apple.com/us/app/garageband/id682658836
 GarageBand artwork was retrieved from Apple's iTunes Lookup API.
 Adobe Premiere Pro: Devicon v2.17.0 (premierepro-original.svg).
 All product names and marks remain the property of their respective owners.
+
+Skill expansion sources:
+html5.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/html5/html5-original.svg
+css3.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/css3/css3-original.svg
+cplusplus.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/cplusplus/cplusplus-original.svg
+csharp.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/csharp/csharp-original.svg
+unity.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/unity/unity-original.svg
+pytorch.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/pytorch/pytorch-original.svg
+express.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/express/express-original.svg
+prisma.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/prisma/prisma-original.svg
+ejs.svg: https://raw.githubusercontent.com/simple-icons/simple-icons/c01109118e134e061c9bdf2e1a7f814117f1f032/icons/ejs.svg
+postgresql.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/postgresql/postgresql-original.svg
+xcode.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/xcode/xcode-original.svg
+github.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/github/github-original.svg
+docker.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/docker/docker-original.svg
+linux.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/linux/linux-original.svg
+swift.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/swift/swift-original.svg
+ollama.svg: https://raw.githubusercontent.com/lobehub/lobe-icons/05260484d9f4de68f90cc87a634ae68fa4043efd/packages/static-svg/icons/ollama.svg
+litellm.svg: https://docs.litellm.ai/img/brand/litellm-favicon.svg
+comfyui.svg: https://raw.githubusercontent.com/lobehub/lobe-icons/05260484d9f4de68f90cc87a634ae68fa4043efd/packages/static-svg/icons/comfyui-color.svg
+flux.svg: https://raw.githubusercontent.com/lobehub/lobe-icons/05260484d9f4de68f90cc87a634ae68fa4043efd/packages/static-svg/icons/flux.svg
+espressif.svg: https://raw.githubusercontent.com/simple-icons/simple-icons/c01109118e134e061c9bdf2e1a7f814117f1f032/icons/espressif.svg
+micropython.svg: https://raw.githubusercontent.com/simple-icons/simple-icons/c01109118e134e061c9bdf2e1a7f814117f1f032/icons/micropython.svg
+circuitpython.png: https://circuitpython.org/assets/images/logo-dark.png
+raspberrypi.svg: https://raw.githubusercontent.com/simple-icons/simple-icons/c01109118e134e061c9bdf2e1a7f814117f1f032/icons/raspberrypi.svg
+bambulab.svg: https://raw.githubusercontent.com/simple-icons/simple-icons/c01109118e134e061c9bdf2e1a7f814117f1f032/icons/bambulab.svg
+openmediavault.svg: https://raw.githubusercontent.com/simple-icons/simple-icons/c01109118e134e061c9bdf2e1a7f814117f1f032/icons/openmediavault.svg
+bluetooth.svg: https://raw.githubusercontent.com/simple-icons/simple-icons/c01109118e134e061c9bdf2e1a7f814117f1f032/icons/bluetooth.svg
+m5stack.svg: https://raw.githubusercontent.com/simple-icons/simple-icons/c01109118e134e061c9bdf2e1a7f814117f1f032/icons/m5stack.svg
+adobe.svg: https://raw.githubusercontent.com/simple-icons/simple-icons/11.15.0/icons/adobe.svg
+ml-agents.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/brain-circuit.svg (concept pictogram, not a brand logo)
+urp.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/layers.svg (concept pictogram, not a brand logo)
+llm.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/messages-square.svg (concept pictogram, not a brand logo)
+reinforcement-learning.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/workflow.svg (concept pictogram, not a brand logo)
+sql.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/database.svg (concept pictogram, not a brand logo)
+rest-api.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/network.svg (concept pictogram, not a brand logo)
+wifi.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/wifi.svg (concept pictogram, not a brand logo)
+esp-now.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/radio.svg (concept pictogram, not a brand logo)
+infrared.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/scan-line.svg (concept pictogram, not a brand logo)
+sinric-pro.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/house.svg (concept pictogram, not a brand logo)
+circuit-design.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/circuit-board.svg (concept pictogram, not a brand logo)
+soldering.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/wrench.svg (concept pictogram, not a brand logo)
+sensors.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/gauge.svg (concept pictogram, not a brand logo)
+motor-control.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/cog.svg (concept pictogram, not a brand logo)
+modeling.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/box.svg (concept pictogram, not a brand logo)
+enclosure.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/component.svg (concept pictogram, not a brand logo)
+ui-design.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/panels-top-left.svg (concept pictogram, not a brand logo)
+planning.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/notebook-pen.svg (concept pictogram, not a brand logo)
+prototyping.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/blocks.svg (concept pictogram, not a brand logo)
+debugging.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/bug.svg (concept pictogram, not a brand logo)
+store-operations.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/store.svg (concept pictogram, not a brand logo)
+presentation.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/presentation.svg (concept pictogram, not a brand logo)
+pc-building.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/pc-case.svg (concept pictogram, not a brand logo)
+swiftui.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/app-window.svg (concept pictogram, not a brand logo)
+opencv.svg: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/opencv/opencv-original.svg
+mediapipe.svg: https://raw.githubusercontent.com/simple-icons/simple-icons/c01109118e134e061c9bdf2e1a7f814117f1f032/icons/mediapipe.svg
+panda3d.svg: https://raw.githubusercontent.com/lucide-icons/lucide/0.468.0/icons/boxes.svg (concept pictogram, not a brand logo)
+Concepts without a standalone product logo use Lucide pictograms (ISC).
+
+Skill expansion sources:
+circuitpython.png: https://circuitpython.org/assets/images/logo-dark.png
+Concepts without a standalone product logo use Lucide pictograms (ISC).

@@ -8,6 +8,7 @@ import {
   fitCamera,
   NODE_SIZE,
   TREE_SIZE,
+  skillRoute,
   zoomCamera,
 } from '../src/lib/skill-tree.js';
 
@@ -17,10 +18,7 @@ const tree = buildSkillTree(model);
 
 test('JSONのすべてのスキルが重複なくツリーに入り、IDも維持する', () => {
   const skills = tree.nodes.filter((node) => node.type === 'skill');
-  assert.equal(
-    skills.length,
-    model.nodes.length,
-  );
+  assert.equal(skills.length, model.nodes.length);
   assert.equal(new Set(skills.map((node) => node.id)).size, skills.length);
   for (const skill of skills) {
     assert.equal(skill.name, model.nodes.find((node) => node.id === skill.id).name);
@@ -29,7 +27,7 @@ test('JSONのすべてのスキルが重複なくツリーに入り、IDも維�
 
 test('すべてのノードは中心からつながり、範囲内に収まる', () => {
   const ids = new Set(tree.nodes.map((node) => node.id));
-  assert.equal(tree.edges.length, tree.nodes.length - 1);
+  assert.equal(tree.edges.filter((edge) => !edge.cross).length, tree.nodes.length - 1);
   for (const edge of tree.edges) {
     assert.ok(ids.has(edge.from));
     assert.ok(ids.has(edge.to));
@@ -40,7 +38,8 @@ test('すべてのノードは中心からつながり、範囲内に収まる',
   }
   assert.equal(reachable.size, ids.size);
   for (const node of tree.nodes) {
-    const [width, height] = NODE_SIZE[node.type];
+    const width = node.type === 'root' ? 150 : node.size * (node.shape === 'diamond' ? Math.SQRT2 : 1) + 16;
+    const height = width;
     assert.ok(node.x - width / 2 >= 0 && node.x + width / 2 <= TREE_SIZE, node.name);
     assert.ok(node.y - height / 2 >= 0 && node.y + height / 2 <= TREE_SIZE, node.name);
   }
@@ -48,9 +47,12 @@ test('すべてのノードは中心からつながり、範囲内に収まる',
 
 test('現在のスキルではノード同士が重ならない', () => {
   for (const [index, node] of tree.nodes.entries()) {
-    const [width, height] = NODE_SIZE[node.type];
+    const width = node.type === 'root' ? 150 : node.size * (node.shape === 'diamond' ? Math.SQRT2 : 1) + 16;
+    const height = width;
     for (const other of tree.nodes.slice(index + 1)) {
-      const [otherWidth, otherHeight] = NODE_SIZE[other.type];
+      const otherWidth =
+        other.type === 'root' ? 150 : other.size * (other.shape === 'diamond' ? Math.SQRT2 : 1) + 16;
+      const otherHeight = otherWidth;
       const overlap =
         Math.abs(node.x - other.x) < (width + otherWidth) / 2 + 8 &&
         Math.abs(node.y - other.y) < (height + otherHeight) / 2 + 8;
@@ -60,10 +62,35 @@ test('現在のスキルではノード同士が重ならない', () => {
 });
 
 test('編集で未知のスキルが増えてもツリーから消さない', () => {
-  const result = buildSkillTree({ ...model, nodes: [{ ...model.nodes[0], id: 'new', name: '新しいスキル', parent: null }] });
+  const result = buildSkillTree({
+    ...model,
+    nodes: [{ ...model.nodes[0], id: 'new', name: '新しいスキル', parent: null, related: [] }],
+  });
   assert.equal(result.nodes.filter((node) => node.type === 'skill').length, 1);
   assert.ok(result.nodes.some((node) => node.name === '新しいスキル'));
   assert.equal(result.edges.length, 1);
+});
+
+test('横断する関連は双方向指定でも1本だけで、親子の経路を上書きしない', () => {
+  const result = buildSkillTree({
+    version: 1,
+    root: model.root,
+    nodes: model.nodes
+      .slice(0, 2)
+      .map((node, index) => ({ ...node, parent: null, related: [model.nodes[1 - index].id] })),
+  });
+  assert.equal(result.edges.filter((edge) => edge.cross).length, 1);
+  assert.equal(result.edges.filter((edge) => !edge.cross).length, 2);
+});
+
+test('直線・折れ線・曲線と曲がりを描画用の経路に変換する', () => {
+  const from = { x: 100, y: 200 },
+    to = { x: 400, y: 500 };
+  assert.equal(skillRoute(from, to, 'straight').path, 'M 100 200 L 400 500');
+  assert.match(skillRoute(from, to, 'curve', 80).path, / Q /);
+  assert.ok(skillRoute(from, to, 'elbow').elbow);
+  assert.notEqual(skillRoute(from, to, 'curve', 80).path, skillRoute(from, to, 'curve', -80).path);
+  assert.doesNotMatch(skillRoute(from, from, 'curve', 100).path, /NaN|Infinity/);
 });
 
 test('分類名・用途名は表示用のノードとして生成しない', () => {
@@ -72,7 +99,10 @@ test('分類名・用途名は表示用のノードとして生成しない', ()
 
 test('参照する技術アイコンとライセンスはローカルにそろっている', () => {
   for (const glyph of Object.values(icons)) {
-    if (!glyph.src.endsWith('.svg')) { assert.ok(fs.existsSync(`public${glyph.src}`)); continue; }
+    if (!glyph.src.endsWith('.svg')) {
+      assert.ok(fs.existsSync(`public${glyph.src}`));
+      continue;
+    }
     const svg = fs.readFileSync(`public${glyph.src}`, 'utf8');
     assert.match(svg, /<svg/);
     assert.doesNotMatch(svg, /<script|foreignObject|\son\w+=/i);

@@ -1,7 +1,7 @@
 import { validateSkillTree } from './skill-tree-model.js';
 
 export const TREE_SIZE = 2400;
-export const NODE_SIZE = { root: [180, 150], skill: [180, 140] };
+export const NODE_SIZE = { root: [180, 150], skill: [112, 112] };
 export const normalizeSkill = (name) => String(name).trim().toLowerCase();
 
 export function buildSkillTree(model) {
@@ -14,8 +14,46 @@ export function buildSkillTree(model) {
     from: node.parent || 'root',
     to: node.id,
     branch: node.branch,
+    id: `main-${node.id}`,
+    route: node.route,
+    bend: node.bend,
+    cross: false,
   }));
+  const pairs = new Set(edges.map((edge) => [edge.from, edge.to].sort().join(':')));
+  for (const node of valid.nodes) {
+    for (const target of node.related) {
+      const key = [node.id, target].sort().join(':');
+      if (pairs.has(key)) continue;
+      pairs.add(key);
+      edges.push({
+        id: key,
+        from: node.id,
+        to: target,
+        branch: node.branch,
+        route: 'curve',
+        bend: 55,
+        cross: true,
+      });
+    }
+  }
   return { nodes, edges };
+}
+
+export function skillRoute(from, to, kind = 'elbow', bend = 0) {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const length = Math.max(1, Math.hypot(dx, dy));
+  const middle = {
+    x: (from.x + to.x) / 2 - (dy / length) * bend,
+    y: (from.y + to.y) / 2 + (dx / length) * bend,
+  };
+  if (kind === 'straight') return { path: `M ${from.x} ${from.y} L ${to.x} ${to.y}` };
+  if (kind === 'curve') return { path: `M ${from.x} ${from.y} Q ${middle.x} ${middle.y} ${to.x} ${to.y}` };
+  const diagonal = Math.min(Math.abs(dx), Math.abs(dy));
+  const elbow = bend
+    ? middle
+    : { x: from.x + Math.sign(dx) * diagonal, y: from.y + Math.sign(dy) * diagonal };
+  return { path: `M ${from.x} ${from.y} L ${elbow.x} ${elbow.y} L ${to.x} ${to.y}`, elbow };
 }
 export function fitCamera(size, bounds = { x: 0, y: 0, width: TREE_SIZE, height: TREE_SIZE }, padding = 24) {
   const scale = Math.max(
