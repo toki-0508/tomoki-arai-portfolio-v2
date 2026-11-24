@@ -21,22 +21,25 @@ export function useTreeCamera(ref, nodes) {
   const pointers = useRef(new Map());
   const gesture = useRef(null);
   const suppressClick = useRef(false);
-  const fittedBranch = useRef(null);
+  const fittedView = useRef({ target: null, minimumScale: null });
   const fit = useCallback(
-    (branch = null) => {
-      fittedBranch.current = branch;
-      const fitted = fitCamera(size, branchBounds(nodes, branch), 48);
-      // スマホで分野を選んだときは、全体の収まりより技術名の可読性を優先する。
+    (target = null, minimumScale = 0) => {
+      fittedView.current = { target, minimumScale };
+      const fitted = fitCamera(size, branchBounds(nodes, target), 48);
+      const readableScale = target ? Math.max(0.55, minimumScale) : minimumScale;
       setCamera(
-        branch && fitted.scale < 0.55
-          ? zoomCamera(fitted, 0.55, { x: size.width / 2, y: size.height / 2 })
+        fitted.scale < readableScale
+          ? zoomCamera(fitted, readableScale, { x: size.width / 2, y: size.height / 2 })
           : fitted,
       );
     },
     [size, nodes],
   );
   useEffect(() => {
-    fit(fittedBranch.current);
+    if (size.width <= 1 || size.height <= 1) return;
+    const { target, minimumScale } = fittedView.current;
+    // 開いた直後は技術を読める倍率、リセットでは全体像を表示する。
+    fit(target, minimumScale ?? (size.width < 640 ? 0.34 : 0.48));
   }, [fit]);
 
   const zoom = useCallback(

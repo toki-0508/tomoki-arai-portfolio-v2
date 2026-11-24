@@ -28,9 +28,11 @@
 
 ### Aboutのスキルツリー
 
-スキルのデータは従来どおり `src/content/site.json` の `SKILL_GROUPS` です。編集モードでは「閲覧」に切り替えて「スキルを一覧で見る」を開き、「編集」に戻すと名前を編集できます。分野・用途の枝分けは `src/content/skill-tree.js`、配置・ズーム計算は `src/lib/skill-tree.js`、UIは `src/components/skill-tree/` に分離しています。分類にない名前は Tools & AI の「その他」に入り、表示から消えません。
+スキルのデータは従来どおり `src/content/site.json` の `SKILL_GROUPS` です。編集モードでは「閲覧」に切り替えて「スキルを一覧で見る」を開き、「編集」に戻すと名前を編集できます。内部の系統分けは `src/content/skill-tree.js`、技術同士の経路・座標・アイコンは `src/content/skill-nodes.js`、配置・ズーム計算は `src/lib/skill-tree.js`、UIは `src/components/skill-tree/` に分離しています。未分類の名前もツリーから消えません。
 
-通常表示は系統の全体像を示し、拡大画面では分野選択・ドラッグ・ホイール・ピンチ・キーボードで探索できます。ノードの数字は掲載作品と配布物のタグに基づく件数で、習熟度ではありません。ノードの大きさは分野・用途・技術という階層を表します。参考画像自体はサイトに転載していません。
+通常表示はツリー全体、拡大画面は読みやすい倍率で始まり、ドラッグ・ホイール・ピンチ・キーボードで探索できます。分野名の箱やタブは表示せず、技術アイコン自体を分岐点に使います。経路は技術のつながりを視覚化したもので、必須の学習順序や習熟度を意味しません。選択時の件数は掲載作品・配布物のタグから集計します。
+
+参考にしたのは本人指定の画像、[Path of Exile](https://www.pathofexile.com/passive-skill-tree) と [Last Epoch](https://lastepoch.com/skills/) の大小ノード・細い経路・選択時の強調です。ゲームの画像は転載していません。技術ロゴは [Devicon v2.17.0](https://github.com/devicons/devicon/tree/v2.17.0) をローカル配信し、`public/images/skills/` に出典とMITライセンスを同梱しています。
 
 ### OG 画像の作り直し
 

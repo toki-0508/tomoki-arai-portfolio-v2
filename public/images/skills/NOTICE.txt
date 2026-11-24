@@ -1,0 +1,5 @@
+Technology icons: Devicon v2.17.0
+Source: https://github.com/devicons/devicon/tree/v2.17.0
+License: MIT (see LICENSE.txt).
+Product names and logos are trademarks of their respective owners.
+Used to identify the technologies in this portfolio; no endorsement is implied.
