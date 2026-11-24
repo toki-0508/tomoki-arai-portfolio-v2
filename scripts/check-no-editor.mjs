@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 // '__editor' は保存窓口のパス('/__editor' と '/__editor/' のどちらの書き方も拾う)
-export const MARKERS = ['__editor', 'data-portfolio-editable', 'portfolio-editor-bar', 'portfolio-editor-panel', 'ped-image-host'];
+export const MARKERS = ['__editor', '__skill-tree', 'skill-layout-editor', 'data-portfolio-editable', 'portfolio-editor-bar', 'portfolio-editor-panel', 'ped-image-host'];
 
 export function findMarkers(dir) {
   const hits = [];

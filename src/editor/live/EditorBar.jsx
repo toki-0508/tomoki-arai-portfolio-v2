@@ -37,6 +37,7 @@ export function EditorRoot({ route }) {
         <button type="button" aria-pressed={state.panel === 'settings'} onClick={() => toggle('settings')}>
           このページの設定
         </button>
+        <a href="/__skill-tree" target="_blank" rel="noreferrer">スキルツリーを配置</a>
         <button type="button" aria-pressed={state.panel === 'notes'} onClick={() => toggle('notes')}>
           Claudeへのメモ{state.notes.trim() ? ' ●' : ''}
         </button>

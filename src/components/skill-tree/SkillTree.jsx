@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon } from '../Icon.jsx';
-import { C, S } from '../../editor/index.jsx';
+import { C } from '../../editor/index.jsx';
 import { t } from '../../content/copy.js';
-import { SKILL_GROUPS } from '../../content/site.js';
-import { SKILL_BRANCHES } from '../../content/skill-tree.js';
+import MODEL from '../../content/skill-tree.json';
 import { buildSkillTree, branchBounds, fitCamera } from '../../lib/skill-tree.js';
 import { useElementSize, useTreeCamera } from './useTreeCamera.js';
 import { SkillGraph } from './SkillGraph.jsx';
@@ -127,7 +126,7 @@ function TreeExplorer({ tree, onClose }) {
 }
 
 export function SkillTree() {
-  const tree = useMemo(() => buildSkillTree(SKILL_GROUPS, SKILL_BRANCHES), [SKILL_GROUPS]);
+  const tree = useMemo(() => buildSkillTree(MODEL), [MODEL]);
   const preview = useRef(null);
   const opener = useRef(null);
   const size = useElementSize(preview);
@@ -167,13 +166,7 @@ export function SkillTree() {
           <C k="about.tree.list" />
         </summary>
         <ul>
-          {SKILL_GROUPS.flatMap((group, gi) =>
-            group.skills.map((skill, si) => (
-              <li key={`${gi}-${si}`}>
-                <S path={`SKILL_GROUPS.${gi}.skills.${si}`} />
-              </li>
-            )),
-          )}
+          {MODEL.nodes.map((node) => <li key={node.id}>{node.name}</li>)}
         </ul>
       </details>
       {expanded && <TreeExplorer tree={tree} onClose={close} />}

@@ -1,8 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { SKILL_BRANCHES } from '../src/content/skill-tree.js';
-import { SKILL_GLYPHS } from '../src/content/skill-nodes.js';
 import {
   branchBounds,
   buildSkillTree,
@@ -13,19 +11,19 @@ import {
   zoomCamera,
 } from '../src/lib/skill-tree.js';
 
-const site = JSON.parse(fs.readFileSync('src/content/site.json', 'utf8'));
-const tree = buildSkillTree(site.SKILL_GROUPS, SKILL_BRANCHES);
+const model = JSON.parse(fs.readFileSync('src/content/skill-tree.json', 'utf8'));
+const icons = JSON.parse(fs.readFileSync('src/content/skill-icons.json', 'utf8'));
+const tree = buildSkillTree(model);
 
-test('すべての既存スキルが重複なくツリーに入り、編集パスも維持する', () => {
+test('JSONのすべてのスキルが重複なくツリーに入り、IDも維持する', () => {
   const skills = tree.nodes.filter((node) => node.type === 'skill');
   assert.equal(
     skills.length,
-    site.SKILL_GROUPS.reduce((sum, group) => sum + group.skills.length, 0),
+    model.nodes.length,
   );
   assert.equal(new Set(skills.map((node) => node.id)).size, skills.length);
   for (const skill of skills) {
-    const [, gi, , si] = skill.path.split('.');
-    assert.equal(skill.name, site.SKILL_GROUPS[gi].skills[si]);
+    assert.equal(skill.name, model.nodes.find((node) => node.id === skill.id).name);
   }
 });
 
@@ -62,7 +60,7 @@ test('現在のスキルではノード同士が重ならない', () => {
 });
 
 test('編集で未知のスキルが増えてもツリーから消さない', () => {
-  const result = buildSkillTree([{ title: '追加', skills: ['新しいスキル'] }], SKILL_BRANCHES);
+  const result = buildSkillTree({ ...model, nodes: [{ ...model.nodes[0], id: 'new', name: '新しいスキル', parent: null }] });
   assert.equal(result.nodes.filter((node) => node.type === 'skill').length, 1);
   assert.ok(result.nodes.some((node) => node.name === '新しいスキル'));
   assert.equal(result.edges.length, 1);
@@ -73,9 +71,9 @@ test('分類名・用途名は表示用のノードとして生成しない', ()
 });
 
 test('参照する技術アイコンとライセンスはローカルにそろっている', () => {
-  for (const glyph of Object.values(SKILL_GLYPHS)) {
-    if (!glyph.icon) continue;
-    const svg = fs.readFileSync(`public/images/skills/${glyph.icon}.svg`, 'utf8');
+  for (const glyph of Object.values(icons)) {
+    if (!glyph.src.endsWith('.svg')) { assert.ok(fs.existsSync(`public${glyph.src}`)); continue; }
+    const svg = fs.readFileSync(`public${glyph.src}`, 'utf8');
     assert.match(svg, /<svg/);
     assert.doesNotMatch(svg, /<script|foreignObject|\son\w+=/i);
   }
@@ -83,7 +81,7 @@ test('参照する技術アイコンとライセンスはローカルにそろ�
 });
 
 test('スキルが空でもツリーとカメラは有限の座標になる', () => {
-  const result = buildSkillTree([], SKILL_BRANCHES);
+  const result = buildSkillTree({ ...model, nodes: [] });
   assert.equal(result.nodes.filter((node) => node.type === 'skill').length, 0);
   const camera = fitCamera({ width: 320, height: 300 }, branchBounds(result.nodes));
   assert.ok(Object.values(camera).every(Number.isFinite));

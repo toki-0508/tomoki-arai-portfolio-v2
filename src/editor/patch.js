@@ -12,6 +12,7 @@
 // ============================================================
 import { bodyRegions } from '../lib/markdown-parse.js';
 import { COPY_FILE, SITE_FILE } from './shared.js';
+import { SKILL_TREE_FILE } from '../lib/skill-tree-model.js';
 
 export class PatchError extends Error {}
 
@@ -48,6 +49,7 @@ export const DOWNLOAD_FIELDS = {
 };
 
 export function fileKind(file) {
+  if (file === SKILL_TREE_FILE) return 'skill-tree';
   if (file === COPY_FILE) return 'copy';
   if (file === SITE_FILE) return 'site';
   if (WORK_FILE.test(file)) return 'work';

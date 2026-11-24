@@ -1,6 +1,6 @@
 import { Icon } from '../Icon.jsx';
 import { Link } from '../ui.jsx';
-import { C, F, S } from '../../editor/index.jsx';
+import { C, F } from '../../editor/index.jsx';
 import { t } from '../../content/copy.js';
 import { DOWNLOADS, WORKS } from '../../content/loader.js';
 import { normalizeSkill } from '../../lib/skill-tree.js';
@@ -17,13 +17,13 @@ export function SkillDetails({ node, onClose, onNavigate }) {
       aria-live="polite"
     >
       <div className="skill-tree-detail-head">
-        <SkillEmblem name={node.name} />
+        <SkillEmblem name={node.name} icon={node.icon} />
         <div>
           <p className="skill-tree-small">
             <C k="about.tree.selected" />
           </p>
           <h3 id="skill-detail-title">
-            <S path={node.path} />
+            {node.name}
           </h3>
         </div>
         <button

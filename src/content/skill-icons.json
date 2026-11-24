@@ -1,0 +1,192 @@
+{
+  "javascript": {
+    "label": "JavaScript",
+    "src": "/images/skills/javascript.svg",
+    "monochrome": false
+  },
+  "typescript": {
+    "label": "TypeScript",
+    "src": "/images/skills/typescript.svg",
+    "monochrome": false
+  },
+  "react": {
+    "label": "React",
+    "src": "/images/skills/react.svg",
+    "monochrome": false
+  },
+  "nextjs": {
+    "label": "Next.js",
+    "src": "/images/skills/nextjs.svg",
+    "monochrome": true
+  },
+  "threejs": {
+    "label": "Three.js",
+    "src": "/images/skills/threejs.svg",
+    "monochrome": true
+  },
+  "vitejs": {
+    "label": "Vite",
+    "src": "/images/skills/vitejs.svg",
+    "monochrome": false
+  },
+  "tailwindcss": {
+    "label": "Tailwind CSS",
+    "src": "/images/skills/tailwindcss.svg",
+    "monochrome": false
+  },
+  "flutter": {
+    "label": "Flutter",
+    "src": "/images/skills/flutter.svg",
+    "monochrome": false
+  },
+  "dart": {
+    "label": "Dart",
+    "src": "/images/skills/dart.svg",
+    "monochrome": false
+  },
+  "chrome": {
+    "label": "Chrome Extensions",
+    "src": "/images/skills/chrome.svg",
+    "monochrome": false
+  },
+  "python": {
+    "label": "Python",
+    "src": "/images/skills/python.svg",
+    "monochrome": false
+  },
+  "java": {
+    "label": "Java",
+    "src": "/images/skills/java.svg",
+    "monochrome": false
+  },
+  "c": {
+    "label": "C",
+    "src": "/images/skills/c.svg",
+    "monochrome": false
+  },
+  "forge": {
+    "label": "Minecraft Forge",
+    "src": "/images/skills/forge.png",
+    "monochrome": false
+  },
+  "firebase": {
+    "label": "Firebase",
+    "src": "/images/skills/firebase.svg",
+    "monochrome": false
+  },
+  "sqlite": {
+    "label": "SQLite",
+    "src": "/images/skills/sqlite.svg",
+    "monochrome": false
+  },
+  "supabase": {
+    "label": "Supabase",
+    "src": "/images/skills/supabase.svg",
+    "monochrome": false
+  },
+  "googleappsscript": {
+    "label": "Google Apps Script",
+    "src": "/images/skills/googleappsscript.svg",
+    "monochrome": true
+  },
+  "nodejs": {
+    "label": "Node.js",
+    "src": "/images/skills/nodejs.svg",
+    "monochrome": false
+  },
+  "vercel": {
+    "label": "Vercel",
+    "src": "/images/skills/vercel.svg",
+    "monochrome": true
+  },
+  "githubactions": {
+    "label": "GitHub Actions",
+    "src": "/images/skills/githubactions.svg",
+    "monochrome": false
+  },
+  "blender": {
+    "label": "Blender",
+    "src": "/images/skills/blender.svg",
+    "monochrome": false
+  },
+  "garageband": {
+    "label": "GarageBand",
+    "src": "/images/skills/garageband.png",
+    "monochrome": false
+  },
+  "figma": {
+    "label": "Figma",
+    "src": "/images/skills/figma.svg",
+    "monochrome": false
+  },
+  "illustrator": {
+    "label": "Adobe Illustrator",
+    "src": "/images/skills/illustrator.svg",
+    "monochrome": false
+  },
+  "photoshop": {
+    "label": "Adobe Photoshop",
+    "src": "/images/skills/photoshop.svg",
+    "monochrome": false
+  },
+  "kicad": {
+    "label": "KiCad",
+    "src": "/images/skills/kicad.svg",
+    "monochrome": true
+  },
+  "arduino": {
+    "label": "Arduino",
+    "src": "/images/skills/arduino.svg",
+    "monochrome": false
+  },
+  "nordic": {
+    "label": "nRF52840",
+    "src": "/images/skills/nordic.svg",
+    "monochrome": true
+  },
+  "zephyr": {
+    "label": "Zephyr",
+    "src": "/images/skills/zephyr.svg",
+    "monochrome": false
+  },
+  "git": {
+    "label": "Git",
+    "src": "/images/skills/git.svg",
+    "monochrome": false
+  },
+  "vscode": {
+    "label": "VS Code",
+    "src": "/images/skills/vscode.svg",
+    "monochrome": false
+  },
+  "notion": {
+    "label": "Notion",
+    "src": "/images/skills/notion.svg",
+    "monochrome": true
+  },
+  "openai": {
+    "label": "ChatGPT",
+    "src": "/images/skills/openai.svg",
+    "monochrome": true
+  },
+  "claude": {
+    "label": "Claude",
+    "src": "/images/skills/claude.svg",
+    "monochrome": false
+  },
+  "codex": {
+    "label": "Codex",
+    "src": "/images/skills/codex.svg",
+    "monochrome": true
+  },
+  "qwen": {
+    "label": "Qwen",
+    "src": "/images/skills/qwen.svg",
+    "monochrome": false
+  },
+  "premierepro": {
+    "label": "Adobe Premiere Pro",
+    "src": "/images/skills/premierepro.svg",
+    "monochrome": false
+  }
+}
