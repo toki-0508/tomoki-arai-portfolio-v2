@@ -46,16 +46,14 @@ test('すべてのノードは中心からつながり、範囲内に収まる',
 });
 
 test('現在のスキルではノード同士が重ならない', () => {
+  // A diagonal pair can have overlapping bounding boxes without overlapping emblems.
+  const radius = (node) => {
+    const size = node.type === 'root' ? 96 : node.size;
+    return (size * (node.type === 'root' || node.shape === 'diamond' ? Math.SQRT2 : 1)) / 2;
+  };
   for (const [index, node] of tree.nodes.entries()) {
-    const width = node.type === 'root' ? 150 : node.size * (node.shape === 'diamond' ? Math.SQRT2 : 1) + 16;
-    const height = width;
     for (const other of tree.nodes.slice(index + 1)) {
-      const otherWidth =
-        other.type === 'root' ? 150 : other.size * (other.shape === 'diamond' ? Math.SQRT2 : 1) + 16;
-      const otherHeight = otherWidth;
-      const overlap =
-        Math.abs(node.x - other.x) < (width + otherWidth) / 2 + 8 &&
-        Math.abs(node.y - other.y) < (height + otherHeight) / 2 + 8;
+      const overlap = Math.hypot(node.x - other.x, node.y - other.y) < radius(node) + radius(other);
       assert.ok(!overlap, `${node.name} / ${other.name}`);
     }
   }

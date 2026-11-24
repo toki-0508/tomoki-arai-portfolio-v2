@@ -1,4 +1,14 @@
 {
+  "fusion": {
+    "label": "Fusion",
+    "src": "/images/skills/fusion.svg",
+    "monochrome": false
+  },
+  "unrealengine": {
+    "label": "UnrealEngine",
+    "src": "/images/skills/unrealengine.svg",
+    "monochrome": true
+  },
   "javascript": {
     "label": "JavaScript",
     "src": "/images/skills/javascript.svg",
